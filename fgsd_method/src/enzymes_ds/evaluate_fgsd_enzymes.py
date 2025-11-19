@@ -8,13 +8,22 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 from sklearn.preprocessing import label_binarize
 import networkx as nx
-from fgsd import FGSD
+from karateclub.estimator import Estimator # Χρειαζόμαστε τη βάση
 import warnings
 import os
 import urllib.request
 import zipfile
-warnings.filterwarnings('ignore')
+import pandas as pd
+import sys
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+from fgsd import FlexibleFGSD 
 
 def download_and_load_enzymes():
     """Download and load ENZYMES dataset from TU Dortmund."""
@@ -24,7 +33,6 @@ def download_and_load_enzymes():
     base_url = 'https://www.chrsmrrs.com/graphkerneldatasets/ENZYMES.zip'
     zip_path = os.path.join(data_dir, 'ENZYMES.zip')
     
-    # Download if not exists
     if not os.path.exists(os.path.join(data_dir, 'ENZYMES')):
         print("Downloading ENZYMES dataset...")
         urllib.request.urlretrieve(base_url, zip_path)
@@ -32,48 +40,31 @@ def download_and_load_enzymes():
             zip_ref.extractall(data_dir)
         print("Download complete.")
     
-    # Parse dataset files
     dataset_path = os.path.join(data_dir, 'ENZYMES')
-    
-    # Read graph indicator (which graph each node belongs to)
     graph_indicator = np.loadtxt(os.path.join(dataset_path, 'ENZYMES_graph_indicator.txt'), dtype=int)
-    
-    # Read edges (A.txt contains edge list)
     edges = np.loadtxt(os.path.join(dataset_path, 'ENZYMES_A.txt'), dtype=int, delimiter=',')
-    
-    # Read graph labels
     graph_labels = np.loadtxt(os.path.join(dataset_path, 'ENZYMES_graph_labels.txt'), dtype=int)
     
-    # Build NetworkX graphs
     num_graphs = len(graph_labels)
     graphs = [nx.Graph() for _ in range(num_graphs)]
     
-    # Add nodes
     for node_id, graph_id in enumerate(graph_indicator, start=1):
         graphs[graph_id - 1].add_node(node_id)
     
-    # Add edges
     for edge in edges:
         node1, node2 = edge
         graph_id = graph_indicator[node1 - 1]
         graphs[graph_id - 1].add_edge(node1, node2)
     
-    # Relabel nodes to be contiguous starting from 0
     graphs = [nx.convert_node_labels_to_integers(g) for g in graphs]
-    
-    # Convert labels to 0-indexed
     labels = graph_labels - 1
-    
     return graphs, labels
 
-
 def load_enzymes_dataset():
-    """Load ENZYMES dataset."""
     return download_and_load_enzymes()
 
-
+# --- 3. EVALUATION (UNCHANGED) ---
 def evaluate_classifier(X_train, X_test, y_train, y_test, classifier_name, clf):
-    """Evaluate a single classifier and return metrics."""
     # Training
     start_time = time.time()
     clf.fit(X_train, y_train)
@@ -88,14 +79,12 @@ def evaluate_classifier(X_train, X_test, y_train, y_test, classifier_name, clf):
     accuracy = accuracy_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred, average='weighted')
     
-    # AUC (one-vs-rest for multiclass)
     try:
         y_test_bin = label_binarize(y_test, classes=np.unique(y_train))
         if hasattr(clf, 'predict_proba'):
             y_score = clf.predict_proba(X_test)
         elif hasattr(clf, 'decision_function'):
             y_score = clf.decision_function(X_test)
-            # Normalize for multiclass
             if len(y_score.shape) == 1:
                 y_score = y_score.reshape(-1, 1)
         else:
@@ -117,9 +106,12 @@ def evaluate_classifier(X_train, X_test, y_train, y_test, classifier_name, clf):
         'inference_time': inference_time
     }
 
-
-def run_experiment(embedding_dims, test_size=0.3, random_state=42):
-    """Run complete experiment with varying embedding dimensions."""
+# --- 4. EXPERIMENT RUNNER (UPDATED FOR TRIPLETS) ---
+def run_experiment(configs, test_size=0.3, random_state=42):
+    """
+    Run complete experiment iterating over configuration triplets.
+    configs: List of dictionaries {'func': str, 'bins': int, 'range': float}
+    """
     print("Loading ENZYMES dataset...")
     graphs, labels = load_enzymes_dataset()
     
@@ -130,16 +122,21 @@ def run_experiment(embedding_dims, test_size=0.3, random_state=42):
     
     results = []
     
-    for dim in embedding_dims:
-        print(f"\n{'='*60}")
-        print(f"Evaluating with embedding dimension (hist_bins): {dim}")
-        print(f"{'='*60}")
+    for i, config in enumerate(configs):
+        func = config['func']
+        bins = config['bins']
+        rng = config['range']
         
-        # Generate embeddings with memory tracking
+        print(f"\n{'='*80}")
+        print(f"Experiment {i+1}/{len(configs)}: Function='{func}', Bins={bins}, Range={rng}")
+        print(f"{'='*80}")
+        
+        # Generate embeddings
         tracemalloc.start()
         start_time = time.time()
         
-        model = FGSD(hist_bins=dim, hist_range=20, seed=random_state)
+        # Χρησιμοποιούμε τη FlexibleFGSD
+        model = FlexibleFGSD(hist_bins=bins, hist_range=rng, func_type=func, seed=random_state)
         model.fit(graphs_train)
         X_train = model.get_embedding()
         X_test = model.infer(graphs_test)
@@ -149,64 +146,73 @@ def run_experiment(embedding_dims, test_size=0.3, random_state=42):
         tracemalloc.stop()
         memory_mb = peak / 1024 / 1024
         
-        print(f"Embedding generation time: {generation_time:.2f}s")
-        print(f"Peak memory usage: {memory_mb:.2f} MB")
-        print(f"Train embeddings shape: {X_train.shape}")
-        print(f"Test embeddings shape: {X_test.shape}")
+        print(f"Generation Time: {generation_time:.2f}s | Memory: {memory_mb:.2f} MB")
+        print(f"Embeddings Shape: {X_train.shape}")
         
-        # Define classifiers
         classifiers = {
-            'SVM (RBF)': SVC(kernel='rbf', random_state=random_state, probability=True),
-            'SVM (Linear)': SVC(kernel='linear', random_state=random_state, probability=True),
-            'MLP': MLPClassifier(hidden_layer_sizes=(100, 50), max_iter=500, 
-                                random_state=random_state),
-            'Random Forest': RandomForestClassifier(n_estimators=100, random_state=random_state)
+            'SVM (RBF) + Scaler': make_pipeline(
+                StandardScaler(), # we added scaler because we put raw data
+                SVC(kernel='rbf', C=100, gamma='scale', probability=True, random_state=random_state)
+            ),
+            'Random Forest': RandomForestClassifier(n_estimators=1000, random_state=random_state)
         }
         
-        # Evaluate each classifier
         for clf_name, clf in classifiers.items():
-            print(f"\nEvaluating {clf_name}...")
-            result = evaluate_classifier(X_train, X_test, y_train, y_test, clf_name, clf)
-            result['embedding_dim'] = dim
-            result['generation_time'] = generation_time
-            result['memory_mb'] = memory_mb
-            results.append(result)
-            
-            print(f"  Accuracy: {result['accuracy']:.4f}")
-            print(f"  F1-Score: {result['f1_score']:.4f}")
-            if result['auc'] is not None:
-                print(f"  AUC: {result['auc']:.4f}")
-            print(f"  Training time: {result['train_time']:.4f}s")
+            res = evaluate_classifier(X_train, X_test, y_train, y_test, clf_name, clf)
+            # Αποθηκεύουμε την τριάδα στα αποτελέσματα
+            res['func'] = func
+            res['bins'] = bins
+            res['range'] = rng
+            res['generation_time'] = generation_time
+            results.append(res)
+            print(f"  -> {clf_name}: Acc={res['accuracy']:.4f}, F1={res['f1_score']:.4f}")
     
     return results
 
-
 def print_summary(results):
-    """Print summary of all results."""
-    print("\n" + "="*80)
+    print("\n" + "="*100)
     print("SUMMARY OF RESULTS")
-    print("="*80)
-    print(f"{'Dim':<6} {'Classifier':<20} {'Accuracy':<10} {'F1-Score':<10} {'AUC':<10} "
-          f"{'Gen Time':<10} {'Train Time':<12} {'Memory (MB)':<12}")
-    print("-"*80)
+    print("="*100)
+    print(f"{'Func':<12} {'Bins':<6} {'Range':<8} {'Classifier':<15} {'Accuracy':<10} {'F1':<10} {'GenTime':<8}")
+    print("-" * 100)
     
-    for r in results:
-        auc_str = f"{r['auc']:.4f}" if r['auc'] is not None else "N/A"
-        print(f"{r['embedding_dim']:<6} {r['classifier']:<20} {r['accuracy']:<10.4f} "
-              f"{r['f1_score']:<10.4f} {auc_str:<10} {r['generation_time']:<10.2f} "
-              f"{r['train_time']:<12.4f} {r['memory_mb']:<12.2f}")
+    # Sort by Accuracy descending
+    sorted_results = sorted(results, key=lambda x: x['accuracy'], reverse=True)
+    
+    for r in sorted_results:
+        print(f"{r['func']:<12} {r['bins']:<6} {r['range']:<8.1f} {r['classifier']:<15} "
+              f"{r['accuracy']:<10.4f} {r['f1_score']:<10.4f} {r['generation_time']:<8.2f}")
 
-
+# --- 5. MAIN CONFIGURATION ---
 if __name__ == "__main__":
-    # Vary embedding dimensions
-    embedding_dimensions = [50, 100, 200, 300, 500]
     
-    print("Starting FGSD evaluation on ENZYMES dataset")
-    results = run_experiment(embedding_dimensions)
+    # ΕΔΩ ΟΡΙΖΕΙΣ ΤΙΣ ΤΡΙΑΔΕΣ ΣΟΥ
+    # Προσοχή: Για την 'polynomial' και 'biharmonic' το Range πρέπει 
+    # κανονικά να βρεθεί με Pre-analysis. Εδώ βάζω ενδεικτικές τιμές.
+    
+    configurations = [
+        # --- HARMONIC (Global) ---
+        # Χρησιμοποιούμε το Range=33 που βρήκες εσύ
+        {'func': 'harmonic', 'bins': 100, 'range': 33},
+        {'func': 'harmonic', 'bins': 200, 'range': 33},
+        {'func': 'harmonic', 'bins': 300, 'range': 33},
+        
+        # # --- POLYNOMIAL (Local - f(λ)=λ^2) ---
+        # {'func': 'polynomial', 'bins': 50, 'range': 5},
+        # {'func': 'polynomial', 'bins': 100, 'range': 5},
+        
+        # # --- BIHARMONIC (Global - f(λ)=1/λ^2) ---
+
+        # {'func': 'biharmonic', 'bins': 100, 'range': 800},
+    ]
+    
+    print("Starting Multi-Configuration FGSD Experiment...")
+    results = run_experiment(configurations)
     print_summary(results)
     
-    # Save results
-    import pandas as pd
+    # Save
     df = pd.DataFrame(results)
-    df.to_csv('../results/fgsd_enzymes_results.csv', index=False)
-    print(f"\nResults saved to results/fgsd_enzymes_results.csv")
+    output_path = '../results/fgsd_triplets_results.csv'
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    df.to_csv(output_path, index=False)
+    print(f"\nResults saved to {output_path}")

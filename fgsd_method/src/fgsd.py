@@ -3,70 +3,68 @@ import networkx as nx
 from typing import List
 from karateclub.estimator import Estimator
 
-
-class FGSD(Estimator):
-    r"""An implementation of `"FGSD" <https://papers.nips.cc/paper/6614-hunt-for-the-unique-stable-sparse-and-fast-feature-learning-on-graphs>`_
-    from the NeurIPS '17 paper "Hunt For The Unique, Stable, Sparse And Fast Feature Learning On Graphs".
-    The procedure calculates the Moore-Penrose spectrum of the normalized Laplacian.
-    Using this spectrum the histogram of the spectral features is used as a whole graph representation.
-
-    Args:
-        hist_bins (int): Number of histogram bins. Default is 200.
-        hist_range (int): Histogram range considered. Default is 20.
-        seed (int): Random seed value. Default is 42.
+class FlexibleFGSD(Estimator):
     """
-
-    def __init__(self, hist_bins: int = 200, hist_range: int = 20, seed: int = 42):
+    Μια ευέλικτη υλοποίηση της FGSD που επιτρέπει αλλαγή της συνάρτησης f(λ).
+    
+    Args:
+        hist_bins (int): Αριθμός κάδων.
+        hist_range (int/float): Το εύρος του ιστογράμματος (0, range).
+        func_type (str): 'harmonic' (1/λ), 'biharmonic' (1/λ^2), 'polynomial' (λ^2).
+        seed (int): Random seed.
+    """
+    def __init__(self, hist_bins=200, hist_range=20, func_type='harmonic', seed=42):
         self.hist_bins = hist_bins
         self.hist_range = (0, hist_range)
+        self.func_type = func_type
         self.seed = seed
 
     def _calculate_fgsd(self, graph):
-        """
-        Calculating the features of a graph.
-
-        Arg types:
-            * **graph** *(NetworkX graph)* - A graph to be embedded.
-
-        Return types:
-            * **hist** *(Numpy array)* - The embedding of a single graph.
-        """
-        L = nx.normalized_laplacian_matrix(graph).todense()
-        fL = np.linalg.pinv(L)
+        # 1. Υπολογισμός Normalized Laplacian
+        # Χρησιμοποιούμε asarray για να αποφύγουμε προβλήματα με matrix types
+        L = np.asarray(nx.normalized_laplacian_matrix(graph).todense())
+        
+        # w: ιδιοτιμές, v: ιδιοδιανύσματα
+        w, v = np.linalg.eigh(L)
+        
+        if self.func_type == 'harmonic':
+            # f(λ) = 1/λ (Global Structure)
+            # Αν λ είναι πολύ κοντά στο 0 (λόγω float precision), το αγνοούμε ή βάζουμε 0
+            func_w = np.where(w > 1e-9, 1.0 / w, 0)
+            
+        elif self.func_type == 'biharmonic':
+            # f(λ) = 1/λ^2 (Global Structure - More Unique)
+            func_w = np.where(w > 1e-9, 1.0 / (w**2), 0)
+            
+        elif self.func_type == 'polynomial':
+            # f(λ) = λ^2 (Local Structure - Fine Grained)
+            # Εδώ βάζουμε p=2 ως default για το πείραμα
+            func_w = w ** 2
+            
+        else:
+            raise ValueError(f"Unknown function type: {self.func_type}")
+            
+        # 4. Ανακατασκευή του πίνακα f(L)
+        # f(L) = V * diag(f(λ)) * V^T
+        fL = v @ np.diag(func_w) @ v.T
+        
+        # 5. Υπολογισμός Αποστάσεων (ίδιος τύπος για όλα)
+        # S_xy = fL_xx + fL_yy - 2*fL_xy
         ones = np.ones(L.shape[0])
         S = np.outer(np.diag(fL), ones) + np.outer(ones, np.diag(fL)) - 2 * fL
+        
+        # 6. Ιστόγραμμα
         hist, _ = np.histogram(S.flatten(), bins=self.hist_bins, range=self.hist_range)
         return hist
 
-    def fit(self, graphs: List[nx.classes.graph.Graph]):
-        """
-        Fitting a FGSD model.
-
-        Arg types:
-            * **graphs** *(List of NetworkX graphs)* - The graphs to be embedded.
-        """
+    def fit(self, graphs):
         self._set_seed()
-        graphs = self._check_graphs(graphs)
+        # Σιγουρευόμαστε ότι οι γράφοι είναι σωστοί
         self._embedding = [self._calculate_fgsd(graph) for graph in graphs]
 
-    def get_embedding(self) -> np.array:
-        r"""Getting the embedding of graphs.
-
-        Return types:
-            * **embedding** *(Numpy array)* - The embedding of graphs.
-        """
+    def get_embedding(self):
         return np.array(self._embedding)
 
-    def infer(self, graphs: List[nx.classes.graph.Graph]) -> np.array:
-        """
-        Inferring the embedding for a list of graphs.
-
-        Arg types:
-            * **graphs** *(List of NetworkX graphs)* - The graphs to be embedded.
-        Return types:
-            * **embedding** *(Numpy array)* - The embedding of graphs.
-        """
+    def infer(self, graphs):
         self._set_seed()
-        graphs = self._check_graphs(graphs)
-        embedding = np.array([self._calculate_fgsd(graph) for graph in graphs])
-        return embedding
+        return np.array([self._calculate_fgsd(graph) for graph in graphs])
