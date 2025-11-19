@@ -1,0 +1,27 @@
+# Byte-compiled and optimisation files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+
+# Notebook checkpoints
+.ipynb_checkpoints
+
+# IDE settings
+.idea/
+.vscode/
