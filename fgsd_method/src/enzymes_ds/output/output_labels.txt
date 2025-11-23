@@ -1,0 +1,34 @@
+Starting Multi-Configuration FGSD Experiment...
+Loading ENZYMES dataset...
+Node Labels Found: [1 2 3] (Total unique: 3)
+Node Label Features Shape: (600, 3)
+
+================================================================================
+Experiment 1/2: Function='hybrid' + Node Labels
+================================================================================
+Total Embedding Shape (Spectral + Labels): (510, 203)
+  -> SVM (RBF) + Scaler: Train Acc=0.9902, Test Acc=0.4667, F1=0.4721
+  -> Random Forest: Train Acc=1.0000, Test Acc=0.5556, F1=0.5563
+  -> MLP: Train Acc=0.9588, Test Acc=0.4222, F1=0.4196
+
+================================================================================
+Experiment 2/2: Function='polynomial', Bins=100, Range=4.1 + Node Labels
+================================================================================
+Total Embedding Shape (Spectral + Labels): (510, 103)
+  -> SVM (RBF) + Scaler: Train Acc=0.9882, Test Acc=0.4333, F1=0.4392
+  -> Random Forest: Train Acc=1.0000, Test Acc=0.5444, F1=0.5421
+  -> MLP: Train Acc=0.9000, Test Acc=0.4556, F1=0.4600
+
+========================================================================================================================
+SUMMARY OF RESULTS
+========================================================================================================================
+Func         Parameters                     Classifier           Train Acc   Test Acc   F1         GenTime 
+------------------------------------------------------------------------------------------------------------------------
+hybrid       h_bins=100,h_range=33,p_bins=100,p_range=4.1 Random Forest        1.0000      0.5556     0.5563     1.32    
+polynomial   bins=100, range=4.1            Random Forest        1.0000      0.5444     0.5421     1.30    
+hybrid       h_bins=100,h_range=33,p_bins=100,p_range=4.1 SVM (RBF) + Scaler   0.9902      0.4667     0.4721     1.32    
+polynomial   bins=100, range=4.1            MLP                  0.9000      0.4556     0.4600     1.30    
+polynomial   bins=100, range=4.1            SVM (RBF) + Scaler   0.9882      0.4333     0.4392     1.30    
+hybrid       h_bins=100,h_range=33,p_bins=100,p_range=4.1 MLP                  0.9588      0.4222     0.4196     1.32    
+
+Results saved to ../results/fgsd_triplets_labels.csv

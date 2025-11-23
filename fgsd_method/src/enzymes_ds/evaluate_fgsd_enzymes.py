@@ -24,9 +24,10 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 
 from fgsd import FlexibleFGSD 
+from optimized_method import HybridFGSD
 
 def download_and_load_enzymes():
-    """Download and load ENZYMES dataset from TU Dortmund."""
+    """Download and load ENZYMES dataset including Node Labels."""
     data_dir = '/tmp/ENZYMES'
     os.makedirs(data_dir, exist_ok=True)
     
@@ -45,12 +46,29 @@ def download_and_load_enzymes():
     edges = np.loadtxt(os.path.join(dataset_path, 'ENZYMES_A.txt'), dtype=int, delimiter=',')
     graph_labels = np.loadtxt(os.path.join(dataset_path, 'ENZYMES_graph_labels.txt'), dtype=int)
     
+    # --- NEW: Load Node Labels ---
+    # Κάθε γραμμή αντιστοιχεί σε έναν κόμβο
+    node_labels_raw = np.loadtxt(os.path.join(dataset_path, 'ENZYMES_node_labels.txt'), dtype=int)
+    
     num_graphs = len(graph_labels)
     graphs = [nx.Graph() for _ in range(num_graphs)]
+    node_labels_list = [] # Λίστα που θα κρατάει τα labels για κάθε γράφο ξεχωριστά
     
+    # Add nodes
     for node_id, graph_id in enumerate(graph_indicator, start=1):
         graphs[graph_id - 1].add_node(node_id)
     
+    # Split node labels by graph
+    current_idx = 0
+    for i in range(1, num_graphs + 1):
+        # Βρίσκουμε πόσοι κόμβοι ανήκουν στον γράφο i
+        count = np.sum(graph_indicator == i)
+        # Παίρνουμε το κομμάτι των labels που αντιστοιχεί σε αυτόν τον γράφο
+        labels_of_graph = node_labels_raw[current_idx : current_idx + count]
+        node_labels_list.append(labels_of_graph)
+        current_idx += count
+
+    # Add edges
     for edge in edges:
         node1, node2 = edge
         graph_id = graph_indicator[node1 - 1]
@@ -58,10 +76,31 @@ def download_and_load_enzymes():
     
     graphs = [nx.convert_node_labels_to_integers(g) for g in graphs]
     labels = graph_labels - 1
-    return graphs, labels
+    
+    return graphs, labels, node_labels_list
 
 def load_enzymes_dataset():
     return download_and_load_enzymes()
+
+
+def create_node_label_features(node_labels_list):
+    """Μετατρέπει τις λίστες ετικετών κόμβων σε Bag-of-Words (Ιστόγραμμα)."""
+    # 1. Βρίσκουμε όλες τις μοναδικές ετικέτες στο dataset (π.χ. 1, 2, 3)
+    all_labels = np.concatenate(node_labels_list)
+    unique_labels = np.unique(all_labels)
+    n_unique = len(unique_labels)
+    min_lbl, max_lbl = min(unique_labels), max(unique_labels)
+    
+    print(f"Node Labels Found: {unique_labels} (Total unique: {n_unique})")
+    
+    features = []
+    for labels in node_labels_list:
+        # Φτιάχνουμε ιστόγραμμα για κάθε γράφο
+        # bins=n_unique σημαίνει ότι θα έχουμε τόσες στήλες όσα και τα είδη ετικετών
+        hist, _ = np.histogram(labels, bins=n_unique, range=(min_lbl, max_lbl + 1))
+        features.append(hist)
+        
+    return np.array(features)
 
 # --- 3. EVALUATION (UNCHANGED) ---
 def evaluate_classifier(X_train, X_test, y_train, y_test, classifier_name, clf):
@@ -70,6 +109,10 @@ def evaluate_classifier(X_train, X_test, y_train, y_test, classifier_name, clf):
     clf.fit(X_train, y_train)
     train_time = time.time() - start_time
     
+    # Calculate training accuracy to check for overfitting
+    y_train_pred = clf.predict(X_train)
+    train_accuracy = accuracy_score(y_train, y_train_pred)
+
     # Prediction
     start_time = time.time()
     y_pred = clf.predict(X_test)
@@ -99,6 +142,7 @@ def evaluate_classifier(X_train, X_test, y_train, y_test, classifier_name, clf):
     
     return {
         'classifier': classifier_name,
+        'train_accuracy': train_accuracy,
         'accuracy': accuracy,
         'f1_score': f1,
         'auc': auc,
@@ -107,103 +151,141 @@ def evaluate_classifier(X_train, X_test, y_train, y_test, classifier_name, clf):
     }
 
 # --- 4. EXPERIMENT RUNNER (UPDATED FOR TRIPLETS) ---
-def run_experiment(configs, test_size=0.3, random_state=42):
+def run_experiment(configs, test_size=0.15, random_state=42):
     """
-    Run complete experiment iterating over configuration triplets.
-    configs: List of dictionaries {'func': str, 'bins': int, 'range': float}
+    Run complete experiment with Node Labels Enrichment.
     """
     print("Loading ENZYMES dataset...")
-    graphs, labels = load_enzymes_dataset()
+    # 1. Unpack και τα 3 στοιχεία
+    graphs, labels, node_labels_list = load_enzymes_dataset()
     
-    # Split data
-    graphs_train, graphs_test, y_train, y_test = train_test_split(
-        graphs, labels, test_size=test_size, random_state=random_state, stratify=labels
+    # 2. Δημιουργία των 'Chemical Features' (Node Labels)
+    # Αυτά υπολογίζονται μία φορά και είναι σταθερά
+    X_node_labels = create_node_label_features(node_labels_list)
+    print(f"Node Label Features Shape: {X_node_labels.shape}")
+
+    # 3. Split Data
+    # Περνάμε ΚΑΙ τα X_node_labels στο split για να κοπούν συγχρονισμένα
+    graphs_train, graphs_test, y_train, y_test, X_labels_train, X_labels_test = train_test_split(
+        graphs, labels, X_node_labels, test_size=test_size, random_state=random_state, stratify=labels
     )
     
     results = []
     
     for i, config in enumerate(configs):
         func = config['func']
-        bins = config['bins']
-        rng = config['range']
         
         print(f"\n{'='*80}")
-        print(f"Experiment {i+1}/{len(configs)}: Function='{func}', Bins={bins}, Range={rng}")
+        if func == 'hybrid':
+            harm_bins = config.get('harm_bins', 200)
+            harm_range = config.get('harm_range', 33)
+            pol_bins = config.get('pol_bins', 70)
+            pol_range = config.get('pol_range', 4.1)
+            print(f"Experiment {i+1}/{len(configs)}: Function='{func}' + Node Labels")
+        else:
+            bins = config['bins']
+            rng = config['range']
+            print(f"Experiment {i+1}/{len(configs)}: Function='{func}', Bins={bins}, Range={rng} + Node Labels")
         print(f"{'='*80}")
         
-        # Generate embeddings
         tracemalloc.start()
         start_time = time.time()
         
-        # Χρησιμοποιούμε τη FlexibleFGSD
-        model = FlexibleFGSD(hist_bins=bins, hist_range=rng, func_type=func, seed=random_state)
+        # Initialize spectral model
+        if func == 'hybrid':
+            model = HybridFGSD(
+                harm_bins=harm_bins, harm_range=harm_range,
+                pol_bins=pol_bins, pol_range=pol_range,
+                func_type='hybrid', seed=random_state
+            )
+        else:
+            model = FlexibleFGSD(hist_bins=bins, hist_range=rng, func_type=func, seed=random_state)
+
+        # Generate Spectral Embeddings
         model.fit(graphs_train)
-        X_train = model.get_embedding()
-        X_test = model.infer(graphs_test)
+        X_train_spectral = model.get_embedding()
+        X_test_spectral = model.infer(graphs_test)
+        
+        # --- ENRICHMENT STEP (Η Ένωση) ---
+        # Ενώνουμε τα Spectral Features με τα Node Label Features
+        # np.hstack κολλάει τους πίνακες οριζόντια
+        X_train = np.hstack([X_train_spectral, X_labels_train])
+        X_test = np.hstack([X_test_spectral, X_labels_test])
         
         generation_time = time.time() - start_time
         current, peak = tracemalloc.get_traced_memory()
         tracemalloc.stop()
         memory_mb = peak / 1024 / 1024
         
-        print(f"Generation Time: {generation_time:.2f}s | Memory: {memory_mb:.2f} MB")
-        print(f"Embeddings Shape: {X_train.shape}")
+        print(f"Total Embedding Shape (Spectral + Labels): {X_train.shape}")
         
         classifiers = {
             'SVM (RBF) + Scaler': make_pipeline(
-                StandardScaler(), # we added scaler because we put raw data
+                StandardScaler(),
                 SVC(kernel='rbf', C=100, gamma='scale', probability=True, random_state=random_state)
             ),
-            'Random Forest': RandomForestClassifier(n_estimators=1000, random_state=random_state)
+            'Random Forest': RandomForestClassifier(n_estimators=1000, random_state=random_state),
+            'MLP': make_pipeline(
+                StandardScaler(), 
+                MLPClassifier(
+                    hidden_layer_sizes=(1024, 512, 256, 128), 
+                    activation='relu',
+                    solver='adam',
+                    alpha=0.001,
+                    learning_rate_init=0.001,
+                    learning_rate='adaptive',
+                    max_iter=2000, 
+                    early_stopping=True,      
+                    n_iter_no_change=20,      
+                    random_state=random_state
+                )
+            )
         }
         
         for clf_name, clf in classifiers.items():
             res = evaluate_classifier(X_train, X_test, y_train, y_test, clf_name, clf)
-            # Αποθηκεύουμε την τριάδα στα αποτελέσματα
-            res['func'] = func
-            res['bins'] = bins
-            res['range'] = rng
+            res.update(config)
             res['generation_time'] = generation_time
             results.append(res)
-            print(f"  -> {clf_name}: Acc={res['accuracy']:.4f}, F1={res['f1_score']:.4f}")
+            print(f"  -> {clf_name}: Train Acc={res['train_accuracy']:.4f}, Test Acc={res['accuracy']:.4f}, F1={res['f1_score']:.4f}")
     
     return results
 
 def print_summary(results):
-    print("\n" + "="*100)
+    print("\n" + "="*120)
     print("SUMMARY OF RESULTS")
-    print("="*100)
-    print(f"{'Func':<12} {'Bins':<6} {'Range':<8} {'Classifier':<15} {'Accuracy':<10} {'F1':<10} {'GenTime':<8}")
-    print("-" * 100)
+    print("="*120)
+    # Adjusted header to be more generic
+    print(f"{'Func':<12} {'Parameters':<30} {'Classifier':<20} {'Train Acc':<11} {'Test Acc':<10} {'F1':<10} {'GenTime':<8}")
+    print("-" * 120)
     
     # Sort by Accuracy descending
     sorted_results = sorted(results, key=lambda x: x['accuracy'], reverse=True)
     
     for r in sorted_results:
-        print(f"{r['func']:<12} {r['bins']:<6} {r['range']:<8.1f} {r['classifier']:<15} "
-              f"{r['accuracy']:<10.4f} {r['f1_score']:<10.4f} {r['generation_time']:<8.2f}")
+        if r['func'] == 'hybrid':
+            params = f"h_bins={r.get('harm_bins', 'N/A')},h_range={r.get('harm_range', 'N/A')},p_bins={r.get('pol_bins', 'N/A')},p_range={r.get('pol_range', 'N/A')}"
+        else:
+            params = f"bins={r.get('bins', 'N/A')}, range={r.get('range', 'N/A')}"
+
+        print(f"{r['func']:<12} {params:<30} {r['classifier']:<20} "
+              f"{r['train_accuracy']:<11.4f} {r['accuracy']:<10.4f} {r['f1_score']:<10.4f} {r['generation_time']:<8.2f}")
 
 # --- 5. MAIN CONFIGURATION ---
 if __name__ == "__main__":
     
-    # ΕΔΩ ΟΡΙΖΕΙΣ ΤΙΣ ΤΡΙΑΔΕΣ ΣΟΥ
-    # Προσοχή: Για την 'polynomial' και 'biharmonic' το Range πρέπει 
-    # κανονικά να βρεθεί με Pre-analysis. Εδώ βάζω ενδεικτικές τιμές.
-    
     configurations = [
-        # --- HARMONIC (Global) ---
-        # Χρησιμοποιούμε το Range=33 που βρήκες εσύ
-        {'func': 'harmonic', 'bins': 100, 'range': 33},
-        {'func': 'harmonic', 'bins': 200, 'range': 33},
-        {'func': 'harmonic', 'bins': 300, 'range': 33},
+        # --- HYBRID EXAMPLE ---
+        # For 'hybrid', specify bins and range for both parts.
+        {'func': 'hybrid', 'harm_bins': 100, 'harm_range': 33, 'pol_bins': 100, 'pol_range': 4.1},
+
+        # # --- HARMONIC (Global) ---
+        # # Uses 'bins' and 'range' keys.
+        # {'func': 'harmonic', 'bins': 300, 'range': 33},
         
         # # --- POLYNOMIAL (Local - f(λ)=λ^2) ---
-        # {'func': 'polynomial', 'bins': 50, 'range': 5},
-        # {'func': 'polynomial', 'bins': 100, 'range': 5},
-        
-        # # --- BIHARMONIC (Global - f(λ)=1/λ^2) ---
-
-        # {'func': 'biharmonic', 'bins': 100, 'range': 800},
+        # # Uses 'bins' and 'range' keys.
+        {'func': 'polynomial', 'bins': 100, 'range': 4.1},
     ]
     
     print("Starting Multi-Configuration FGSD Experiment...")
@@ -212,7 +294,7 @@ if __name__ == "__main__":
     
     # Save
     df = pd.DataFrame(results)
-    output_path = '../results/fgsd_triplets_results.csv'
+    output_path = '../results/fgsd_triplets_labels.csv'
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     df.to_csv(output_path, index=False)
     print(f"\nResults saved to {output_path}")

@@ -1,0 +1,23 @@
+Starting Multi-Configuration FGSD Experiment...
+Loading ENZYMES dataset...
+
+================================================================================
+Experiment 1/1: Function='hybrid'
+  Harmonic(bins=100, range=33) | Polynomial(bins=100, range=4.1)
+================================================================================
+Generation Time: 1.47s | Memory: 2.73 MB
+Embeddings Shape: (510, 200)
+  -> SVM (RBF) + Scaler: Train Acc=0.9863, Test Acc=0.4667, F1=0.4647
+  -> Random Forest: Train Acc=1.0000, Test Acc=0.5111, F1=0.5117
+  -> MLP: Train Acc=0.9118, Test Acc=0.5000, F1=0.4881
+
+========================================================================================================================
+SUMMARY OF RESULTS
+========================================================================================================================
+Func         Parameters                     Classifier           Train Acc   Test Acc   F1         GenTime 
+------------------------------------------------------------------------------------------------------------------------
+hybrid       h_bins=100,h_range=33,p_bins=100,p_range=4.1 Random Forest        1.0000      0.5111     0.5117     1.47    
+hybrid       h_bins=100,h_range=33,p_bins=100,p_range=4.1 MLP                  0.9118      0.5000     0.4881     1.47    
+hybrid       h_bins=100,h_range=33,p_bins=100,p_range=4.1 SVM (RBF) + Scaler   0.9863      0.4667     0.4647     1.47    
+
+Results saved to ../results/fgsd_triplets_hybrid.csv
