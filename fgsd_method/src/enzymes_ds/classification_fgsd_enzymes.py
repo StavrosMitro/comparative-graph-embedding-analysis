@@ -42,21 +42,24 @@ def download_and_load_enzymes():
         print("Download complete.")
     
     dataset_path = os.path.join(data_dir, 'ENZYMES')
-    graph_indicator = np.loadtxt(os.path.join(dataset_path, 'ENZYMES_graph_indicator.txt'), dtype=int)
-    edges = np.loadtxt(os.path.join(dataset_path, 'ENZYMES_A.txt'), dtype=int, delimiter=',')
-    graph_labels = np.loadtxt(os.path.join(dataset_path, 'ENZYMES_graph_labels.txt'), dtype=int)
     
-    # --- NEW: Load Node Labels ---
-    # Κάθε γραμμή αντιστοιχεί σε έναν κόμβο
+    #1d grapjh_indicator[i]=node i belongs to X graph
+    graph_indicator = np.loadtxt(os.path.join(dataset_path, 'ENZYMES_graph_indicator.txt'), dtype=int)
+    
+    #edges...
+    edges = np.loadtxt(os.path.join(dataset_path, 'ENZYMES_A.txt'), dtype=int, delimiter=',')
+    #each graph in which class belongs
+    graph_labels = np.loadtxt(os.path.join(dataset_path, 'ENZYMES_graph_labels.txt'), dtype=int)
+    #node label... chemichal type
     node_labels_raw = np.loadtxt(os.path.join(dataset_path, 'ENZYMES_node_labels.txt'), dtype=int)
     
-    num_graphs = len(graph_labels)
-    graphs = [nx.Graph() for _ in range(num_graphs)]
+    num_graphs = len(graph_labels) #how many classes do we have?
+    graphs = [nx.Graph() for _ in range(num_graphs)]#list of networkx graphs empty
     node_labels_list = [] # Λίστα που θα κρατάει τα labels για κάθε γράφο ξεχωριστά
     
     # Add nodes
     for node_id, graph_id in enumerate(graph_indicator, start=1):
-        graphs[graph_id - 1].add_node(node_id)
+        graphs[graph_id - 1].add_node(node_id) #netowrkx func
     
     # Split node labels by graph
     current_idx = 0
@@ -79,13 +82,9 @@ def download_and_load_enzymes():
     
     return graphs, labels, node_labels_list
 
-def load_enzymes_dataset():
-    return download_and_load_enzymes()
 
 
 def create_node_label_features(node_labels_list):
-    """Μετατρέπει τις λίστες ετικετών κόμβων σε Bag-of-Words (Ιστόγραμμα)."""
-    # 1. Βρίσκουμε όλες τις μοναδικές ετικέτες στο dataset (π.χ. 1, 2, 3)
     all_labels = np.concatenate(node_labels_list)
     unique_labels = np.unique(all_labels)
     n_unique = len(unique_labels)
@@ -95,8 +94,6 @@ def create_node_label_features(node_labels_list):
     
     features = []
     for labels in node_labels_list:
-        # Φτιάχνουμε ιστόγραμμα για κάθε γράφο
-        # bins=n_unique σημαίνει ότι θα έχουμε τόσες στήλες όσα και τα είδη ετικετών
         hist, _ = np.histogram(labels, bins=n_unique, range=(min_lbl, max_lbl + 1))
         features.append(hist)
         
@@ -157,7 +154,7 @@ def run_experiment(configs, test_size=0.15, random_state=42):
     """
     print("Loading ENZYMES dataset...")
     # 1. Unpack και τα 3 στοιχεία
-    graphs, labels, node_labels_list = load_enzymes_dataset()
+    graphs, labels, node_labels_list = download_and_load_enzymes()
     
     # 2. Δημιουργία των 'Chemical Features' (Node Labels)
     # Αυτά υπολογίζονται μία φορά και είναι σταθερά
