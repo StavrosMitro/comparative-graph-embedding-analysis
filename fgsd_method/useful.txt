@@ -1,0 +1,32 @@
+# ENZYMES, IMDB & REDDIT Classification Pipeline
+# ===============================================
+# 
+# CACHED (reused if exists):
+#   - Preanalysis (spectral distance analysis)
+#   - Grid Search (ENZYMES only, with node labels)
+#
+# ALWAYS RUNS:
+#   - Dimension Analysis
+#   - Final Classification (tests all bin sizes + naive_hybrid)
+#   - Stability Analysis (if --stability)
+#
+# DATASETS:
+#   - ENZYMES: Has node labels (bag of words with 3 features)
+#   - IMDB: No node labels (spectral only)
+#   - REDDIT: No node labels (spectral only)
+
+# ENZYMES (with node labels)
+python -m enzymes_ds.classification_main
+python -m enzymes_ds.classification_main --stability
+python -m enzymes_ds.classification_main --force
+python -m enzymes_ds.classification_main --no-node-labels
+
+# IMDB (no node labels, no grid search)
+python -m imbd_ds.classification_main
+python -m imbd_ds.classification_main --stability
+python -m imbd_ds.classification_main --force
+
+# REDDIT (no node labels, no grid search)
+python -m reddit_ds.classification_main
+python -m reddit_ds.classification_main --stability
+python -m reddit_ds.classification_main --force

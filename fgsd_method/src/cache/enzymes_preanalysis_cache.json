@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "dataset_name": "enzymes",
+    "sample_size": 400,
+    "max_nodes": 200
+  },
+  "params": {
+    "harmonic": {
+      "func_type": "harmonic",
+      "bins": 50,
+      "range_val": 30.30375474533977,
+      "p99": 30.30375474533977,
+      "recommended_bins": 50
+    },
+    "polynomial": {
+      "func_type": "polynomial",
+      "bins": 50,
+      "range_val": 3.8061255394691185,
+      "p99": 3.8061255394691185,
+      "recommended_bins": 50
+    }
+  },
+  "recommended_bins": {
+    "harmonic": [
+      50,
+      100,
+      150
+    ],
+    "polynomial": [
+      50,
+      100,
+      150
+    ]
+  }
+}

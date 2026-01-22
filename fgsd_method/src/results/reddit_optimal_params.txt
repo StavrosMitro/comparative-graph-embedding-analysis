@@ -1,0 +1,4 @@
+OPTIMAL PARAMETERS FROM SAMPLED ANALYSIS (n=700)
+==================================================
+harmonic: bins=500, range=14.6061
+polynomial: bins=500, range=3.4818
