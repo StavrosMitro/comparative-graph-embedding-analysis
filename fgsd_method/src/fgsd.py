@@ -20,6 +20,7 @@ class FlexibleFGSD(Estimator):
         self.seed = seed
 
     def _calculate_fgsd(self, graph):
+        """Calculate FGSD embedding for a single graph."""
         # 1. Υπολογισμός Normalized Laplacian
         # Χρησιμοποιούμε asarray για να αποφύγουμε προβλήματα με matrix types
         L = np.asarray(nx.normalized_laplacian_matrix(graph).todense())
@@ -29,20 +30,20 @@ class FlexibleFGSD(Estimator):
         
         if self.func_type == 'harmonic':
             # f(λ) = 1/λ (Global Structure)
-            # Αν λ είναι πολύ κοντά στο 0 (λόγω float precision), το αγνοούμε ή βάζουμε 0
-            func_w = np.where(w > 1e-9, 1.0 / w, 0)
+            with np.errstate(divide='ignore', invalid='ignore'):
+                func_w = np.where(w > 1e-9, 1.0 / w, 0)
             
         elif self.func_type == 'biharmonic':
-            # f(λ) = 1/λ^2 (Global Structure - More Unique)
-            func_w = np.where(w > 1e-9, 1.0 / (w**2), 0)
+            # f(λ) = 1/λ² (Global Structure - Stronger)
+            with np.errstate(divide='ignore', invalid='ignore'):
+                func_w = np.where(w > 1e-9, 1.0 / (w**2), 0)
             
         elif self.func_type == 'polynomial':
-            # f(λ) = λ^2 (Local Structure - Fine Grained)
-            # Εδώ βάζουμε p=2 ως default για το πείραμα
+            # f(λ) = λ² (Local Structure)
             func_w = w ** 2
             
         else:
-            raise ValueError(f"Unknown function type: {self.func_type}")
+            raise ValueError(f"Unknown function type: {self.func_type}. Supported: harmonic, polynomial, biharmonic")
             
         # 4. Ανακατασκευή του πίνακα f(L)
         # f(L) = V * diag(f(λ)) * V^T

@@ -73,6 +73,36 @@ def get_classifiers(random_state=42):
     }
 
 
+def get_classifiers_tuned_or_default(X_train=None, y_train=None, use_tuned=False, random_state=42):
+    """
+    Get classifiers - either default or tuned via grid search.
+    
+    Args:
+        X_train: Training features (required if use_tuned=True)
+        y_train: Training labels (required if use_tuned=True)
+        use_tuned: Whether to use hyperparameter tuning
+        random_state: Random seed
+    
+    Returns:
+        Dictionary of classifier name -> classifier instance
+    """
+    if not use_tuned:
+        return get_classifiers(random_state)
+    
+    # Use tuned classifiers
+    from .hyperparameter_search import get_classifiers_with_tuning
+    
+    if X_train is None or y_train is None:
+        raise ValueError("X_train and y_train required for tuning")
+    
+    return get_classifiers_with_tuning(
+        X_train, y_train,
+        use_cache=True,
+        fast_mode=True,
+        random_state=random_state
+    )
+
+
 def generate_embeddings_with_tracking(graphs_train, graphs_test, func_type, bins, range_val, random_state=42):
     """Generate embeddings with time and memory tracking."""
     gc.collect()

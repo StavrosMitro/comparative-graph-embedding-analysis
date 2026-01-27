@@ -29,6 +29,7 @@ if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 
 from fgsd import FlexibleFGSD
+from optimized_method import HybridFGSD
 from .config import RESULTS_DIR
 
 
@@ -43,8 +44,6 @@ def generate_embeddings(graphs: List, config: Dict[str, Any]) -> np.ndarray:
     Returns:
         Normalized embedding matrix
     """
-    from optimized_method import HybridFGSD
-    
     func = config['func']
     
     if func == 'hybrid':
@@ -56,7 +55,32 @@ def generate_embeddings(graphs: List, config: Dict[str, Any]) -> np.ndarray:
             func_type='hybrid',
             seed=42
         )
+    elif func == 'biharmonic_hybrid':
+        # Biharmonic + Polynomial hybrid - generate separately and concatenate
+        model_bh = FlexibleFGSD(
+            hist_bins=config['biharm_bins'],
+            hist_range=config['biharm_range'],
+            func_type='biharmonic',
+            seed=42
+        )
+        model_pol = FlexibleFGSD(
+            hist_bins=config['pol_bins'],
+            hist_range=config['pol_range'],
+            func_type='polynomial',
+            seed=42
+        )
+        
+        model_bh.fit(graphs)
+        model_pol.fit(graphs)
+        
+        X_bh = model_bh.get_embedding()
+        X_pol = model_pol.get_embedding()
+        X_spectral = np.hstack([X_bh, X_pol])
+        
+        scaler = StandardScaler()
+        return scaler.fit_transform(X_spectral)
     else:
+        # harmonic, polynomial, biharmonic
         model = FlexibleFGSD(
             hist_bins=config['bins'],
             hist_range=config['range'],

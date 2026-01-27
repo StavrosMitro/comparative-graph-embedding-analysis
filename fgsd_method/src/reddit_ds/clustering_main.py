@@ -14,7 +14,6 @@ import gc
 import numpy as np
 import pandas as pd
 
-# Setup paths
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 if parent_dir not in sys.path:
@@ -30,27 +29,31 @@ from reddit_ds.clustering import (
 )
 
 
-# Default configurations
+# Default configurations based on preanalysis results
+# REDDIT: harmonic range ~14.6, polynomial range ~3.5, biharmonic range ~500 (1/λ² gives much larger values)
 DEFAULT_CONFIGS = [
+    # Harmonic configurations (range ~15)
+    {'name': 'harmonic_100_15', 'func': 'harmonic', 'bins': 100, 'range': 15.0},
+    {'name': 'harmonic_200_15', 'func': 'harmonic', 'bins': 200, 'range': 15.0},
+    # Polynomial configurations (range ~3.5)
+    {'name': 'polynomial_50_3.5', 'func': 'polynomial', 'bins': 50, 'range': 3.5},
+    {'name': 'polynomial_100_3.5', 'func': 'polynomial', 'bins': 100, 'range': 3.5},
+    # Biharmonic configurations (range ~500, because 1/λ² >> 1/λ)
+    {'name': 'biharmonic_100_500', 'func': 'biharmonic', 'bins': 100, 'range': 500.0},
+    {'name': 'biharmonic_200_500', 'func': 'biharmonic', 'bins': 200, 'range': 500.0},
+    # Naive hybrid (harmonic + polynomial) - use 'naive_hybrid' consistently
     {
-        'name': 'hybrid_500_14.6_500_3.5',
-        'func': 'hybrid',
-        'harm_bins': 500,
-        'harm_range': 14.6,
-        'pol_bins': 500,
-        'pol_range': 3.5
+        'name': 'naive_hybrid_200_15_100_3.5',
+        'func': 'naive_hybrid',  # Changed from 'hybrid' for consistency
+        'harm_bins': 200, 'harm_range': 15.0,
+        'pol_bins': 100, 'pol_range': 3.5
     },
+    # Biharmonic hybrid (biharmonic + polynomial)
     {
-        'name': 'polynomial_500_3.5',
-        'func': 'polynomial',
-        'bins': 500,
-        'range': 3.5
-    },
-    {
-        'name': 'harmonic_500_14.6',
-        'func': 'harmonic',
-        'bins': 500,
-        'range': 14.6
+        'name': 'biharmonic_hybrid_200_500_100_3.5',
+        'func': 'biharmonic_hybrid',
+        'biharm_bins': 200, 'biharm_range': 500.0,
+        'pol_bins': 100, 'pol_range': 3.5
     },
 ]
 
@@ -66,7 +69,7 @@ def main(configs=None, neighbor_values=None):
     if configs is None:
         configs = DEFAULT_CONFIGS
     if neighbor_values is None:
-        neighbor_values = [10, 20]
+        neighbor_values = [10, 20, 30]  # Larger values for bigger dataset
     
     print("="*80)
     print("FGSD CLUSTERING ON REDDIT-MULTI-12K")

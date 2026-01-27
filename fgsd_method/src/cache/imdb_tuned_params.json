@@ -1,0 +1,19 @@
+{
+  "Random Forest": {
+    "params": {
+      "max_depth": 10,
+      "max_features": "log2",
+      "min_samples_split": 2,
+      "n_estimators": 500
+    },
+    "cv_score": 0.5090196078431373
+  },
+  "SVM (RBF)": {
+    "params": {
+      "svc__C": 1,
+      "svc__gamma": 0.01,
+      "svc__kernel": "rbf"
+    },
+    "cv_score": 0.491764705882353
+  }
+}

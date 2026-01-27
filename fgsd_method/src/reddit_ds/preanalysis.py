@@ -129,13 +129,21 @@ def load_default_params() -> Tuple[Dict[str, OptimalParams], Dict[str, List[int]
             range_val=3.48,
             p99=3.48,
             recommended_bins=500
+        ),
+        'biharmonic': OptimalParams(
+            func_type='biharmonic',
+            bins=200,
+            range_val=500.0,  # Biharmonic has much larger range (1/λ²)
+            p99=500.0,
+            recommended_bins=200
         )
     }
     
     # Default bin sizes to test
     recommended_bins = {
         'harmonic': [100, 200, 500],
-        'polynomial': [100, 200, 500]
+        'polynomial': [100, 200, 500],
+        'biharmonic': [100, 200, 500]
     }
     
     return optimal_params, recommended_bins
@@ -190,6 +198,9 @@ def compute_spectral_distances_sampled(
                     func_w = np.where(w > 1e-9, 1.0 / w, 0)
             elif func_type == 'polynomial':
                 func_w = w ** 2
+            elif func_type == 'biharmonic':
+                with np.errstate(divide='ignore', invalid='ignore'):
+                    func_w = np.where(w > 1e-9, 1.0 / (w**2), 0)
             else:
                 func_w = w
             
@@ -382,7 +393,8 @@ def run_sampled_preanalysis(
     optimal_params = {}
     recommended_bins = {}
     
-    for func_type in ['harmonic', 'polynomial']:
+    # Include biharmonic in the analysis
+    for func_type in ['harmonic', 'polynomial', 'biharmonic']:
         distances, node_counts = compute_spectral_distances_sampled(
             graphs, func_type, sample_size
         )

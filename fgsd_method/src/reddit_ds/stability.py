@@ -3,14 +3,12 @@ Stability Analysis for FGSD embeddings on REDDIT-MULTI-12K.
 """
 
 import gc
-import time
 import copy
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any
 
 import numpy as np
 import networkx as nx
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.preprocessing import StandardScaler
 
 import sys
 import os
@@ -19,7 +17,6 @@ if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 
 from fgsd import FlexibleFGSD
-from optimized_method import HybridFGSD
 
 
 # Default perturbation ratios
@@ -31,17 +28,7 @@ def perturb_graph_edges(
     perturbation_ratio: float = 0.05,
     seed: int = 42
 ) -> nx.Graph:
-    """
-    Perturb a graph by randomly adding/removing edges.
-    
-    Args:
-        graph: Original NetworkX graph
-        perturbation_ratio: Fraction of edges to perturb (add + remove)
-        seed: Random seed for reproducibility
-    
-    Returns:
-        Perturbed copy of the graph
-    """
+    """Perturb a graph by randomly adding/removing edges."""
     np.random.seed(seed)
     G = copy.deepcopy(graph)
     
@@ -55,14 +42,12 @@ def perturb_graph_edges(
     n_remove = n_perturb // 2
     n_add = n_perturb - n_remove
     
-    # Remove random edges
     edges = list(G.edges())
     if n_remove > 0 and len(edges) > 0:
         remove_indices = np.random.choice(len(edges), min(n_remove, len(edges)), replace=False)
         for idx in remove_indices:
             G.remove_edge(*edges[idx])
     
-    # Add random edges (non-existing)
     nodes = list(G.nodes())
     added = 0
     max_attempts = n_add * 10
@@ -94,29 +79,20 @@ def compute_embedding_stability(
     X_perturbed: np.ndarray,
     metric: str = 'cosine'
 ) -> Dict[str, float]:
-    """
-    Compute stability metrics between original and perturbed embeddings.
-    
-    Args:
-        X_original: Original embeddings (n_samples, n_features)
-        X_perturbed: Perturbed embeddings (n_samples, n_features)
-        metric: Similarity metric ('cosine', 'euclidean')
-    
-    Returns:
-        Dictionary with stability metrics
-    """
-    n_samples = X_original.shape[0]
+    """Compute stability metrics between original and perturbed embeddings."""
     
     if metric == 'cosine':
-        # Compute pairwise cosine similarity for corresponding samples
-        similarities = []
-        for i in range(n_samples):
-            sim = cosine_similarity(
-                X_original[i:i+1], 
-                X_perturbed[i:i+1]
-            )[0, 0]
-            similarities.append(sim)
-        similarities = np.array(similarities)
+        # OPTIMIZED: Vectorized computation instead of loop
+        # Compute row-wise cosine similarity efficiently
+        norms_orig = np.linalg.norm(X_original, axis=1, keepdims=True)
+        norms_pert = np.linalg.norm(X_perturbed, axis=1, keepdims=True)
+        
+        # Avoid division by zero
+        norms_orig = np.maximum(norms_orig, 1e-10)
+        norms_pert = np.maximum(norms_pert, 1e-10)
+        
+        # Row-wise dot product divided by norms = cosine similarity per row
+        similarities = np.sum(X_original * X_perturbed, axis=1) / (norms_orig.flatten() * norms_pert.flatten())
         
         return {
             'mean_cosine_similarity': float(np.mean(similarities)),
@@ -126,10 +102,7 @@ def compute_embedding_stability(
         }
     
     elif metric == 'euclidean':
-        # Compute L2 distance
         distances = np.linalg.norm(X_original - X_perturbed, axis=1)
-        
-        # Normalize by original embedding norm
         original_norms = np.linalg.norm(X_original, axis=1)
         relative_changes = distances / (original_norms + 1e-10)
         
@@ -143,112 +116,58 @@ def compute_embedding_stability(
         raise ValueError(f"Unknown metric: {metric}")
 
 
+def _generate_base_embedding(graphs: List[nx.Graph], func_type: str, bins: int, range_val: float, seed: int) -> np.ndarray:
+    """Generate embedding for a single function type."""
+    model = FlexibleFGSD(
+        hist_bins=bins,
+        hist_range=range_val,
+        func_type=func_type,
+        seed=seed
+    )
+    model.fit(graphs)
+    return model.get_embedding()
+
+
 def generate_embeddings_for_graphs(
     graphs: List[nx.Graph],
     config: Dict[str, Any],
     seed: int = 42
 ) -> np.ndarray:
-    """Generate FGSD embeddings for a list of graphs."""
+    """
+    Generate FGSD embeddings for a list of graphs.
+    OPTIMIZED: For hybrids, concatenates base embeddings instead of recomputing.
+    """
     func = config['func']
     
     if func in ['hybrid', 'naive_hybrid']:
-        model = HybridFGSD(
-            harm_bins=config['harm_bins'],
-            harm_range=config['harm_range'],
-            pol_bins=config['pol_bins'],
-            pol_range=config['pol_range'],
-            func_type='hybrid',
-            seed=seed
+        # Generate harmonic and polynomial separately, then concatenate
+        X_harm = _generate_base_embedding(
+            graphs, 'harmonic', 
+            config['harm_bins'], config['harm_range'], seed
         )
-    else:
-        model = FlexibleFGSD(
-            hist_bins=config['bins'],
-            hist_range=config['range'],
-            func_type=func,
-            seed=seed
+        X_poly = _generate_base_embedding(
+            graphs, 'polynomial',
+            config['pol_bins'], config['pol_range'], seed
         )
+        return np.hstack([X_harm, X_poly])
     
-    model.fit(graphs)
-    return model.get_embedding()
-
-
-def run_stability_analysis(
-    graphs: List[nx.Graph],
-    labels: np.ndarray,
-    config: Dict[str, Any],
-    perturbation_ratios: List[float] = [0.01, 0.05, 0.10],
-    X_original: np.ndarray = None,
-    seed: int = 42
-) -> Tuple[Dict[str, Any], np.ndarray]:
-    """
-    Run stability analysis on a configuration.
+    elif func == 'biharmonic_hybrid':
+        # Generate biharmonic and polynomial separately, then concatenate
+        X_biharm = _generate_base_embedding(
+            graphs, 'biharmonic',
+            config['biharm_bins'], config['biharm_range'], seed
+        )
+        X_poly = _generate_base_embedding(
+            graphs, 'polynomial',
+            config['pol_bins'], config['pol_range'], seed
+        )
+        return np.hstack([X_biharm, X_poly])
     
-    Args:
-        graphs: List of original graphs
-        labels: Ground truth labels
-        config: FGSD configuration
-        perturbation_ratios: List of perturbation ratios to test
-        X_original: Pre-computed original embeddings (optional, will compute if None)
-        seed: Random seed
-    
-    Returns:
-        Tuple of (stability_results dict, original_embeddings if computed)
-    """
-    print(f"\n{'='*60}")
-    print(f"STABILITY ANALYSIS: {config.get('name', config['func'])}")
-    print(f"{'='*60}")
-    
-    # Compute original embeddings if not provided
-    if X_original is None:
-        print("Computing original embeddings...")
-        start_time = time.time()
-        X_original = generate_embeddings_for_graphs(graphs, config, seed)
-        orig_time = time.time() - start_time
-        print(f"  -> Shape: {X_original.shape}, Time: {orig_time:.2f}s")
     else:
-        print(f"Using pre-computed embeddings. Shape: {X_original.shape}")
-    
-    results = {
-        'config': config,
-        'original_shape': X_original.shape,
-        'perturbation_results': []
-    }
-    
-    for ratio in perturbation_ratios:
-        print(f"\n--- Perturbation Ratio: {ratio*100:.0f}% ---")
-        
-        # Perturb graphs
-        print(f"  Perturbing {len(graphs)} graphs...")
-        perturbed_graphs = perturb_graphs_batch(graphs, ratio, seed)
-        
-        # Compute perturbed embeddings
-        print(f"  Computing perturbed embeddings...")
-        start_time = time.time()
-        X_perturbed = generate_embeddings_for_graphs(perturbed_graphs, config, seed)
-        perturb_time = time.time() - start_time
-        
-        # Compute stability metrics
-        stability_cosine = compute_embedding_stability(X_original, X_perturbed, 'cosine')
-        stability_euclidean = compute_embedding_stability(X_original, X_perturbed, 'euclidean')
-        
-        print(f"  Stability Metrics:")
-        print(f"    -> Mean Cosine Similarity: {stability_cosine['mean_cosine_similarity']:.4f}")
-        print(f"    -> Std Cosine Similarity:  {stability_cosine['std_cosine_similarity']:.4f}")
-        print(f"    -> Mean Relative Change:   {stability_euclidean['mean_relative_change']:.4f}")
-        
-        results['perturbation_results'].append({
-            'ratio': ratio,
-            'perturb_time': perturb_time,
-            **stability_cosine,
-            **stability_euclidean,
-            'X_perturbed': X_perturbed  # Store for classification comparison
-        })
-        
-        # Cleanup
-        del perturbed_graphs
-        gc.collect()
-    
-    return results, X_original
+        # Single function type: harmonic, polynomial, biharmonic
+        return _generate_base_embedding(
+            graphs, func, config['bins'], config['range'], seed
+        )
 
 
 def compute_classification_stability(

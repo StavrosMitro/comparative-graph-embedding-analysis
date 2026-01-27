@@ -4,8 +4,10 @@ FGSD Classification on ENZYMES
 Usage:
     python -m enzymes_ds.classification_main                    # Full pipeline (auto-detects what needs to run)
     python -m enzymes_ds.classification_main --stability        # Include stability analysis
+    python -m enzymes_ds.classification_main --stability-only   # Only stability (loads best config from results)
     python -m enzymes_ds.classification_main --force            # Force rerun everything
     python -m enzymes_ds.classification_main --skip-grid        # Skip grid search
+    python -m enzymes_ds.classification_main --tune-classifiers # Run classifier hyperparameter tuning
 """
 
 import os
@@ -30,7 +32,8 @@ from enzymes_ds.preanalysis import run_sampled_preanalysis
 from enzymes_ds.classification import (
     run_dimension_analysis, run_final_classification,
     print_dimension_analysis_summary, print_summary,
-    generate_embeddings_with_tracking, evaluate_classifier, get_classifiers
+    generate_embeddings_with_tracking, evaluate_classifier, get_classifiers,
+    get_classifiers_tuned_or_default
 )
 
 
@@ -53,6 +56,43 @@ def check_existing_results():
         'stability': os.path.exists(os.path.join(RESULTS_DIR, 'fgsd_enzymes_stability_results.csv')),
     }
     return exists
+
+
+def load_best_config_from_results():
+    """Load best configuration from existing results CSV."""
+    final_path = os.path.join(RESULTS_DIR, 'fgsd_enzymes_final_results.csv')
+    dim_path = os.path.join(RESULTS_DIR, 'fgsd_enzymes_dimension_analysis.csv')
+    
+    for path in [final_path, dim_path]:
+        if os.path.exists(path):
+            print(f"Loading best config from: {path}")
+            df = pd.read_csv(path)
+            
+            optimal_params = {}
+            
+            for func_type in ['harmonic', 'polynomial']:
+                func_df = df[df['func'] == func_type]
+                if len(func_df) > 0:
+                    best_row = func_df.loc[func_df['accuracy'].idxmax()]
+                    bins = int(best_row['bins']) if pd.notna(best_row.get('bins')) else 100
+                    range_val = float(best_row['range']) if pd.notna(best_row.get('range')) else 30.0
+                    
+                    optimal_params[func_type] = OptimalParams(
+                        func_type=func_type,
+                        bins=bins,
+                        range_val=range_val,
+                        p99=range_val,
+                        recommended_bins=bins
+                    )
+                    print(f"  {func_type.upper()}: bins={bins}, range={range_val}")
+            
+            if optimal_params:
+                return optimal_params
+    
+    raise FileNotFoundError(
+        f"No results found in {RESULTS_DIR}. "
+        "Run full pipeline first: python -m enzymes_ds.classification_main"
+    )
 
 
 def run_grid_search(optimal_params, test_size=0.15, random_state=42, use_node_labels=True):
@@ -140,7 +180,203 @@ def run_grid_search(optimal_params, test_size=0.15, random_state=42, use_node_la
     return all_results
 
 
-def main(run_stability: bool = False, force: bool = False, use_node_labels: bool = True, skip_grid: bool = False):
+def run_stability_only(use_node_labels: bool = True):
+    """Run only stability analysis using best config from existing results."""
+    from sklearn.model_selection import train_test_split
+    from .stability import (print_stability_summary, DEFAULT_PERTURBATION_RATIOS,
+                           generate_embeddings_for_graphs, perturb_graphs_batch,
+                           compute_embedding_stability, compute_classification_stability)
+    
+    print("="*80)
+    print("STABILITY-ONLY MODE: Loading best config from results")
+    print("="*80)
+    
+    optimal_params = load_best_config_from_results()
+    
+    print("\n" + "="*80)
+    print("Running Stability Analysis")
+    print("="*80)
+    
+    ensure_dataset_ready()
+    graphs, labels, node_labels_list = load_all_graphs(DATASET_DIR)
+    X_node_labels = create_node_label_features(node_labels_list) if use_node_labels and node_labels_list else None
+    
+    stability_results = []
+    all_stability_results = []
+    
+    configs_to_test = []
+    for func_type in ['harmonic', 'polynomial']:
+        if func_type in optimal_params:
+            p = optimal_params[func_type]
+            configs_to_test.append({
+                'name': func_type, 'func': func_type,
+                'bins': p.bins, 'range': round(p.range_val, 2)
+            })
+    
+    if 'harmonic' in optimal_params and 'polynomial' in optimal_params:
+        h, p = optimal_params['harmonic'], optimal_params['polynomial']
+        configs_to_test.append({
+            'name': 'naive_hybrid', 'func': 'naive_hybrid',
+            'harm_bins': h.bins, 'harm_range': round(h.range_val, 2),
+            'pol_bins': p.bins, 'pol_range': round(p.range_val, 2)
+        })
+    
+    print(f"\nConfigs to test: {[c['name'] for c in configs_to_test]}")
+    
+    for config in configs_to_test:
+        print(f"\n  Stability for {config['name']}...")
+        X_spectral = generate_embeddings_for_graphs(graphs, config, seed=42)
+        
+        for test_with_labels in [False, True]:
+            if test_with_labels and X_node_labels is None:
+                continue
+            
+            suffix = "_with_labels" if test_with_labels else ""
+            config_name = f"{config['name']}{suffix}"
+            
+            X_original = np.hstack([X_spectral, X_node_labels]) if test_with_labels else X_spectral
+            
+            print(f"    Testing: {config_name} (dim={X_original.shape[1]})")
+            
+            indices = np.arange(len(graphs))
+            train_idx, test_idx = train_test_split(indices, test_size=0.15, random_state=42, stratify=labels)
+            
+            config_results = {'config': {**config, 'name': config_name}, 'perturbation_results': []}
+            
+            for ratio in DEFAULT_PERTURBATION_RATIOS:
+                perturbed_graphs = perturb_graphs_batch(graphs, ratio, seed=42)
+                X_pert_spectral = generate_embeddings_for_graphs(perturbed_graphs, config, seed=42)
+                X_perturbed = np.hstack([X_pert_spectral, X_node_labels]) if test_with_labels else X_pert_spectral
+                
+                stability_cosine = compute_embedding_stability(X_original, X_perturbed, 'cosine')
+                stability_euclidean = compute_embedding_stability(X_original, X_perturbed, 'euclidean')
+                clf_stability = compute_classification_stability(
+                    X_original[train_idx], X_original[test_idx],
+                    X_perturbed[train_idx], X_perturbed[test_idx],
+                    labels[train_idx], labels[test_idx], 42
+                )
+                
+                result_entry = {
+                    'ratio': ratio, 'func': config_name, 'with_node_labels': test_with_labels,
+                    **stability_cosine, **stability_euclidean, **clf_stability
+                }
+                if config['func'] in ['naive_hybrid', 'hybrid']:
+                    result_entry.update({'harm_bins': config['harm_bins'], 'harm_range': config['harm_range'],
+                                        'pol_bins': config['pol_bins'], 'pol_range': config['pol_range']})
+                else:
+                    result_entry.update({'bins': config['bins'], 'range': config['range']})
+                
+                stability_results.append(result_entry)
+                config_results['perturbation_results'].append(result_entry)
+                del perturbed_graphs
+                gc.collect()
+            
+            all_stability_results.append(config_results)
+    
+    print_stability_summary(all_stability_results)
+    
+    os.makedirs(RESULTS_DIR, exist_ok=True)
+    df_stab = pd.DataFrame(stability_results)
+    stab_path = os.path.join(RESULTS_DIR, 'fgsd_enzymes_stability_results.csv')
+    df_stab.to_csv(stab_path, index=False)
+    print(f"\n✅ Stability saved to: {stab_path}")
+    
+    del graphs
+    gc.collect()
+
+
+def run_classifier_hyperparameter_search(optimal_params, test_size=0.15, random_state=42, use_node_labels=True, fast_mode=True):
+    """
+    Run hyperparameter tuning for RF and SVM classifiers.
+    Uses the best embedding configuration from preanalysis.
+    """
+    from .hyperparameter_search import run_classifier_tuning
+    from sklearn.model_selection import train_test_split
+    
+    print("\n" + "="*80)
+    print("CLASSIFIER HYPERPARAMETER TUNING")
+    print("="*80)
+    
+    graphs, labels, node_labels_list = load_all_graphs(DATASET_DIR)
+    X_node_labels = create_node_label_features(node_labels_list) if use_node_labels and node_labels_list else None
+    
+    # Split data
+    if X_node_labels is not None:
+        graphs_train, graphs_test, y_train, y_test, X_labels_train, X_labels_test = train_test_split(
+            graphs, labels, X_node_labels, test_size=test_size, random_state=random_state, stratify=labels)
+    else:
+        graphs_train, graphs_test, y_train, y_test = train_test_split(
+            graphs, labels, test_size=test_size, random_state=random_state, stratify=labels)
+        X_labels_train = X_labels_test = None
+    
+    # Generate embeddings using best config (polynomial usually best)
+    func_type = 'polynomial' if 'polynomial' in optimal_params else list(optimal_params.keys())[0]
+    params = optimal_params[func_type]
+    
+    print(f"\nGenerating embeddings with: {func_type}, bins={params.bins}, range={params.range_val:.2f}")
+    
+    X_train, X_test, gen_time, _ = generate_embeddings_with_tracking(
+        graphs_train, graphs_test, func_type, params.bins, round(params.range_val, 2), random_state
+    )
+    
+    # Add node labels if available
+    if X_labels_train is not None:
+        X_train = np.hstack([X_train, X_labels_train])
+        X_test = np.hstack([X_test, X_labels_test])
+    
+    print(f"Embedding shape for tuning: {X_train.shape}")
+    
+    # Run tuning
+    tuning_results = run_classifier_tuning(
+        X_train, y_train,
+        fast_mode=fast_mode,
+        cv=5,
+        random_state=random_state,
+        save_results=True
+    )
+    
+    # Evaluate tuned models on test set
+    print("\n" + "="*80)
+    print("EVALUATION OF TUNED CLASSIFIERS ON TEST SET")
+    print("="*80)
+    
+    eval_results = []
+    for clf_name, res in tuning_results.items():
+        clf = res['model']
+        
+        # Re-fit on full training set (GridSearchCV uses CV, so we refit)
+        clf.fit(X_train, y_train)
+        
+        eval_res = evaluate_classifier(X_train, X_test, y_train, y_test, f"{clf_name} (Tuned)", clf)
+        eval_res['cv_score'] = res['cv_score']
+        eval_res['best_params'] = str(res['params'])
+        eval_results.append(eval_res)
+        
+        print(f"\n{clf_name} (Tuned):")
+        print(f"  CV Score: {res['cv_score']:.4f}")
+        print(f"  Test Accuracy: {eval_res['accuracy']:.4f}")
+        print(f"  Test F1: {eval_res['f1_score']:.4f}")
+        print(f"  Best Params: {res['params']}")
+    
+    # Save tuning results
+    import pandas as pd
+    df = pd.DataFrame(eval_results)
+    tuning_path = os.path.join(RESULTS_DIR, 'fgsd_enzymes_classifier_tuning.csv')
+    df.to_csv(tuning_path, index=False)
+    print(f"\n✅ Tuning results saved to: {tuning_path}")
+    
+    del graphs
+    gc.collect()
+    
+    return tuning_results
+
+
+def main(run_stability: bool = False, force: bool = False, use_node_labels: bool = True, 
+         skip_grid: bool = False, stability_only: bool = False, tune_classifiers: bool = False):
+    if stability_only:
+        run_stability_only(use_node_labels)
+        return
+    
     print("="*80)
     print("FGSD CLASSIFICATION ON ENZYMES")
     print("="*80)
@@ -183,6 +419,17 @@ def main(run_stability: bool = False, force: bool = False, use_node_labels: bool
     for func_type, params in optimal_params.items():
         bins_list = recommended_bins.get(func_type, [params.bins])
         print(f"  {func_type.upper()}: range={params.range_val:.2f}, bins={bins_list}")
+    
+    # =================================================================
+    # STEP 1.5: Classifier Hyperparameter Tuning (OPTIONAL)
+    # =================================================================
+    if tune_classifiers:
+        run_classifier_hyperparameter_search(
+            optimal_params, 
+            use_node_labels=use_node_labels,
+            fast_mode=True
+        )
+        print("\n✅ Classifier tuning complete. Tuned params will be used in subsequent runs.")
     
     # =================================================================
     # STEP 2: Grid Search (CACHED - only recompute if force or missing)
@@ -242,10 +489,9 @@ def main(run_stability: bool = False, force: bool = False, use_node_labels: bool
     print("STEP 4: Final Classification (always runs)")
     print("="*80)
     
-    # Pass recommended_bins so final classification tests all bin sizes
     final_results = run_final_classification(
         optimal_params, 
-        recommended_bins=recommended_bins,  # Test all bin sizes!
+        recommended_bins=recommended_bins,
         use_node_labels=use_node_labels
     )
     print_summary(final_results)
@@ -282,7 +528,6 @@ def main(run_stability: bool = False, force: bool = False, use_node_labels: bool
         stability_results = []
         all_stability_results = []
         
-        # Build configs: harmonic, polynomial, naive_hybrid
         configs_to_test = []
         for func_type in ['harmonic', 'polynomial']:
             if func_type in optimal_params:
@@ -294,7 +539,6 @@ def main(run_stability: bool = False, force: bool = False, use_node_labels: bool
                     'range': round(p.range_val, 2)
                 })
         
-        # Add naive_hybrid (spectral only)
         if 'harmonic' in optimal_params and 'polynomial' in optimal_params:
             h, p = optimal_params['harmonic'], optimal_params['polynomial']
             configs_to_test.append({
@@ -308,7 +552,6 @@ def main(run_stability: bool = False, force: bool = False, use_node_labels: bool
             print(f"\n  Stability for {config['name']}...")
             X_spectral = generate_embeddings_for_graphs(graphs, config, seed=42)
             
-            # For stability, test both with and without node labels
             for test_with_labels in [False, True]:
                 if test_with_labels and X_node_labels is None:
                     continue
@@ -388,6 +631,8 @@ def main(run_stability: bool = False, force: bool = False, use_node_labels: bool
         print(f"  📊 {os.path.join(RESULTS_DIR, 'fgsd_enzymes_grid_search.csv')} (cached)")
     print(f"  📊 {dim_path}")
     print(f"  📊 {final_path}")
+    if tune_classifiers:
+        print(f"  📊 {os.path.join(RESULTS_DIR, 'fgsd_enzymes_classifier_tuning.csv')}")
     if run_stability:
         print(f"  📊 {os.path.join(RESULTS_DIR, 'fgsd_enzymes_stability_results.csv')}")
 
@@ -395,10 +640,13 @@ def main(run_stability: bool = False, force: bool = False, use_node_labels: bool
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='FGSD Classification on ENZYMES')
     parser.add_argument('--stability', action='store_true', help='Include stability analysis')
+    parser.add_argument('--stability-only', action='store_true', help='Run only stability (loads config from results)')
     parser.add_argument('--force', action='store_true', help='Force rerun everything')
     parser.add_argument('--no-node-labels', action='store_true', help='Disable node labels')
     parser.add_argument('--skip-grid', action='store_true', help='Skip grid search')
+    parser.add_argument('--tune-classifiers', action='store_true', help='Run classifier hyperparameter tuning (RF & SVM)')
     args = parser.parse_args()
     
     main(run_stability=args.stability, force=args.force, 
-         use_node_labels=not args.no_node_labels, skip_grid=args.skip_grid)
+         use_node_labels=not args.no_node_labels, skip_grid=args.skip_grid,
+         stability_only=args.stability_only, tune_classifiers=args.tune_classifiers)

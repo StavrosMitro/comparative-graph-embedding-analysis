@@ -3,6 +3,8 @@ FGSD Classification on REDDIT-MULTI-12K
 - Full dataset pre-analysis to determine optimal bins and range
 - Automatic parameter selection based on spectral distance distribution
 - Classification with multiple models
+
+NOTE: This is a standalone script. For modular usage, prefer classification_main.py
 """
 
 import os
@@ -10,7 +12,6 @@ import sys
 import warnings
 import gc
 import time
-import tracemalloc
 import urllib.request
 import zipfile
 from dataclasses import dataclass
@@ -37,7 +38,6 @@ if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 
 from fgsd import FlexibleFGSD
-from optimized_method import HybridFGSD
 
 warnings.filterwarnings('ignore')
 

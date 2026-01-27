@@ -1,14 +1,13 @@
 """
 Classification for FGSD experiments on REDDIT-MULTI-12K.
+Core functions for embedding generation and evaluation.
 """
 
 import gc
 import time
-import tracemalloc
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any
 
 import numpy as np
-from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -26,7 +25,7 @@ if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 
 from fgsd import FlexibleFGSD
-from .config import DATASET_DIR, BATCH_SIZE, OptimalParams
+from .config import DATASET_DIR, BATCH_SIZE
 from .data_loader import ensure_dataset_ready, load_metadata, iter_graph_batches
 
 
@@ -67,6 +66,7 @@ def evaluate_classifier(X_train, X_test, y_train, y_test, classifier_name, clf):
 
 
 def get_classifiers(random_state=42):
+    """Return dictionary of classifiers to use."""
     return {
         'SVM (RBF)': make_pipeline(StandardScaler(), SVC(kernel='rbf', C=100, gamma='scale', probability=True, random_state=random_state)),
         'Random Forest': RandomForestClassifier(n_estimators=500, max_depth=20, random_state=random_state, n_jobs=-1),
@@ -74,209 +74,41 @@ def get_classifiers(random_state=42):
     }
 
 
+def get_classifiers_tuned_or_default(X_train=None, y_train=None, use_tuned=False, random_state=42):
+    """Get classifiers - either default or tuned via grid search."""
+    if not use_tuned:
+        return get_classifiers(random_state)
+    
+    from .hyperparameter_search import get_tuned_classifiers, load_tuned_params
+    
+    tuned_params = load_tuned_params()
+    if tuned_params is not None:
+        return get_tuned_classifiers(tuned_params, random_state)
+    
+    # No cached params, return defaults
+    return get_classifiers(random_state)
+
+
 def generate_all_embeddings(func_type, bins, range_val, random_state=42):
-    """Generate embeddings for ALL graphs batch-wise."""
+    """
+    Generate embeddings for ALL graphs batch-wise.
+    This is the core embedding generation function.
+    """
     ensure_dataset_ready()
     
     model = FlexibleFGSD(hist_bins=bins, hist_range=range_val, func_type=func_type, seed=random_state)
     
     embeddings_list = []
-    total_batches = 0
     
     for graphs, labels, _ in tqdm(iter_graph_batches(DATASET_DIR, BATCH_SIZE), desc=f"  {func_type}"):
         model.fit(graphs)
         batch_emb = model.get_embedding()
         embeddings_list.append(batch_emb)
-        total_batches += 1
         del graphs
         gc.collect()
     
     X_all = np.vstack(embeddings_list)
     return X_all
-
-
-def run_dimension_analysis(optimal_params, bin_sizes=[100, 200, 500], test_size=0.15, random_state=42):
-    """Run dimension analysis with bin sizes from preanalysis."""
-    print(f"\n{'='*80}\nDIMENSION ANALYSIS (Spectral Only)\n{'='*80}")
-    
-    ensure_dataset_ready()
-    records = load_metadata(DATASET_DIR)
-    all_labels = np.array([r.label for r in records])
-    
-    indices = np.arange(len(records))
-    train_idx, test_idx = train_test_split(indices, test_size=test_size, random_state=random_state, stratify=all_labels)
-    
-    results = []
-    best_config = {}
-    classifiers = get_classifiers(random_state)
-    
-    for func_type in ['harmonic', 'polynomial']:
-        if func_type not in optimal_params:
-            continue
-        
-        range_val = round(optimal_params[func_type].range_val, 2)
-        print(f"\n{'='*60}\nFunction: {func_type.upper()} (range={range_val})\n{'='*60}")
-        
-        best_acc, best_bins = 0, bin_sizes[0]
-        
-        for bins in bin_sizes:
-            print(f"\n--- bins={bins} ---")
-            
-            start_time = time.time()
-            X_all = generate_all_embeddings(func_type, bins, range_val, random_state)
-            gen_time = time.time() - start_time
-            
-            X_train, X_test = X_all[train_idx], X_all[test_idx]
-            y_train, y_test = all_labels[train_idx], all_labels[test_idx]
-            
-            print(f"  Shape: {X_train.shape}, Time: {gen_time:.2f}s")
-            
-            for clf_name, clf in classifiers.items():
-                res = evaluate_classifier(X_train, X_test, y_train, y_test, clf_name, clf)
-                result_entry = {
-                    'func': func_type, 'bins': bins, 'range': range_val,
-                    'embedding_dim': bins, 'generation_time': gen_time, **res
-                }
-                results.append(result_entry)
-                
-                auc_str = f"{res['auc']:.4f}" if res['auc'] else "N/A"
-                print(f"  {clf_name}: Acc={res['accuracy']:.4f}, F1={res['f1_score']:.4f}, AUC={auc_str}")
-                
-                if res['accuracy'] > best_acc:
-                    best_acc, best_bins = res['accuracy'], bins
-            
-            del X_all
-            gc.collect()
-        
-        best_config[func_type] = (best_bins, best_acc)
-        print(f"\n✓ Best for {func_type}: bins={best_bins} (acc={best_acc:.4f})")
-    
-    return results, best_config
-
-
-def run_final_classification(optimal_params, recommended_bins=None, test_size=0.15, random_state=42):
-    """
-    Run final classification testing ALL bin sizes.
-    REDDIT has no node labels, so only spectral features are used.
-    """
-    print(f"\n{'='*80}\nFINAL CLASSIFICATION\n{'='*80}")
-    
-    ensure_dataset_ready()
-    records = load_metadata(DATASET_DIR)
-    all_labels = np.array([r.label for r in records])
-    
-    print(f"REDDIT-MULTI-12K: No node labels available. Using spectral features only.")
-    
-    indices = np.arange(len(records))
-    train_idx, test_idx = train_test_split(indices, test_size=test_size, random_state=random_state, stratify=all_labels)
-    
-    y_train, y_test = all_labels[train_idx], all_labels[test_idx]
-    
-    results = []
-    classifiers = get_classifiers(random_state)
-    
-    if recommended_bins is None:
-        recommended_bins = {'harmonic': [100, 200, 500], 'polynomial': [100, 200, 500]}
-    
-    all_bin_sizes = set()
-    for bins_list in recommended_bins.values():
-        all_bin_sizes.update(bins_list)
-    all_bin_sizes = sorted(all_bin_sizes)
-    
-    print(f"Testing bin sizes: {all_bin_sizes}")
-    
-    best_embeddings = {}
-    
-    # =================================================================
-    # Test each function type with each bin size
-    # =================================================================
-    for func_type in ['harmonic', 'polynomial']:
-        if func_type not in optimal_params:
-            continue
-        
-        range_val = round(optimal_params[func_type].range_val, 2)
-        bins_to_test = recommended_bins.get(func_type, all_bin_sizes)
-        
-        print(f"\n--- {func_type.upper()} (range={range_val}) ---")
-        
-        func_best_acc = 0
-        func_best_bins = bins_to_test[0]
-        func_best_X = None
-        
-        for bins in bins_to_test:
-            start_time = time.time()
-            X_all = generate_all_embeddings(func_type, bins, range_val, random_state)
-            gen_time = time.time() - start_time
-            
-            X_train, X_test = X_all[train_idx], X_all[test_idx]
-            
-            for clf_name, clf in classifiers.items():
-                res = evaluate_classifier(X_train, X_test, y_train, y_test, clf_name, clf)
-                result_entry = {
-                    'func': func_type,
-                    'bins': bins, 'range': range_val,
-                    'generation_time': gen_time,
-                    'embedding_dim': X_train.shape[1], **res
-                }
-                results.append(result_entry)
-                
-                if res['accuracy'] > func_best_acc:
-                    func_best_acc = res['accuracy']
-                    func_best_bins = bins
-                    func_best_X = X_all.copy()
-            
-            print(f"  bins={bins}: best={max(r['accuracy'] for r in results if r['func']==func_type and r.get('bins')==bins):.4f}")
-            
-            del X_all
-            gc.collect()
-        
-        # Store best embeddings for hybrid
-        if func_best_X is not None:
-            best_embeddings[func_type] = {
-                'X_all': func_best_X,
-                'bins': func_best_bins, 'range': range_val
-            }
-        print(f"  ✓ Best bins for {func_type}: {func_best_bins} (acc={func_best_acc:.4f})")
-    
-    # =================================================================
-    # Create and test naive_hybrid
-    # =================================================================
-    if 'harmonic' in best_embeddings and 'polynomial' in best_embeddings:
-        print(f"\n--- NAIVE_HYBRID ---")
-        h, p = best_embeddings['harmonic'], best_embeddings['polynomial']
-        
-        X_hybrid = np.hstack([h['X_all'], p['X_all']])
-        X_train_hybrid, X_test_hybrid = X_hybrid[train_idx], X_hybrid[test_idx]
-        
-        print(f"  shape: {X_train_hybrid.shape}")
-        
-        for clf_name, clf in classifiers.items():
-            res = evaluate_classifier(X_train_hybrid, X_test_hybrid, y_train, y_test, clf_name, clf)
-            result_entry = {
-                'func': 'naive_hybrid',
-                'harm_bins': h['bins'], 'harm_range': h['range'],
-                'pol_bins': p['bins'], 'pol_range': p['range'],
-                'embedding_dim': X_train_hybrid.shape[1], **res
-            }
-            results.append(result_entry)
-        
-        print(f"  best={max(r['accuracy'] for r in results if r['func']=='naive_hybrid'):.4f}")
-        
-        del X_hybrid
-        gc.collect()
-    
-    # Cleanup
-    for k in best_embeddings:
-        del best_embeddings[k]['X_all']
-    gc.collect()
-    
-    # Print top results
-    print(f"\n--- Top 10 Results ---")
-    for r in sorted(results, key=lambda x: -x['accuracy'])[:10]:
-        bins_info = f"bins={r.get('bins', 'hybrid')}"
-        print(f"  {r['func']:<20} {bins_info:<15} {r['classifier']:<18} Acc={r['accuracy']:.4f}")
-    
-    return results
 
 
 def print_dimension_analysis_summary(results):
@@ -302,6 +134,8 @@ def print_summary(results):
         
         if 'harm_bins' in r:
             config = f"h:{r['harm_bins']}/{r['harm_range']}, p:{r['pol_bins']}/{r['pol_range']}"
+        elif 'biharm_bins' in r:
+            config = f"bh:{r['biharm_bins']}/{r['biharm_range']}, p:{r['pol_bins']}/{r['pol_range']}"
         else:
             config = f"bins={r.get('bins', 'N/A')}, range={r.get('range', 'N/A')}"
         
@@ -311,3 +145,14 @@ def print_summary(results):
     
     best = sorted(results, key=lambda x: -x['accuracy'])[0]
     print(f"\nBEST: {best['func']} with {best['classifier']} -> Accuracy: {best['accuracy']:.4f}")
+
+
+# Legacy functions kept for backward compatibility but not used in main pipeline
+def run_dimension_analysis(optimal_params, bin_sizes=[100, 200, 500], test_size=0.15, random_state=42):
+    """Legacy function - prefer using run_dimension_analysis_with_cache in classification_main.py"""
+    raise NotImplementedError("Use run_dimension_analysis_with_cache from classification_main.py instead")
+
+
+def run_final_classification(best_embeddings, train_idx, test_idx, y_train, y_test, random_state=42):
+    """Legacy function - prefer using run_final_classification_with_cache in classification_main.py"""
+    raise NotImplementedError("Use run_final_classification_with_cache from classification_main.py instead")

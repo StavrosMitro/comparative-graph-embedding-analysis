@@ -38,7 +38,8 @@ from .stability import (
     generate_embeddings_for_graphs,
     run_stability_analysis,
     compute_classification_stability,
-    print_stability_summary
+    print_stability_summary,
+    DEFAULT_PERTURBATION_RATIOS  # Added missing export
 )
 
 __all__ = [
@@ -66,4 +67,5 @@ __all__ = [
     'compute_embedding_stability', 'generate_embeddings_for_graphs',
     'run_stability_analysis', 'compute_classification_stability',
     'print_stability_summary',
+    'DEFAULT_PERTURBATION_RATIOS',  # Added
 ]

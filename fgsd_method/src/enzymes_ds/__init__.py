@@ -37,7 +37,9 @@ from .stability import (
     compute_embedding_stability,
     generate_embeddings_for_graphs,
     run_stability_analysis,
-    print_stability_summary
+    compute_classification_stability,
+    print_stability_summary,
+    DEFAULT_PERTURBATION_RATIOS
 )
 
 __all__ = [
@@ -63,5 +65,7 @@ __all__ = [
     # Stability
     'perturb_graph_edges', 'perturb_graphs_batch',
     'compute_embedding_stability', 'generate_embeddings_for_graphs',
-    'run_stability_analysis', 'print_stability_summary',
+    'run_stability_analysis', 'compute_classification_stability',
+    'print_stability_summary',
+    'DEFAULT_PERTURBATION_RATIOS',
 ]

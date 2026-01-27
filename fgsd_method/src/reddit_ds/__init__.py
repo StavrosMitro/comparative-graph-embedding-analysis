@@ -19,9 +19,9 @@ from .preanalysis import (
     load_default_params
 )
 from .classification import (
-    evaluate_classifier, get_classifiers,
-    run_dimension_analysis, run_final_classification,
-    print_dimension_analysis_summary, print_summary
+    evaluate_classifier, get_classifiers, get_classifiers_tuned_or_default,
+    print_dimension_analysis_summary, print_summary,
+    generate_all_embeddings
 )
 from .stability import (
     perturb_graph_edges,
@@ -31,6 +31,11 @@ from .stability import (
     compute_classification_stability,
     print_stability_summary,
     DEFAULT_PERTURBATION_RATIOS
+)
+from .hyperparameter_search import (
+    run_classifier_tuning,
+    load_tuned_params,
+    get_tuned_classifiers
 )
 
 __all__ = [
@@ -46,12 +51,14 @@ __all__ = [
     'load_preanalysis_from_cache', 'save_preanalysis_to_cache',
     'load_default_params',
     # Classification
-    'evaluate_classifier', 'get_classifiers',
-    'run_dimension_analysis', 'run_final_classification',
+    'evaluate_classifier', 'get_classifiers', 'get_classifiers_tuned_or_default',
     'print_dimension_analysis_summary', 'print_summary',
+    'generate_all_embeddings',
     # Stability
     'perturb_graph_edges', 'perturb_graphs_batch',
     'compute_embedding_stability', 'generate_embeddings_for_graphs',
     'compute_classification_stability', 'print_stability_summary',
     'DEFAULT_PERTURBATION_RATIOS',
+    # Hyperparameter tuning
+    'run_classifier_tuning', 'load_tuned_params', 'get_tuned_classifiers',
 ]

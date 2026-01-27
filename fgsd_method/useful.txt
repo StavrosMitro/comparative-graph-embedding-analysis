@@ -1,32 +1,47 @@
-# ENZYMES, IMDB & REDDIT Classification Pipeline
-# ===============================================
+# ENZYMES, IMDB & REDDIT Classification & Clustering Pipeline
+# ============================================================
 # 
-# CACHED (reused if exists):
-#   - Preanalysis (spectral distance analysis)
-#   - Grid Search (ENZYMES only, with node labels)
-#
-# ALWAYS RUNS:
-#   - Dimension Analysis
-#   - Final Classification (tests all bin sizes + naive_hybrid)
-#   - Stability Analysis (if --stability)
-#
 # DATASETS:
 #   - ENZYMES: Has node labels (bag of words with 3 features)
 #   - IMDB: No node labels (spectral only)
 #   - REDDIT: No node labels (spectral only)
 
+# =============================================
+# CLASSIFICATION
+# =============================================
+
 # ENZYMES (with node labels)
 python -m enzymes_ds.classification_main
 python -m enzymes_ds.classification_main --stability
+python -m enzymes_ds.classification_main --stability-only    # Only stability (loads best config from results)
 python -m enzymes_ds.classification_main --force
 python -m enzymes_ds.classification_main --no-node-labels
+python -m enzymes_ds.classification_main --tune-classifiers  # Grid search for RF & SVM hyperparameters
 
-# IMDB (no node labels, no grid search)
+# IMDB (no node labels)
 python -m imbd_ds.classification_main
 python -m imbd_ds.classification_main --stability
+python -m imbd_ds.classification_main --stability-only       # Only stability (loads best config from results)
 python -m imbd_ds.classification_main --force
+python -m imbd_ds.classification_main --tune-classifiers     # Grid search for RF & SVM hyperparameters
 
-# REDDIT (no node labels, no grid search)
+# REDDIT (no node labels)
 python -m reddit_ds.classification_main
 python -m reddit_ds.classification_main --stability
+python -m reddit_ds.classification_main --stability-only     # Only stability (loads best config from results)
 python -m reddit_ds.classification_main --force
+python -m reddit_ds.classification_main --tune-classifiers   # Grid search for RF & SVM hyperparameters
+
+# =============================================
+# CLUSTERING
+# =============================================
+
+# ENZYMES clustering (with node labels by default)
+python -m enzymes_ds.clustering_main
+python -m enzymes_ds.clustering_main --no-node-labels
+
+# IMDB clustering
+python -m imbd_ds.clustering_main
+
+# REDDIT clustering
+python -m reddit_ds.clustering_main

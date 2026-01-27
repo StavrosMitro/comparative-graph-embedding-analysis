@@ -29,26 +29,24 @@ from imbd_ds.clustering import (
 )
 
 
+# Default configurations based on preanalysis results
+# IMDB: harmonic range ~3.5, polynomial range ~3.1, biharmonic range ~50 (smaller graphs)
 DEFAULT_CONFIGS = [
+    # Harmonic configurations
+    {'name': 'harmonic_35_3.5', 'func': 'harmonic', 'bins': 35, 'range': 3.5},
+    {'name': 'harmonic_70_3.5', 'func': 'harmonic', 'bins': 70, 'range': 3.5},
+    # Polynomial configurations  
+    {'name': 'polynomial_31_3.1', 'func': 'polynomial', 'bins': 31, 'range': 3.1},
+    {'name': 'polynomial_62_3.1', 'func': 'polynomial', 'bins': 62, 'range': 3.1},
+    # Biharmonic configurations (1/λ² - larger range than harmonic)
+    {'name': 'biharmonic_50_50', 'func': 'biharmonic', 'bins': 50, 'range': 50.0},
+    {'name': 'biharmonic_100_50', 'func': 'biharmonic', 'bins': 100, 'range': 50.0},
+    # Naive hybrid (harmonic + polynomial)
     {
-        'name': 'hybrid_100_3.5_200_3.5',
+        'name': 'naive_hybrid_70_3.5_62_3.1',
         'func': 'hybrid',
-        'harm_bins': 100,
-        'harm_range': 3.5,
-        'pol_bins': 200,
-        'pol_range': 3.5
-    },
-    {
-        'name': 'polynomial_200_3.1',
-        'func': 'polynomial',
-        'bins': 200,
-        'range': 3.1
-    },
-    {
-        'name': 'harmonic_100_3.5',
-        'func': 'harmonic',
-        'bins': 100,
-        'range': 3.5
+        'harm_bins': 70, 'harm_range': 3.5,
+        'pol_bins': 62, 'pol_range': 3.1
     },
 ]
 
@@ -57,7 +55,7 @@ def main(configs=None, neighbor_values=None):
     if configs is None:
         configs = DEFAULT_CONFIGS
     if neighbor_values is None:
-        neighbor_values = [10, 15, 20]
+        neighbor_values = [5, 10, 15, 20]
     
     print("="*80)
     print("FGSD CLUSTERING ON IMDB-MULTI")

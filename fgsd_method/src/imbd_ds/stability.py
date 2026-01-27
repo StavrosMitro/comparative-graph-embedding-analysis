@@ -84,17 +84,18 @@ def compute_embedding_stability(
     metric: str = 'cosine'
 ) -> Dict[str, float]:
     """Compute stability metrics between original and perturbed embeddings."""
-    n_samples = X_original.shape[0]
     
     if metric == 'cosine':
-        similarities = []
-        for i in range(n_samples):
-            sim = cosine_similarity(
-                X_original[i:i+1], 
-                X_perturbed[i:i+1]
-            )[0, 0]
-            similarities.append(sim)
-        similarities = np.array(similarities)
+        # OPTIMIZED: Vectorized computation instead of loop
+        norms_orig = np.linalg.norm(X_original, axis=1, keepdims=True)
+        norms_pert = np.linalg.norm(X_perturbed, axis=1, keepdims=True)
+        
+        # Avoid division by zero
+        norms_orig = np.maximum(norms_orig, 1e-10)
+        norms_pert = np.maximum(norms_pert, 1e-10)
+        
+        # Row-wise cosine similarity
+        similarities = np.sum(X_original * X_perturbed, axis=1) / (norms_orig.flatten() * norms_pert.flatten())
         
         return {
             'mean_cosine_similarity': float(np.mean(similarities)),
