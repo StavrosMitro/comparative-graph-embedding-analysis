@@ -1,0 +1,5 @@
+OPTIMAL PARAMETERS FOR REDDIT-MULTI-12K
+==================================================
+harmonic: bins=500, range=14.6100
+polynomial: bins=500, range=3.4800
+biharmonic: bins=500, range=500.0000

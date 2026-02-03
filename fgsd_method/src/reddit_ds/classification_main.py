@@ -630,7 +630,7 @@ def main(run_stability: bool = False, force: bool = False, stability_only: bool 
     
     print("\nBest configuration:")
     for func_type, params in optimal_params.items():
-        print(f"  {func_type.UPPER()}: bins={params.bins}, range={params.range_val:.2f}")
+        print(f"  {func_type.upper()}: bins={params.bins}, range={params.range_val:.2f}")
     
     # =================================================================
     # STEP 6: Final Classification (hybrids - uses cached embeddings)

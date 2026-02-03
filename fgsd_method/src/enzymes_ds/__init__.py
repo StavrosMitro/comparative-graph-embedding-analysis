@@ -24,12 +24,14 @@ from .classification import (
     print_dimension_analysis_summary, print_summary
 )
 from .clustering import (
+    run_clustering_experiment,
+    print_clustering_summary,
     generate_embeddings,
-    perform_clustering_analysis,
+    perform_clustering_with_params,
     evaluate_clustering,
     visualize_clusters,
-    run_clustering_experiment,
-    print_clustering_summary
+    run_clustering_grid_search,
+    apply_normalization
 )
 from .stability import (
     perturb_graph_edges,
@@ -59,7 +61,7 @@ __all__ = [
     'run_dimension_analysis', 'run_final_classification',
     'print_dimension_analysis_summary', 'print_summary',
     # Clustering
-    'generate_embeddings', 'perform_clustering_analysis',
+    'generate_embeddings', 'perform_clustering_with_params',
     'evaluate_clustering', 'visualize_clusters',
     'run_clustering_experiment', 'print_clustering_summary',
     # Stability

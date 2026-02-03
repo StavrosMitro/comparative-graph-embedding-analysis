@@ -5,6 +5,7 @@ Main entry point script.
 Usage:
     python -m enzymes_ds.clustering_main
     python -m enzymes_ds.clustering_main --no-node-labels
+    python -m enzymes_ds.clustering_main --no-grid-search
 """
 
 import os
@@ -32,7 +33,6 @@ from enzymes_ds.clustering import (
 
 
 # Default configurations based on preanalysis results
-# ENZYMES: harmonic range ~30, polynomial range ~4, biharmonic range ~200 (smaller graphs than Reddit)
 DEFAULT_CONFIGS = [
     # Harmonic configurations
     {'name': 'harmonic_50_30', 'func': 'harmonic', 'bins': 50, 'range': 30.0},
@@ -40,9 +40,6 @@ DEFAULT_CONFIGS = [
     # Polynomial configurations
     {'name': 'polynomial_50_4', 'func': 'polynomial', 'bins': 50, 'range': 4.0},
     {'name': 'polynomial_100_4', 'func': 'polynomial', 'bins': 100, 'range': 4.0},
-    # Biharmonic configurations (1/λ² - larger range than harmonic)
-    {'name': 'biharmonic_50_200', 'func': 'biharmonic', 'bins': 50, 'range': 200.0},
-    {'name': 'biharmonic_100_200', 'func': 'biharmonic', 'bins': 100, 'range': 200.0},
     # Naive hybrid (harmonic + polynomial)
     {
         'name': 'naive_hybrid_100_30_100_4',
@@ -53,7 +50,7 @@ DEFAULT_CONFIGS = [
 ]
 
 
-def main(configs=None, neighbor_values=None, use_node_labels=True):
+def main(configs=None, neighbor_values=None, use_node_labels=True, run_grid_search=True):
     if configs is None:
         configs = DEFAULT_CONFIGS
     if neighbor_values is None:
@@ -62,6 +59,7 @@ def main(configs=None, neighbor_values=None, use_node_labels=True):
     print("="*80)
     print("FGSD CLUSTERING ON ENZYMES")
     print(f"Node labels: {'ENABLED' if use_node_labels else 'DISABLED'}")
+    print(f"Grid search: {'ENABLED' if run_grid_search else 'DISABLED'}")
     print("="*80)
     
     ensure_dataset_ready()
@@ -74,7 +72,8 @@ def main(configs=None, neighbor_values=None, use_node_labels=True):
         configs=configs,
         node_labels_list=node_labels_list if use_node_labels else None,
         neighbor_values=neighbor_values,
-        visualize=True
+        visualize=True,
+        run_grid_search=run_grid_search
     )
     
     print_clustering_summary(results)
@@ -82,6 +81,8 @@ def main(configs=None, neighbor_values=None, use_node_labels=True):
     os.makedirs(RESULTS_DIR, exist_ok=True)
     df = pd.DataFrame(results)
     suffix = '_with_labels' if use_node_labels else '_spectral_only'
+    if run_grid_search:
+        suffix += '_gridsearch'
     output_path = os.path.join(RESULTS_DIR, f'fgsd_enzymes_clustering_results{suffix}.csv')
     df.to_csv(output_path, index=False)
     print(f"\nResults saved to: {output_path}")
@@ -95,6 +96,7 @@ def main(configs=None, neighbor_values=None, use_node_labels=True):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='FGSD Clustering on ENZYMES')
     parser.add_argument('--no-node-labels', action='store_true', help='Disable node labels')
+    parser.add_argument('--no-grid-search', action='store_true', help='Disable clustering grid search')
     args = parser.parse_args()
     
-    main(use_node_labels=not args.no_node_labels)
+    main(use_node_labels=not args.no_node_labels, run_grid_search=not args.no_grid_search)

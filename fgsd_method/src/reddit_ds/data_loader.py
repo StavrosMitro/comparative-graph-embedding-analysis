@@ -12,8 +12,15 @@ import pandas as pd
 import networkx as nx
 from tqdm import tqdm
 
-from .config import DATASET_DIR, BATCH_SIZE, GraphRecord
-
+try:
+    from .config import DATASET_DIR, BATCH_SIZE, GraphRecord
+except ImportError:
+    try:
+        from config import DATASET_DIR, BATCH_SIZE, GraphRecord
+    except ImportError:
+        # Fallback αν δεν βρεθεί το config
+        import os
+        DATASET_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
 def ensure_dataset_ready() -> str:
     """Ensure the dataset is downloaded and extracted."""

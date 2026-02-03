@@ -10,7 +10,17 @@ from typing import List, Tuple, Optional
 import numpy as np
 import networkx as nx
 
-from .config import DATASET_DIR
+try:
+    # Προσπάθεια relative import (αν τρέχει ως πακέτο)
+    from .config import DATASET_DIR
+except ImportError:
+    # Fallback σε absolute import (αν τρέχει ως script)
+    try:
+        from config import DATASET_DIR
+    except ImportError:
+        # Αν δεν υπάρχει καν το config.py, ορίζουμε εδώ έναν φάκελο data
+        import os
+        DATASET_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
 
 def ensure_dataset_ready() -> str:

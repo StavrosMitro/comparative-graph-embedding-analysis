@@ -10,8 +10,15 @@ from typing import List, Tuple
 import numpy as np
 import networkx as nx
 
-from .config import DATASET_DIR
-
+try:
+    from .config import DATASET_DIR
+except ImportError:
+    try:
+        from config import DATASET_DIR
+    except ImportError:
+        # Fallback αν δεν βρεθεί το config
+        import os
+        DATASET_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 
 def ensure_dataset_ready() -> str:
     """Ensure the dataset is downloaded and extracted."""

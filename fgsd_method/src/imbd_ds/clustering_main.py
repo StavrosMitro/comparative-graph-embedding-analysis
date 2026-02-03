@@ -4,12 +4,14 @@ Main entry point script.
 
 Usage:
     python -m imbd_ds.clustering_main
+    python -m imbd_ds.clustering_main --no-grid-search
 """
 
 import os
 import sys
 import warnings
 import gc
+import argparse
 
 import numpy as np
 import pandas as pd
@@ -30,17 +32,14 @@ from imbd_ds.clustering import (
 
 
 # Default configurations based on preanalysis results
-# IMDB: harmonic range ~3.5, polynomial range ~3.1, biharmonic range ~50 (smaller graphs)
+# IMDB: harmonic range ~3.5, polynomial range ~3.1
 DEFAULT_CONFIGS = [
     # Harmonic configurations
     {'name': 'harmonic_35_3.5', 'func': 'harmonic', 'bins': 35, 'range': 3.5},
     {'name': 'harmonic_70_3.5', 'func': 'harmonic', 'bins': 70, 'range': 3.5},
-    # Polynomial configurations  
+    # Polynomial configurations
     {'name': 'polynomial_31_3.1', 'func': 'polynomial', 'bins': 31, 'range': 3.1},
     {'name': 'polynomial_62_3.1', 'func': 'polynomial', 'bins': 62, 'range': 3.1},
-    # Biharmonic configurations (1/λ² - larger range than harmonic)
-    {'name': 'biharmonic_50_50', 'func': 'biharmonic', 'bins': 50, 'range': 50.0},
-    {'name': 'biharmonic_100_50', 'func': 'biharmonic', 'bins': 100, 'range': 50.0},
     # Naive hybrid (harmonic + polynomial)
     {
         'name': 'naive_hybrid_70_3.5_62_3.1',
@@ -51,7 +50,7 @@ DEFAULT_CONFIGS = [
 ]
 
 
-def main(configs=None, neighbor_values=None):
+def main(configs=None, neighbor_values=None, run_grid_search=True):
     if configs is None:
         configs = DEFAULT_CONFIGS
     if neighbor_values is None:
@@ -59,6 +58,7 @@ def main(configs=None, neighbor_values=None):
     
     print("="*80)
     print("FGSD CLUSTERING ON IMDB-MULTI")
+    print(f"Grid search: {'ENABLED' if run_grid_search else 'DISABLED'}")
     print("="*80)
     
     ensure_dataset_ready()
@@ -70,14 +70,16 @@ def main(configs=None, neighbor_values=None):
         labels=labels,
         configs=configs,
         neighbor_values=neighbor_values,
-        visualize=True
+        visualize=True,
+        run_grid_search=run_grid_search
     )
     
     print_clustering_summary(results)
     
     os.makedirs(RESULTS_DIR, exist_ok=True)
     df = pd.DataFrame(results)
-    output_path = os.path.join(RESULTS_DIR, 'fgsd_imdb_clustering_results.csv')
+    suffix = '_gridsearch' if run_grid_search else ''
+    output_path = os.path.join(RESULTS_DIR, f'fgsd_imdb_clustering_results{suffix}.csv')
     df.to_csv(output_path, index=False)
     print(f"\nResults saved to: {output_path}")
     
@@ -88,4 +90,8 @@ def main(configs=None, neighbor_values=None):
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description='FGSD Clustering on IMDB-MULTI')
+    parser.add_argument('--no-grid-search', action='store_true', help='Disable clustering grid search')
+    args = parser.parse_args()
+    
+    main(run_grid_search=not args.no_grid_search)

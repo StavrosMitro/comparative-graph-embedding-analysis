@@ -33,15 +33,26 @@ python -m reddit_ds.classification_main --force
 python -m reddit_ds.classification_main --tune-classifiers   # Grid search for RF & SVM hyperparameters
 
 # =============================================
-# CLUSTERING
+# CLUSTERING (with grid search)
 # =============================================
 
 # ENZYMES clustering (with node labels by default)
-python -m enzymes_ds.clustering_main
-python -m enzymes_ds.clustering_main --no-node-labels
+python -m enzymes_ds.clustering_main                         # Full grid search + visualization of best
+python -m enzymes_ds.clustering_main --no-node-labels        # Spectral only (no node labels)
+python -m enzymes_ds.clustering_main --no-grid-search        # Original behavior without grid search
 
 # IMDB clustering
-python -m imbd_ds.clustering_main
+python -m imbd_ds.clustering_main                            # Full grid search + visualization of best
+python -m imbd_ds.clustering_main --no-grid-search           # Original behavior without grid search
 
 # REDDIT clustering
 python -m reddit_ds.clustering_main
+
+# =============================================
+# GRID SEARCH PARAMETERS (Clustering)
+# =============================================
+# Normalization: L2, StandardScaler, MinMaxScaler
+# PCA variance: 0.90, 0.95, 0.99
+# K-Means n_init: 10, 50
+# Spectral n_neighbors: 5, 10, 15, 20
+# Spectral affinity: nearest_neighbors, rbf
