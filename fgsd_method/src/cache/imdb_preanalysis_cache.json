@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "dataset_name": "imdb",
+    "sample_size": 500,
+    "max_nodes": 300
+  },
+  "params": {
+    "harmonic": {
+      "func_type": "harmonic",
+      "bins": 50,
+      "range_val": 3.522655277010671,
+      "p99": 3.522655277010671,
+      "recommended_bins": 50
+    },
+    "polynomial": {
+      "func_type": "polynomial",
+      "bins": 50,
+      "range_val": 3.125000000000001,
+      "p99": 3.125000000000001,
+      "recommended_bins": 50
+    }
+  },
+  "recommended_bins": {
+    "harmonic": [
+      50,
+      100,
+      150
+    ],
+    "polynomial": [
+      50,
+      100,
+      150
+    ]
+  }
+}

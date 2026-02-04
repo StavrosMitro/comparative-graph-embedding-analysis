@@ -25,11 +25,13 @@ from .classification import (
 )
 from .clustering import (
     generate_embeddings,
-    perform_clustering_analysis,
+    perform_clustering_with_params,
     evaluate_clustering,
     visualize_clusters,
     run_clustering_experiment,
-    print_clustering_summary
+    print_clustering_summary,
+    run_clustering_grid_search,
+    apply_normalization
 )
 from .stability import (
     perturb_graph_edges,
@@ -39,7 +41,7 @@ from .stability import (
     run_stability_analysis,
     compute_classification_stability,
     print_stability_summary,
-    DEFAULT_PERTURBATION_RATIOS  # Added missing export
+    DEFAULT_PERTURBATION_RATIOS
 )
 
 __all__ = [
@@ -59,13 +61,14 @@ __all__ = [
     'run_dimension_analysis', 'run_final_classification',
     'print_dimension_analysis_summary', 'print_summary',
     # Clustering
-    'generate_embeddings', 'perform_clustering_analysis',
+    'generate_embeddings', 'perform_clustering_with_params',
     'evaluate_clustering', 'visualize_clusters',
     'run_clustering_experiment', 'print_clustering_summary',
+    'run_clustering_grid_search', 'apply_normalization',
     # Stability
     'perturb_graph_edges', 'perturb_graphs_batch',
     'compute_embedding_stability', 'generate_embeddings_for_graphs',
     'run_stability_analysis', 'compute_classification_stability',
     'print_stability_summary',
-    'DEFAULT_PERTURBATION_RATIOS',  # Added
+    'DEFAULT_PERTURBATION_RATIOS',
 ]
