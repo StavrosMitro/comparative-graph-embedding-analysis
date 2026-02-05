@@ -56,10 +56,21 @@ def main(configs=None, neighbor_values=None, use_node_labels=True, run_grid_sear
     if neighbor_values is None:
         neighbor_values = [5, 10, 15, 20]
     
+    # Check for UMAP
+    try:
+        import umap
+        has_umap = True
+        umap_version = umap.__version__
+    except ImportError:
+        has_umap = False
+        umap_version = None
+    
     print("="*80)
     print("FGSD CLUSTERING ON ENZYMES")
     print(f"Node labels: {'ENABLED' if use_node_labels else 'DISABLED'}")
     print(f"Grid search: {'ENABLED' if run_grid_search else 'DISABLED'}")
+    print(f"Normalizations tested: l2, standard, none (raw)")
+    print(f"UMAP: {'ENABLED (v' + umap_version + ')' if has_umap else 'DISABLED'}")
     print("="*80)
     
     ensure_dataset_ready()
@@ -73,7 +84,8 @@ def main(configs=None, neighbor_values=None, use_node_labels=True, run_grid_sear
         node_labels_list=node_labels_list if use_node_labels else None,
         neighbor_values=neighbor_values,
         visualize=True,
-        run_grid_search=run_grid_search
+        run_grid_search=run_grid_search,
+        save_umap_coords=True  # Save UMAP coordinates
     )
     
     print_clustering_summary(results)
@@ -86,6 +98,17 @@ def main(configs=None, neighbor_values=None, use_node_labels=True, run_grid_sear
     output_path = os.path.join(RESULTS_DIR, f'fgsd_enzymes_clustering_results{suffix}.csv')
     df.to_csv(output_path, index=False)
     print(f"\nResults saved to: {output_path}")
+    
+    # Print summary of 'none' normalization results (raw embeddings)
+    none_results = df[df['normalization'] == 'none'] if 'normalization' in df.columns else pd.DataFrame()
+    if len(none_results) > 0:
+        print("\n" + "="*80)
+        print("RAW EMBEDDINGS (no normalization) RESULTS:")
+        print("="*80)
+        best_none = none_results.loc[none_results['ari'].idxmax()]
+        print(f"  Best ARI: {best_none['ari']:.4f}")
+        print(f"  Method: {best_none['method']}")
+        print(f"  Config: {best_none['config_name']}")
     
     del graphs
     gc.collect()

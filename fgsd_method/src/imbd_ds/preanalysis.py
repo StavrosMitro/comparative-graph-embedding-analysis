@@ -125,9 +125,10 @@ def load_default_params() -> Tuple[Dict[str, OptimalParams], Dict[str, List[int]
         )
     }
     
+    # Expanded to 5 bin sizes
     recommended_bins = {
-        'harmonic': [50, 100, 200],
-        'polynomial': [50, 100, 200]
+        'harmonic': [50, 100, 150, 200, 250],
+        'polynomial': [50, 100, 150, 200, 250]
     }
     
     return optimal_params, recommended_bins
@@ -215,7 +216,7 @@ def determine_optimal_params_and_bins(
     node_counts: np.ndarray, 
     func_type: str,
     save_plot: bool = True,
-    top_n_bins: int = 3
+    top_n_bins: int = 5
 ) -> Tuple[OptimalParams, List[int]]:
     """Analyze distribution and determine optimal range and top N bin sizes."""
     print(f"\n{'='*60}")
@@ -313,7 +314,7 @@ def run_sampled_preanalysis(
     use_cache: bool = True,
     force_recompute: bool = False,
     dataset_name: str = 'imdb',
-    top_n_bins: int = 3
+    top_n_bins: int = 5
 ) -> Tuple[Dict[str, OptimalParams], Dict[str, List[int]]]:
     """Run pre-analysis to determine optimal range and bin sizes."""
     print("\n" + "="*80)

@@ -24,22 +24,42 @@ import os
 # File paths
 FILES = {
     'ENZYMES': {
-        'dimension': 'src/results/fgsd_enzymes_dimension_analysis.csv',
-        'grid': None,
+        'dimension': {
+            'preprocessed': 'src/results/fgsd_enzymes_dimension_analysis.csv',
+            'raw': 'src/results/raw_embeddings/fgsd_enzymes_raw_dimension_analysis.csv'
+        },
+        'grid': {
+            'preprocessed': None,
+            'raw': None
+        },
     },
     'IMDB-MULTI': {
-        'dimension': 'src/results/fgsd_imdb_dimension_analysis.csv',
-        'grid': 'src/results/fgsd_imdb_grid_search.csv',
+        'dimension': {
+            'preprocessed': 'src/results/fgsd_imdb_dimension_analysis.csv',
+            'raw': 'src/results/raw_embeddings/fgsd_imdb_raw_dimension_analysis.csv'
+        },
+        'grid': {
+            'preprocessed': 'src/results/fgsd_imdb_grid_search.csv',
+            'raw': 'src/results/raw_embeddings/fgsd_imdb_raw_grid_search.csv'
+        },
     },
     'REDDIT-MULTI-12K': {
-        'dimension': 'src/results/fgsd_reddit_dimension_analysis.csv',
-        'grid': None,
+        'dimension': {
+            'preprocessed': 'src/results/fgsd_reddit_dimension_analysis.csv',
+            'raw': 'src/results/raw_embeddings/fgsd_reddit_raw_dimension_analysis.csv'
+        },
+        'grid': {
+            'preprocessed': None,
+            'raw': None
+        },
     },
 }
 
-# Output directory
+# Output directories
 OUTPUT_DIR = 'plots/computational_analysis'
+OUTPUT_DIR_RAW = 'plots/computational_analysis/raw_embeddings'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+os.makedirs(OUTPUT_DIR_RAW, exist_ok=True)
 
 # Plot settings
 plt.rcParams['figure.dpi'] = 150
@@ -59,7 +79,7 @@ def load_data(path):
     return None
 
 
-def plot_time_vs_dimension(all_data, output_dir):
+def plot_time_vs_dimension(all_data, output_dir, raw_mode=False):
     """
     Plot 1: Generation Time vs Embedding Dimension for each dataset.
     Shows how computational cost scales with embedding size.
@@ -95,7 +115,7 @@ def plot_time_vs_dimension(all_data, output_dir):
     print("  ✅ Saved: time_vs_dimension.png")
 
 
-def plot_memory_vs_dimension(all_data, output_dir):
+def plot_memory_vs_dimension(all_data, output_dir, raw_mode=False):
     """
     Plot 2: Memory Usage vs Embedding Dimension.
     Shows memory footprint scaling.
@@ -131,7 +151,7 @@ def plot_memory_vs_dimension(all_data, output_dir):
     print("  ✅ Saved: memory_vs_dimension.png")
 
 
-def plot_time_memory_tradeoff(all_data, output_dir):
+def plot_time_memory_tradeoff(all_data, output_dir, raw_mode=False):
     """
     Plot 3: Time vs Memory Trade-off scatter.
     Shows relationship between computational costs.
@@ -159,11 +179,36 @@ def plot_time_memory_tradeoff(all_data, output_dir):
                       s=100, alpha=0.7, color=color, marker=marker,
                       label=f'{dataset_name} - {func}')
             
-            # Annotate with dimension
+            # Annotate with dimension (collision avoidance)
+            func_df = func_df.sort_values('generation_time')
+            
+            x_range = func_df['generation_time'].max() - func_df['generation_time'].min()
+            y_range = func_df['memory_mb'].max() - func_df['memory_mb'].min()
+            if x_range == 0: x_range = 1
+            if y_range == 0: y_range = 1
+            
+            prev_x, prev_y = -9999, -9999
+            offset_dir = 1
+            
             for _, row in func_df.iterrows():
+                x, y = row['generation_time'], row['memory_mb']
+                
+                dx = abs(x - prev_x) / x_range
+                dy = abs(y - prev_y) / y_range
+                
+                if dx < 0.1 and dy < 0.1:
+                    offset_dir *= -1
+                else:
+                    offset_dir = 1
+                
+                xytext = (3, 3) if offset_dir > 0 else (3, -10)
+                
                 ax.annotate(f'd={int(row["embedding_dim"])}',
-                           (row['generation_time'], row['memory_mb']),
-                           textcoords="offset points", xytext=(3, 3), fontsize=7)
+                           (x, y),
+                           textcoords="offset points", xytext=xytext, fontsize=7,
+                           bbox=dict(boxstyle="round,pad=0.1", fc="white", ec="none", alpha=0.3))
+                
+                prev_x, prev_y = x, y
     
     ax.set_xlabel('Generation Time (seconds)', fontsize=12)
     ax.set_ylabel('Memory Usage (MB)', fontsize=12)
@@ -177,7 +222,20 @@ def plot_time_memory_tradeoff(all_data, output_dir):
     print("  ✅ Saved: time_memory_tradeoff.png")
 
 
-def plot_time_vs_accuracy(all_data, output_dir):
+def get_pareto_frontier(xs, ys):
+    """Pareto frontier helper: Min X, Max Y"""
+    points = sorted(zip(xs, ys), key=lambda k: k[0])
+    pareto_x, pareto_y = [], []
+    current_max_y = -float('inf')
+    for x, y in points:
+        if y > current_max_y:
+            pareto_x.append(x)
+            pareto_y.append(y)
+            current_max_y = y
+    return pareto_x, pareto_y
+
+
+def plot_time_vs_accuracy(all_data, output_dir, raw_mode=False):
     """
     Plot 4: Generation Time vs Accuracy (Pareto frontier analysis).
     Shows efficiency of different configurations.
@@ -201,23 +259,52 @@ def plot_time_vs_accuracy(all_data, output_dir):
             func_df = best_acc[best_acc['func'] == func]
             color = FUNC_COLORS.get(func, '#333')
             
+            # Scatter
             ax.scatter(func_df['generation_time'], func_df['accuracy'],
-                      s=120, alpha=0.7, color=color, label=func.capitalize(),
-                      edgecolors='black', linewidths=0.5)
+                      s=90, alpha=0.7, color=color, label=func.capitalize(),
+                      edgecolors='white', linewidths=0.5)
             
-            # Annotate with dimension
+            # Pareto Curve
+            px, py = get_pareto_frontier(func_df['generation_time'], func_df['accuracy'])
+            ax.plot(px, py, color=color, linestyle='--', linewidth=1.5, alpha=0.6)
+            
+            # Annotate with dimension (collision avoidance)
+            func_df = func_df.sort_values('generation_time')
+            
+            x_range = func_df['generation_time'].max() - func_df['generation_time'].min()
+            y_range = func_df['accuracy'].max() - func_df['accuracy'].min()
+            if x_range == 0: x_range = 1
+            if y_range == 0: y_range = 1
+            
+            prev_x, prev_y = -9999, -9999
+            offset_dir = 1
+            
             for _, row in func_df.iterrows():
-                ax.annotate(f'd={int(row["embedding_dim"])}',
-                           (row['generation_time'], row['accuracy']),
-                           textcoords="offset points", xytext=(3, 3), fontsize=8)
+                x, y = row['generation_time'], row['accuracy']
+                
+                dx = abs(x - prev_x) / x_range
+                dy = abs(y - prev_y) / y_range
+                
+                if dx < 0.1 and dy < 0.1:
+                    offset_dir *= -1
+                else:
+                    offset_dir = 1
+                
+                xytext = (0, 5) if offset_dir > 0 else (0, -15)
+
+                ax.annotate(f'{int(row["embedding_dim"])}',
+                           (x, y),
+                           textcoords="offset points", xytext=xytext, fontsize=8, ha='center',
+                           bbox=dict(boxstyle="round,pad=0.1", fc="white", ec="none", alpha=0.3))
+                prev_x, prev_y = x, y
         
-        ax.set_xlabel('Generation Time (seconds)', fontsize=11)
+        ax.set_xlabel('Generation Time (s)', fontsize=11)
         ax.set_ylabel('Best Accuracy', fontsize=11)
         ax.set_title(f'{dataset_name}', fontsize=12, fontweight='bold')
-        ax.legend()
+        ax.legend(loc='lower right', fontsize=8)
         ax.grid(True, alpha=0.3)
     
-    fig.suptitle('Generation Time vs Accuracy Trade-off\n(Pareto Analysis - Upper-left is better)',
+    fig.suptitle('Generation Time vs Accuracy Trade-off (Pareto Frontier)',
                 fontsize=14, fontweight='bold', y=1.02)
     plt.tight_layout()
     plt.savefig(f'{output_dir}/time_vs_accuracy.png', bbox_inches='tight', facecolor='white')
@@ -225,7 +312,7 @@ def plot_time_vs_accuracy(all_data, output_dir):
     print("  ✅ Saved: time_vs_accuracy.png")
 
 
-def plot_dataset_comparison(all_data, output_dir):
+def plot_dataset_comparison(all_data, output_dir, raw_mode=False):
     """
     Plot 5: Cross-dataset comparison of generation times.
     Bar chart comparing datasets at similar dimensions.
@@ -334,7 +421,7 @@ def plot_dataset_comparison(all_data, output_dir):
     print("  ✅ Saved: dataset_comparison.png")
 
 
-def plot_binwidth_analysis(all_data, output_dir):
+def plot_binwidth_analysis(all_data, output_dir, raw_mode=False):
     """
     Plot 6: Binwidth impact on generation time (from grid search).
     Shows how binwidth parameter affects computational cost.
@@ -391,7 +478,7 @@ def plot_binwidth_analysis(all_data, output_dir):
     print("  ✅ Saved: binwidth_analysis.png")
 
 
-def plot_function_comparison(all_data, output_dir):
+def plot_function_comparison(all_data, output_dir, raw_mode=False):
     """
     Plot 7: Function type comparison (harmonic vs polynomial vs biharmonic).
     Box plots showing distribution of times and memory.
@@ -458,7 +545,7 @@ def plot_function_comparison(all_data, output_dir):
     print("  ✅ Saved: function_comparison.png")
 
 
-def create_computational_summary(all_data, output_dir):
+def create_computational_summary(all_data, output_dir, raw_mode=False):
     """Create summary table of computational costs."""
     summary_rows = []
     
@@ -509,49 +596,65 @@ def create_computational_summary(all_data, output_dir):
     return summary_df
 
 
+def get_output_dir(raw_mode=False):
+    """Get output directory based on mode."""
+    return OUTPUT_DIR_RAW if raw_mode else OUTPUT_DIR
+
+
 def main():
     print("="*80)
     print("FGSD COMPUTATIONAL COST ANALYSIS")
     print("="*80)
     
-    # Load all data
-    all_data = {}
+    # Load all data for both modes
+    all_data_preprocessed = {}
+    all_data_raw = {}
+    
     for dataset_name, paths in FILES.items():
         print(f"\n📊 Loading {dataset_name}...")
-        all_data[dataset_name] = {
-            'dimension': load_data(paths['dimension']),
-            'grid': load_data(paths['grid']) if paths['grid'] else None
+        
+        # Preprocessed
+        all_data_preprocessed[dataset_name] = {
+            'dimension': load_data(paths['dimension']['preprocessed']),
+            'grid': load_data(paths['grid']['preprocessed']) if paths['grid']['preprocessed'] else None
         }
         
-        df = all_data[dataset_name]['dimension']
-        if df is not None:
-            print(f"  Dimension analysis: {len(df)} rows")
-            print(f"  Columns: {df.columns.tolist()}")
-            if 'generation_time' in df.columns:
-                print(f"  Time range: {df['generation_time'].min():.2f} - {df['generation_time'].max():.2f}s")
-            if 'memory_mb' in df.columns:
-                print(f"  Memory range: {df['memory_mb'].min():.2f} - {df['memory_mb'].max():.2f} MB")
+        # Raw
+        all_data_raw[dataset_name] = {
+            'dimension': load_data(paths['dimension']['raw']),
+            'grid': load_data(paths['grid']['raw']) if paths['grid']['raw'] else None
+        }
     
-    # Generate plots
+    # Generate plots for both modes
     print("\n" + "="*80)
-    print("Generating plots...")
+    print("Generating plots for PREPROCESSED...")
     print("="*80)
     
-    plot_time_vs_dimension(all_data, OUTPUT_DIR)
-    plot_memory_vs_dimension(all_data, OUTPUT_DIR)
-    plot_time_memory_tradeoff(all_data, OUTPUT_DIR)
-    plot_time_vs_accuracy(all_data, OUTPUT_DIR)
-    plot_dataset_comparison(all_data, OUTPUT_DIR)
-    plot_binwidth_analysis(all_data, OUTPUT_DIR)
-    plot_function_comparison(all_data, OUTPUT_DIR)
+    plot_time_vs_dimension(all_data_preprocessed, OUTPUT_DIR, raw_mode=False)
+    plot_memory_vs_dimension(all_data_preprocessed, OUTPUT_DIR, raw_mode=False)
+    plot_time_memory_tradeoff(all_data_preprocessed, OUTPUT_DIR, raw_mode=False)
+    plot_time_vs_accuracy(all_data_preprocessed, OUTPUT_DIR, raw_mode=False)
+    plot_dataset_comparison(all_data_preprocessed, OUTPUT_DIR, raw_mode=False)
+    plot_binwidth_analysis(all_data_preprocessed, OUTPUT_DIR, raw_mode=False)
+    plot_function_comparison(all_data_preprocessed, OUTPUT_DIR, raw_mode=False)
+    create_computational_summary(all_data_preprocessed, OUTPUT_DIR, raw_mode=False)
     
-    # Create summary
-    create_computational_summary(all_data, OUTPUT_DIR)
+    print("\n" + "="*80)
+    print("Generating plots for RAW EMBEDDINGS...")
+    print("="*80)
     
-    print(f"\n✅ All plots saved to: {OUTPUT_DIR}/")
-    print("\nGenerated files:")
-    for f in sorted(os.listdir(OUTPUT_DIR)):
-        print(f"  📈 {f}")
+    plot_time_vs_dimension(all_data_raw, OUTPUT_DIR_RAW, raw_mode=True)
+    plot_memory_vs_dimension(all_data_raw, OUTPUT_DIR_RAW, raw_mode=True)
+    plot_time_memory_tradeoff(all_data_raw, OUTPUT_DIR_RAW, raw_mode=True)
+    plot_time_vs_accuracy(all_data_raw, OUTPUT_DIR_RAW, raw_mode=True)
+    plot_dataset_comparison(all_data_raw, OUTPUT_DIR_RAW, raw_mode=True)
+    plot_binwidth_analysis(all_data_raw, OUTPUT_DIR_RAW, raw_mode=True)
+    plot_function_comparison(all_data_raw, OUTPUT_DIR_RAW, raw_mode=True)
+    create_computational_summary(all_data_raw, OUTPUT_DIR_RAW, raw_mode=True)
+    
+    print(f"\n✅ All plots saved!")
+    print(f"  📁 Preprocessed: {OUTPUT_DIR}/")
+    print(f"  📁 Raw: {OUTPUT_DIR_RAW}/")
 
 
 if __name__ == "__main__":

@@ -25,14 +25,25 @@ import os
 
 # File paths for grid search results
 FILES = {
-    'ENZYMES': 'src/results/fgsd_enzymes_grid_search.csv',
-    'IMDB-MULTI': 'src/results/fgsd_imdb_grid_search.csv',
-    'REDDIT-MULTI-12K': 'src/results/fgsd_reddit_grid_search.csv',
+    'ENZYMES': {
+        'preprocessed': 'src/results/fgsd_enzymes_grid_search.csv',
+        'raw': 'src/results/raw_embeddings/fgsd_enzymes_raw_grid_search.csv'
+    },
+    'IMDB-MULTI': {
+        'preprocessed': 'src/results/fgsd_imdb_grid_search.csv',
+        'raw': 'src/results/raw_embeddings/fgsd_imdb_raw_grid_search.csv'
+    },
+    'REDDIT-MULTI-12K': {
+        'preprocessed': 'src/results/fgsd_reddit_grid_search.csv',
+        'raw': 'src/results/raw_embeddings/fgsd_reddit_raw_grid_search.csv'
+    },
 }
 
-# Output directory
+# Output directories
 OUTPUT_DIR = 'plots/grid_search_analysis'
+OUTPUT_DIR_RAW = 'plots/grid_search_analysis/raw_embeddings'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+os.makedirs(OUTPUT_DIR_RAW, exist_ok=True)
 
 # Plot settings
 plt.rcParams['figure.dpi'] = 150
@@ -46,8 +57,10 @@ FUNC_COLORS = {
     'polynomial': '#3498db', 
     'biharmonic': '#9b59b6'
 }
-BINWIDTH_CMAP = 'viridis'
 
+def get_func_color(func_name):
+    """Get color for function type."""
+    return FUNC_COLORS.get(func_name, '#333333')
 
 def load_data(path):
     """Load grid search data if exists."""
@@ -66,7 +79,12 @@ def load_data(path):
     return df
 
 
-def plot_accuracy_vs_binwidth(df, dataset_name, output_dir):
+def get_output_dir(raw_mode=False):
+    """Get output directory based on mode."""
+    return OUTPUT_DIR_RAW if raw_mode else OUTPUT_DIR
+
+
+def plot_accuracy_vs_binwidth(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 1: Accuracy vs Binwidth for each function type.
     Shows how accuracy changes with histogram resolution.
@@ -78,7 +96,7 @@ def plot_accuracy_vs_binwidth(df, dataset_name, output_dir):
     
     for func in df['func'].unique():
         func_df = df[df['func'] == func].sort_values('binwidth')
-        color = FUNC_COLORS.get(func, '#333')
+        color = get_func_color(func)
         
         ax.plot(func_df['binwidth'], func_df['accuracy'],
                marker='o', linewidth=2.5, markersize=10, 
@@ -91,9 +109,10 @@ def plot_accuracy_vs_binwidth(df, dataset_name, output_dir):
                        textcoords="offset points", xytext=(0, 8), 
                        fontsize=8, ha='center')
     
+    mode_suffix = " (Raw Embeddings)" if raw_mode else ""
     ax.set_xlabel('Binwidth (h)', fontsize=12)
     ax.set_ylabel('Accuracy', fontsize=12)
-    ax.set_title(f'{dataset_name}: Accuracy vs Binwidth\n(bins = range / binwidth)',
+    ax.set_title(f'{dataset_name}: Accuracy vs Binwidth{mode_suffix}\n(bins = range / binwidth)',
                 fontsize=13, fontweight='bold')
     ax.legend(loc='best', fontsize=10)
     ax.grid(True, alpha=0.3)
@@ -103,14 +122,13 @@ def plot_accuracy_vs_binwidth(df, dataset_name, output_dir):
     ax.text(0.02, 0.02, '← More bins (finer resolution)', 
             transform=ax.transAxes, fontsize=9, style='italic', alpha=0.7)
     
-    plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_acc_vs_binwidth.png',
-                bbox_inches='tight', facecolor='white')
+    filename = f'{dataset_name.replace("-", "_").lower()}_acc_vs_binwidth{"_raw" if raw_mode else ""}.png'
+    plt.savefig(f'{output_dir}/{filename}', bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_acc_vs_binwidth.png")
+    print(f"  ✅ Saved: {filename}")
 
 
-def plot_accuracy_vs_bins(df, dataset_name, output_dir):
+def plot_accuracy_vs_bins(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 2: Accuracy vs Number of Bins.
     Direct relationship between embedding dimension and accuracy.
@@ -122,7 +140,7 @@ def plot_accuracy_vs_bins(df, dataset_name, output_dir):
     
     for func in df['func'].unique():
         func_df = df[df['func'] == func].sort_values('bins')
-        color = FUNC_COLORS.get(func, '#333')
+        color = get_func_color(func)
         
         ax.plot(func_df['bins'], func_df['accuracy'],
                marker='s', linewidth=2.5, markersize=10,
@@ -135,21 +153,21 @@ def plot_accuracy_vs_bins(df, dataset_name, output_dir):
                        textcoords="offset points", xytext=(0, 8),
                        fontsize=8, ha='center')
     
+    mode_suffix = " (Raw Embeddings)" if raw_mode else ""
     ax.set_xlabel('Number of Bins (Embedding Dimension)', fontsize=12)
     ax.set_ylabel('Accuracy', fontsize=12)
-    ax.set_title(f'{dataset_name}: Accuracy vs Embedding Dimension',
+    ax.set_title(f'{dataset_name}: Accuracy vs Embedding Dimension{mode_suffix}',
                 fontsize=13, fontweight='bold')
     ax.legend(loc='best', fontsize=10)
     ax.grid(True, alpha=0.3)
     
-    plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_acc_vs_bins.png',
-                bbox_inches='tight', facecolor='white')
+    filename = f'{dataset_name.replace("-", "_").lower()}_acc_vs_bins{"_raw" if raw_mode else ""}.png'
+    plt.savefig(f'{output_dir}/{filename}', bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_acc_vs_bins.png")
+    print(f"  ✅ Saved: {filename}")
 
 
-def plot_f1_vs_binwidth(df, dataset_name, output_dir):
+def plot_f1_vs_binwidth(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 3: F1 Score vs Binwidth.
     """
@@ -160,28 +178,28 @@ def plot_f1_vs_binwidth(df, dataset_name, output_dir):
     
     for func in df['func'].unique():
         func_df = df[df['func'] == func].sort_values('binwidth')
-        color = FUNC_COLORS.get(func, '#333')
+        color = get_func_color(func)
         
         ax.plot(func_df['binwidth'], func_df['f1_score'],
                marker='^', linewidth=2.5, markersize=10,
                label=func.capitalize(), color=color)
     
+    mode_suffix = " (Raw Embeddings)" if raw_mode else ""
     ax.set_xlabel('Binwidth (h)', fontsize=12)
     ax.set_ylabel('F1 Score (weighted)', fontsize=12)
-    ax.set_title(f'{dataset_name}: F1 Score vs Binwidth',
+    ax.set_title(f'{dataset_name}: F1 Score vs Binwidth{mode_suffix}',
                 fontsize=13, fontweight='bold')
     ax.legend(loc='best', fontsize=10)
     ax.grid(True, alpha=0.3)
     ax.invert_xaxis()
     
-    plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_f1_vs_binwidth.png',
-                bbox_inches='tight', facecolor='white')
+    filename = f'{dataset_name.replace("-", "_").lower()}_f1_vs_binwidth{"_raw" if raw_mode else ""}.png'
+    plt.savefig(f'{output_dir}/{filename}', bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_f1_vs_binwidth.png")
+    print(f"  ✅ Saved: {filename}")
 
 
-def plot_time_vs_binwidth(df, dataset_name, output_dir):
+def plot_time_vs_binwidth(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 4: Generation Time vs Binwidth.
     Shows computational cost at different resolutions.
@@ -193,28 +211,28 @@ def plot_time_vs_binwidth(df, dataset_name, output_dir):
     
     for func in df['func'].unique():
         func_df = df[df['func'] == func].sort_values('binwidth')
-        color = FUNC_COLORS.get(func, '#333')
+        color = get_func_color(func)
         
         ax.plot(func_df['binwidth'], func_df['generation_time'],
                marker='o', linewidth=2.5, markersize=10,
                label=func.capitalize(), color=color)
     
+    mode_suffix = " (Raw Embeddings)" if raw_mode else ""
     ax.set_xlabel('Binwidth (h)', fontsize=12)
     ax.set_ylabel('Generation Time (seconds)', fontsize=12)
-    ax.set_title(f'{dataset_name}: Computational Cost vs Binwidth\n(Smaller binwidth = More bins = Higher cost)',
+    ax.set_title(f'{dataset_name}: Computational Cost vs Binwidth{mode_suffix}\n(Smaller binwidth = More bins = Higher cost)',
                 fontsize=13, fontweight='bold')
     ax.legend(loc='best', fontsize=10)
     ax.grid(True, alpha=0.3)
     ax.invert_xaxis()
     
-    plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_time_vs_binwidth.png',
-                bbox_inches='tight', facecolor='white')
+    filename = f'{dataset_name.replace("-", "_").lower()}_time_vs_binwidth{"_raw" if raw_mode else ""}.png'
+    plt.savefig(f'{output_dir}/{filename}', bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_time_vs_binwidth.png")
+    print(f"  ✅ Saved: {filename}")
 
 
-def plot_memory_vs_binwidth(df, dataset_name, output_dir):
+def plot_memory_vs_binwidth(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 5: Memory Usage vs Binwidth.
     """
@@ -225,28 +243,28 @@ def plot_memory_vs_binwidth(df, dataset_name, output_dir):
     
     for func in df['func'].unique():
         func_df = df[df['func'] == func].sort_values('binwidth')
-        color = FUNC_COLORS.get(func, '#333')
+        color = get_func_color(func)
         
         ax.plot(func_df['binwidth'], func_df['memory_mb'],
                marker='s', linewidth=2.5, markersize=10,
                label=func.capitalize(), color=color)
     
+    mode_suffix = " (Raw Embeddings)" if raw_mode else ""
     ax.set_xlabel('Binwidth (h)', fontsize=12)
     ax.set_ylabel('Peak Memory Usage (MB)', fontsize=12)
-    ax.set_title(f'{dataset_name}: Memory Usage vs Binwidth',
+    ax.set_title(f'{dataset_name}: Memory Usage vs Binwidth{mode_suffix}',
                 fontsize=13, fontweight='bold')
     ax.legend(loc='best', fontsize=10)
     ax.grid(True, alpha=0.3)
     ax.invert_xaxis()
     
-    plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_memory_vs_binwidth.png',
-                bbox_inches='tight', facecolor='white')
+    filename = f'{dataset_name.replace("-", "_").lower()}_memory_vs_binwidth{"_raw" if raw_mode else ""}.png'
+    plt.savefig(f'{output_dir}/{filename}', bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_memory_vs_binwidth.png")
+    print(f"  ✅ Saved: {filename}")
 
 
-def plot_accuracy_time_tradeoff(df, dataset_name, output_dir):
+def plot_accuracy_time_tradeoff(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 6: Accuracy vs Generation Time (Pareto analysis).
     Shows efficiency of different configurations.
@@ -258,18 +276,42 @@ def plot_accuracy_time_tradeoff(df, dataset_name, output_dir):
     
     for func in df['func'].unique():
         func_df = df[df['func'] == func]
-        color = FUNC_COLORS.get(func, '#333')
+        color = get_func_color(func)
         
         scatter = ax.scatter(func_df['generation_time'], func_df['accuracy'],
                            s=150, alpha=0.8, color=color, 
                            label=func.capitalize(), edgecolors='black', linewidths=0.5)
         
-        # Annotate with binwidth
+        # Annotate with binwidth (collision avoidance)
+        func_df = func_df.sort_values('generation_time')
+        
+        x_range = func_df['generation_time'].max() - func_df['generation_time'].min()
+        y_range = func_df['accuracy'].max() - func_df['accuracy'].min()
+        if x_range == 0: x_range = 1
+        if y_range == 0: y_range = 1
+        
+        prev_x, prev_y = -9999, -9999
+        offset_dir = 1
+        
         for _, row in func_df.iterrows():
+            x, y = row['generation_time'], row['accuracy']
+            
+            dx = abs(x - prev_x) / x_range
+            dy = abs(y - prev_y) / y_range
+            
+            if dx < 0.1 and dy < 0.1:
+                offset_dir *= -1
+            else:
+                offset_dir = 1
+            
+            xytext = (5, 5) if offset_dir > 0 else (5, -15)
+            
             ax.annotate(f'h={row["binwidth"]}',
-                       (row['generation_time'], row['accuracy']),
-                       textcoords="offset points", xytext=(5, 5),
-                       fontsize=9)
+                       (x, y),
+                       textcoords="offset points", xytext=xytext,
+                       fontsize=9, bbox=dict(boxstyle="round,pad=0.1", fc="white", ec="none", alpha=0.3))
+            
+            prev_x, prev_y = x, y
     
     ax.set_xlabel('Generation Time (seconds)', fontsize=12)
     ax.set_ylabel('Accuracy', fontsize=12)
@@ -283,14 +325,13 @@ def plot_accuracy_time_tradeoff(df, dataset_name, output_dir):
            transform=ax.transAxes, fontsize=9, style='italic', 
            ha='right', alpha=0.7)
     
-    plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_pareto.png',
-                bbox_inches='tight', facecolor='white')
+    filename = f'{dataset_name.replace("-", "_").lower()}_pareto{"_raw" if raw_mode else ""}.png'
+    plt.savefig(f'{output_dir}/{filename}', bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_pareto.png")
+    print(f"  ✅ Saved: {filename}")
 
 
-def plot_heatmap(df, dataset_name, output_dir):
+def plot_heatmap(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 7: Heatmap of Accuracy by Function and Binwidth.
     """
@@ -309,9 +350,10 @@ def plot_heatmap(df, dataset_name, output_dir):
                 cbar_kws={'label': 'Accuracy'}, linewidths=0.5,
                 vmin=pivot.values.min() - 0.02, vmax=pivot.values.max() + 0.02)
     
+    mode_suffix = " (Raw Embeddings)" if raw_mode else ""
     ax.set_xlabel('Binwidth (h) → Fewer bins', fontsize=11)
     ax.set_ylabel('Function Type', fontsize=11)
-    ax.set_title(f'{dataset_name}: Grid Search Accuracy Heatmap\n(bins = range / binwidth)',
+    ax.set_title(f'{dataset_name}: Grid Search Accuracy Heatmap{mode_suffix}\n(bins = range / binwidth)',
                 fontsize=13, fontweight='bold')
     
     # Add bins annotation below
@@ -319,14 +361,13 @@ def plot_heatmap(df, dataset_name, output_dir):
                                        for h in sorted(df['binwidth'].unique(), reverse=True)])
     fig.text(0.5, -0.02, bins_text, ha='center', fontsize=9, style='italic')
     
-    plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_heatmap.png',
-                bbox_inches='tight', facecolor='white')
+    filename = f'{dataset_name.replace("-", "_").lower()}_heatmap{"_raw" if raw_mode else ""}.png'
+    plt.savefig(f'{output_dir}/{filename}', bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_heatmap.png")
+    print(f"  ✅ Saved: {filename}")
 
 
-def plot_combined_summary(df, dataset_name, output_dir):
+def plot_combined_summary(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 8: Combined 2x2 summary plot.
     """
@@ -339,7 +380,7 @@ def plot_combined_summary(df, dataset_name, output_dir):
     ax1 = axes[0, 0]
     for func in df['func'].unique():
         func_df = df[df['func'] == func].sort_values('binwidth')
-        color = FUNC_COLORS.get(func, '#333')
+        color = get_func_color(func)
         ax1.plot(func_df['binwidth'], func_df['accuracy'],
                 marker='o', linewidth=2, markersize=8, label=func.capitalize(), color=color)
     ax1.set_xlabel('Binwidth (h)')
@@ -353,7 +394,7 @@ def plot_combined_summary(df, dataset_name, output_dir):
     ax2 = axes[0, 1]
     for func in df['func'].unique():
         func_df = df[df['func'] == func].sort_values('bins')
-        color = FUNC_COLORS.get(func, '#333')
+        color = get_func_color(func)
         ax2.plot(func_df['bins'], func_df['accuracy'],
                 marker='s', linewidth=2, markersize=8, label=func.capitalize(), color=color)
     ax2.set_xlabel('Number of Bins')
@@ -367,7 +408,7 @@ def plot_combined_summary(df, dataset_name, output_dir):
     if 'generation_time' in df.columns:
         for func in df['func'].unique():
             func_df = df[df['func'] == func].sort_values('binwidth')
-            color = FUNC_COLORS.get(func, '#333')
+            color = get_func_color(func)
             ax3.plot(func_df['binwidth'], func_df['generation_time'],
                     marker='^', linewidth=2, markersize=8, label=func.capitalize(), color=color)
         ax3.set_xlabel('Binwidth (h)')
@@ -385,7 +426,7 @@ def plot_combined_summary(df, dataset_name, output_dir):
     best_per_func = df.loc[df.groupby('func')['accuracy'].idxmax()]
     
     x = np.arange(len(best_per_func))
-    colors = [FUNC_COLORS.get(f, '#333') for f in best_per_func['func']]
+    colors = [get_func_color(f) for f in best_per_func['func']]
     bars = ax4.bar(x, best_per_func['accuracy'], color=colors, alpha=0.8, edgecolor='black')
     
     ax4.set_xticks(x)
@@ -403,14 +444,13 @@ def plot_combined_summary(df, dataset_name, output_dir):
     fig.suptitle(f'{dataset_name}: Grid Search Summary\n(Classifier: Random Forest)',
                 fontsize=15, fontweight='bold', y=1.02)
     
-    plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_summary.png',
-                bbox_inches='tight', facecolor='white')
+    filename = f'{dataset_name.replace("-", "_").lower()}_summary{"_raw" if raw_mode else ""}.png'
+    plt.savefig(f'{output_dir}/{filename}', bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_summary.png")
+    print(f"  ✅ Saved: {filename}")
 
 
-def create_grid_search_summary_table(all_data, output_dir):
+def create_grid_search_summary_table(all_data, output_dir, raw_mode=False):
     """Create summary table of grid search results."""
     summary_rows = []
     
@@ -455,12 +495,12 @@ def create_grid_search_summary_table(all_data, output_dir):
     return summary_df
 
 
-def plot_cross_dataset_comparison(all_data, output_dir):
+def plot_cross_dataset_comparison(all_data_prep, all_data_raw, output_dir):
     """
     Plot comparing grid search results across all datasets.
     """
     # Check how many datasets have data
-    valid_data = {k: v for k, v in all_data.items() if v is not None}
+    valid_data = {k: v for k, v in all_data_prep.items() if v is not None}
     if len(valid_data) < 2:
         print("  ⚠️ Need at least 2 datasets for cross-dataset comparison")
         return
@@ -532,49 +572,58 @@ def main():
     print("="*80)
     print("FGSD GRID SEARCH ANALYSIS")
     print("="*80)
-    print("\nGrid Search Parameters:")
-    print("  • Binwidth (h): [0.05, 0.1, 0.2, 0.5, 1.0]")
-    print("  • bins = range / binwidth (minimum 10)")
-    print("  • Classifier: Random Forest (n_estimators=500, max_depth=20)")
     
-    all_data = {}
+    all_data_preprocessed = {}
+    all_data_raw = {}
     
-    for dataset_name, path in FILES.items():
-        print(f"\n📊 Processing {dataset_name}...")
+    for dataset_name, paths in FILES.items():
+        # Preprocessed
+        print(f"\n📊 Processing {dataset_name} (Preprocessed)...")
+        df_prep = load_data(paths['preprocessed'])
+        all_data_preprocessed[dataset_name] = df_prep
         
-        df = load_data(path)
-        all_data[dataset_name] = df
+        if df_prep is not None:
+            output_dir = get_output_dir(raw_mode=False)
+            plot_accuracy_vs_binwidth(df_prep, dataset_name, output_dir, raw_mode=False)
+            plot_accuracy_vs_bins(df_prep, dataset_name, output_dir, raw_mode=False)
+            plot_f1_vs_binwidth(df_prep, dataset_name, output_dir, raw_mode=False)
+            plot_time_vs_binwidth(df_prep, dataset_name, output_dir, raw_mode=False)
+            plot_memory_vs_binwidth(df_prep, dataset_name, output_dir, raw_mode=False)
+            plot_accuracy_time_tradeoff(df_prep, dataset_name, output_dir, raw_mode=False)
+            plot_heatmap(df_prep, dataset_name, output_dir, raw_mode=False)
+            plot_combined_summary(df_prep, dataset_name, output_dir, raw_mode=False)
         
-        if df is None:
-            continue
+        # Raw
+        print(f"\n📊 Processing {dataset_name} (Raw Embeddings)...")
+        df_raw = load_data(paths['raw'])
+        all_data_raw[dataset_name] = df_raw
         
-        print(f"  Loaded {len(df)} rows")
-        print(f"  Functions: {df['func'].unique().tolist()}")
-        print(f"  Binwidths: {sorted(df['binwidth'].unique())}")
-        print(f"  Bins range: {df['bins'].min()} - {df['bins'].max()}")
-        print(f"  Accuracy range: {df['accuracy'].min():.4f} - {df['accuracy'].max():.4f}")
-        
-        # Generate all plots for this dataset
-        plot_accuracy_vs_binwidth(df, dataset_name, OUTPUT_DIR)
-        plot_accuracy_vs_bins(df, dataset_name, OUTPUT_DIR)
-        plot_f1_vs_binwidth(df, dataset_name, OUTPUT_DIR)
-        plot_time_vs_binwidth(df, dataset_name, OUTPUT_DIR)
-        plot_memory_vs_binwidth(df, dataset_name, OUTPUT_DIR)
-        plot_accuracy_time_tradeoff(df, dataset_name, OUTPUT_DIR)
-        plot_heatmap(df, dataset_name, OUTPUT_DIR)
-        plot_combined_summary(df, dataset_name, OUTPUT_DIR)
+        if df_raw is not None:
+            output_dir_raw = get_output_dir(raw_mode=True)
+            plot_accuracy_vs_binwidth(df_raw, dataset_name, output_dir_raw, raw_mode=True)
+            plot_accuracy_vs_bins(df_raw, dataset_name, output_dir_raw, raw_mode=True)
+            plot_f1_vs_binwidth(df_raw, dataset_name, output_dir_raw, raw_mode=True)
+            plot_time_vs_binwidth(df_raw, dataset_name, output_dir_raw, raw_mode=True)
+            plot_memory_vs_binwidth(df_raw, dataset_name, output_dir_raw, raw_mode=True)
+            plot_accuracy_time_tradeoff(df_raw, dataset_name, output_dir_raw, raw_mode=True)
+            plot_heatmap(df_raw, dataset_name, output_dir_raw, raw_mode=True)
+            plot_combined_summary(df_raw, dataset_name, output_dir_raw, raw_mode=True)
     
-    # Cross-dataset comparison
-    print("\n📊 Creating cross-dataset comparison...")
-    plot_cross_dataset_comparison(all_data, OUTPUT_DIR)
+    # Cross-dataset comparisons
+    print("\n📊 Creating cross-dataset comparisons...")
+    plot_cross_dataset_comparison(all_data_preprocessed, OUTPUT_DIR, raw_mode=False)
+    plot_cross_dataset_comparison(all_data_raw, OUTPUT_DIR_RAW, raw_mode=True)
     
-    # Create summary table
-    create_grid_search_summary_table(all_data, OUTPUT_DIR)
+    # Summary tables
+    create_grid_search_summary_table(all_data_preprocessed, OUTPUT_DIR, raw_mode=False)
+    create_grid_search_summary_table(all_data_raw, OUTPUT_DIR_RAW, raw_mode=True)
     
-    print(f"\n✅ All plots saved to: {OUTPUT_DIR}/")
-    print("\nGenerated files:")
-    for f in sorted(os.listdir(OUTPUT_DIR)):
-        print(f"  📈 {f}")
+    # Comparison
+    plot_raw_vs_preprocessed_accuracy(all_data_preprocessed, all_data_raw, OUTPUT_DIR)
+    
+    print(f"\n✅ All plots saved!")
+    print(f"  📁 Preprocessed: {OUTPUT_DIR}/")
+    print(f"  📁 Raw: {OUTPUT_DIR_RAW}/")
 
 
 if __name__ == "__main__":

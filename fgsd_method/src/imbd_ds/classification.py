@@ -28,6 +28,9 @@ from fgsd import FlexibleFGSD
 from .config import DATASET_DIR, OptimalParams
 from .data_loader import ensure_dataset_ready, load_all_graphs
 
+# Results directory for raw embeddings
+RAW_RESULTS_DIR = os.path.join(parent_dir, 'results', 'raw_embeddings')
+
 
 def evaluate_classifier(X_train, X_test, y_train, y_test, classifier_name, clf):
     """Evaluate a classifier and return metrics."""
@@ -70,6 +73,15 @@ def get_classifiers(random_state=42):
         'SVM (RBF)': make_pipeline(StandardScaler(), SVC(kernel='rbf', C=100, gamma='scale', probability=True, random_state=random_state)),
         'Random Forest': RandomForestClassifier(n_estimators=500, max_depth=20, random_state=random_state, n_jobs=-1),
         'MLP': make_pipeline(StandardScaler(), MLPClassifier(hidden_layer_sizes=(256, 128, 64), max_iter=1000, early_stopping=True, random_state=random_state))
+    }
+
+
+def get_raw_classifiers(random_state=42):
+    """Get all classifiers without any preprocessing (raw embeddings)."""
+    return {
+        'SVM (RBF) Raw': SVC(kernel='rbf', C=100, gamma='scale', probability=True, random_state=random_state),
+        'Random Forest Raw': RandomForestClassifier(n_estimators=500, max_depth=20, random_state=random_state, n_jobs=-1),
+        'MLP Raw': MLPClassifier(hidden_layer_sizes=(256, 128, 64), max_iter=1000, early_stopping=True, random_state=random_state)
     }
 
 
@@ -126,11 +138,13 @@ def run_dimension_analysis(
     optimal_params: Dict[str, OptimalParams],
     bin_sizes: List[int],
     test_size: float = 0.15,
-    random_state: int = 42
+    random_state: int = 42,
+    raw_mode: bool = False
 ) -> Tuple[List[Dict[str, Any]], Dict[str, Tuple[int, float]]]:
     """Run dimension analysis with bin sizes from preanalysis."""
+    mode_str = "(Raw Embeddings)" if raw_mode else ""
     print("\n" + "="*80)
-    print("DIMENSION ANALYSIS: Accuracy vs Compute Cost")
+    print(f"DIMENSION ANALYSIS: Accuracy vs Compute Cost {mode_str}")
     print(f"Testing bin sizes: {bin_sizes}")
     print("="*80)
     
@@ -143,7 +157,7 @@ def run_dimension_analysis(
     
     all_results = []
     best_config = {}
-    classifiers = get_classifiers(random_state)
+    classifiers = get_raw_classifiers(random_state) if raw_mode else get_classifiers(random_state)
     
     for func_type in ['harmonic', 'polynomial']:
         if func_type not in optimal_params:
@@ -190,12 +204,13 @@ def run_dimension_analysis(
     return all_results, best_config
 
 
-def run_final_classification(optimal_params, recommended_bins=None, test_size=0.15, random_state=42):
+def run_final_classification(optimal_params, recommended_bins=None, test_size=0.15, random_state=42, raw_mode=False):
     """
     Run final classification testing ALL bin sizes.
     IMDB has no node labels, so only spectral features are used.
     """
-    print(f"\n{'='*80}\nFINAL CLASSIFICATION\n{'='*80}")
+    mode_str = "(Raw Embeddings)" if raw_mode else ""
+    print(f"\n{'='*80}\nFINAL CLASSIFICATION {mode_str}\n{'='*80}")
     
     ensure_dataset_ready()
     graphs, labels = load_all_graphs(DATASET_DIR)
@@ -206,7 +221,7 @@ def run_final_classification(optimal_params, recommended_bins=None, test_size=0.
         graphs, labels, test_size=test_size, random_state=random_state, stratify=labels)
     
     results = []
-    classifiers = get_classifiers(random_state)
+    classifiers = get_raw_classifiers(random_state) if raw_mode else get_classifiers(random_state)
     
     # Determine bin sizes to test
     if recommended_bins is None:

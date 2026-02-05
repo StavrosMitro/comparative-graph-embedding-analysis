@@ -92,6 +92,12 @@ python -m enzymes_ds.classification_main --no-node-labels
 
 # Run classifier hyperparameter tuning (RF & SVM)
 python -m enzymes_ds.classification_main --tune-classifiers
+
+# Run with raw embeddings (no StandardScaler preprocessing)
+python -m enzymes_ds.classification_main --raw-embeddings
+
+# Raw embeddings with stability analysis
+python -m enzymes_ds.classification_main --raw-embeddings --stability
 ```
 
 **Clustering:**
@@ -123,6 +129,12 @@ python -m imbd_ds.classification_main --force
 
 # Run classifier hyperparameter tuning
 python -m imbd_ds.classification_main --tune-classifiers
+
+# Run with raw embeddings (no StandardScaler preprocessing)
+python -m imbd_ds.classification_main --raw-embeddings
+
+# Raw embeddings with stability analysis
+python -m imbd_ds.classification_main --raw-embeddings --stability
 ```
 
 **Clustering:**

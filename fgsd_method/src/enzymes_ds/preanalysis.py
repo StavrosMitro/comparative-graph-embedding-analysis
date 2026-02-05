@@ -88,7 +88,8 @@ def load_default_params() -> Tuple[Dict[str, OptimalParams], Dict[str, List[int]
         'harmonic': OptimalParams('harmonic', 100, 33.0, 33.0, 100),  # Updated to 33.0
         'polynomial': OptimalParams('polynomial', 100, 4.1, 4.1, 100)  # Updated to 4.1
     }
-    recommended_bins = {'harmonic': [50, 100, 150], 'polynomial': [50, 100, 150]}
+    # Expanded to 5 bin sizes
+    recommended_bins = {'harmonic': [50, 100, 150, 200, 250], 'polynomial': [50, 100, 150, 200, 250]}
     return optimal_params, recommended_bins
 
 
@@ -133,7 +134,7 @@ def compute_spectral_distances_sampled(graphs, func_type, sample_size=PREANALYSI
     return np.array(all_distances), np.array(node_counts)
 
 
-def determine_optimal_params_and_bins(distances, node_counts, func_type, save_plot=True, top_n_bins=3):
+def determine_optimal_params_and_bins(distances, node_counts, func_type, save_plot=True, top_n_bins=5):
     print(f"\n{'='*60}\nPRE-ANALYSIS: {func_type.upper()}\n{'='*60}")
     
     p95, p99 = np.percentile(distances, 95), np.percentile(distances, 99)
@@ -171,7 +172,7 @@ def determine_optimal_params_and_bins(distances, node_counts, func_type, save_pl
     return OptimalParams(func_type, top_bins[0], optimal_range, p99, top_bins[0]), top_bins
 
 
-def run_sampled_preanalysis(graphs=None, sample_size=PREANALYSIS_SAMPLE_SIZE, use_cache=True, force_recompute=False, dataset_name='enzymes', top_n_bins=3):
+def run_sampled_preanalysis(graphs=None, sample_size=PREANALYSIS_SAMPLE_SIZE, use_cache=True, force_recompute=False, dataset_name='enzymes', top_n_bins=5):
     print(f"\n{'='*80}\nPRE-ANALYSIS FOR {dataset_name.upper()}\n{'='*80}")
     
     if use_cache and not force_recompute:

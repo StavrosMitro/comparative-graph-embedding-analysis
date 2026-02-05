@@ -17,7 +17,7 @@ CACHE_DIR = os.path.join(PARENT_DIR, 'cache')  # For storing preanalysis results
 # =============================================================================
 # PROCESSING CONSTANTS
 # =============================================================================
-BATCH_SIZE = 200
+BATCH_SIZE = 500
 PREANALYSIS_SAMPLE_SIZE = 700
 MAX_NODES_FOR_PREANALYSIS = 500
 

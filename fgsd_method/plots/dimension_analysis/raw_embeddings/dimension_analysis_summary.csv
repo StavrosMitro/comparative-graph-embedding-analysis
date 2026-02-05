@@ -1,0 +1,3 @@
+Dataset,Best Function,Best Classifier,Best Dimension,Best Accuracy,Best F1,Generation Time (s)
+ENZYMES,polynomial,Random Forest Raw,150,0.5444444444444444,0.5395044391663729,4.109809160232544
+IMDB-MULTI,polynomial,MLP Raw,150,0.52,0.4981010521666429,7.673027276992798

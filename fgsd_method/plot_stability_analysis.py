@@ -28,14 +28,25 @@ import os
 
 # File paths for stability results
 FILES = {
-    'ENZYMES': 'src/results/fgsd_enzymes_stability_results.csv',
-    'IMDB-MULTI': 'src/results/fgsd_imdb_stability_results.csv',
-    'REDDIT-MULTI-12K': 'src/results/fgsd_reddit_stability_results.csv',
+    'ENZYMES': {
+        'preprocessed': 'src/results/fgsd_enzymes_stability_results.csv',
+        'raw': 'src/results/raw_embeddings/fgsd_enzymes_raw_stability_results.csv'
+    },
+    'IMDB-MULTI': {
+        'preprocessed': 'src/results/fgsd_imdb_stability_results.csv',
+        'raw': 'src/results/raw_embeddings/fgsd_imdb_raw_stability_results.csv'
+    },
+    'REDDIT-MULTI-12K': {
+        'preprocessed': 'src/results/fgsd_reddit_stability_results.csv',
+        'raw': 'src/results/raw_embeddings/fgsd_reddit_raw_stability_results.csv'
+    },
 }
 
-# Output directory
+# Output directories
 OUTPUT_DIR = 'plots/stability_analysis'
+OUTPUT_DIR_RAW = 'plots/stability_analysis/raw_embeddings'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+os.makedirs(OUTPUT_DIR_RAW, exist_ok=True)
 
 # Plot settings
 plt.rcParams['figure.dpi'] = 150
@@ -56,28 +67,6 @@ FUNC_COLORS = {
     'naive_hybrid_with_labels': '#c0392b',
 }
 
-MODE_MARKERS = {'default': 'o', 'remove': 's', 'add': '^'}
-MODE_STYLES = {'default': '-', 'remove': '--', 'add': ':'}
-
-
-def load_data(path):
-    """Load stability analysis data."""
-    if not os.path.exists(path):
-        print(f"  ⚠️  File not found: {path}")
-        return None
-    
-    df = pd.read_csv(path)
-    
-    # Standardize column names
-    if 'ratio' not in df.columns and 'perturbation_ratio' in df.columns:
-        df['ratio'] = df['perturbation_ratio']
-    
-    # Convert ratio to percentage for display
-    if 'ratio' in df.columns:
-        df['ratio_pct'] = df['ratio'] * 100
-    
-    return df
-
 
 def get_func_color(func_name):
     """Get color for function type, handling variants."""
@@ -87,7 +76,12 @@ def get_func_color(func_name):
     return '#333333'
 
 
-def plot_cosine_similarity_vs_perturbation(df, dataset_name, output_dir):
+def get_output_dir(raw_mode=False):
+    """Get output directory based on mode."""
+    return OUTPUT_DIR_RAW if raw_mode else OUTPUT_DIR
+
+
+def plot_cosine_similarity_vs_perturbation(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 1: Cosine Similarity vs Perturbation Ratio
     Shows how embedding stability degrades with increasing perturbation.
@@ -123,9 +117,10 @@ def plot_cosine_similarity_vs_perturbation(df, dataset_name, output_dir):
             ax.plot(func_df_sorted['ratio_pct'], func_df_sorted['mean_cosine_similarity'],
                    marker='o', linewidth=2, markersize=8, label=func, color=color)
     
+    mode_suffix = " (Raw Embeddings)" if raw_mode else ""
     ax.set_xlabel('Perturbation Ratio (%)', fontsize=12)
     ax.set_ylabel('Mean Cosine Similarity', fontsize=12)
-    ax.set_title(f'{dataset_name}: Embedding Stability vs Perturbation\n(Higher = More Stable)', 
+    ax.set_title(f'{dataset_name}: Embedding Stability vs Perturbation{mode_suffix}\n(Higher = More Stable)', 
                 fontsize=13, fontweight='bold')
     ax.legend(loc='best', fontsize=9)
     ax.grid(True, alpha=0.3)
@@ -134,14 +129,13 @@ def plot_cosine_similarity_vs_perturbation(df, dataset_name, output_dir):
     # Add reference line at 1.0 (perfect stability)
     ax.axhline(y=1.0, color='gray', linestyle='--', alpha=0.5, label='Perfect stability')
     
-    plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_cosine_stability.png',
-                bbox_inches='tight', facecolor='white')
+    filename = f'{dataset_name.replace("-", "_").lower()}_cosine_stability{"_raw" if raw_mode else ""}.png'
+    plt.savefig(f'{output_dir}/{filename}', bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_cosine_stability.png")
+    print(f"  ✅ Saved: {filename}")
 
 
-def plot_accuracy_drop_vs_perturbation(df, dataset_name, output_dir):
+def plot_accuracy_drop_vs_perturbation(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 2: Classification Accuracy Drop vs Perturbation
     Shows how robust classification is to graph perturbations.
@@ -176,9 +170,10 @@ def plot_accuracy_drop_vs_perturbation(df, dataset_name, output_dir):
         ax.plot(func_df_sorted['ratio_pct'], func_df_sorted[acc_drop_col],
                marker='o', linewidth=2, markersize=8, label=func, color=color)
     
+    mode_suffix = " (Raw Embeddings)" if raw_mode else ""
     ax.set_xlabel('Perturbation Ratio (%)', fontsize=12)
     ax.set_ylabel('Accuracy Drop (%)', fontsize=12)
-    ax.set_title(f'{dataset_name}: Classification Robustness\n(Lower Drop = More Robust)',
+    ax.set_title(f'{dataset_name}: Classification Robustness{mode_suffix}\n(Lower Drop = More Robust)',
                 fontsize=13, fontweight='bold')
     ax.legend(loc='best', fontsize=9)
     ax.grid(True, alpha=0.3)
@@ -186,14 +181,13 @@ def plot_accuracy_drop_vs_perturbation(df, dataset_name, output_dir):
     # Add reference line at 0 (no drop)
     ax.axhline(y=0, color='green', linestyle='--', alpha=0.5)
     
-    plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_accuracy_drop.png',
-                bbox_inches='tight', facecolor='white')
+    filename = f'{dataset_name.replace("-", "_").lower()}_accuracy_drop{"_raw" if raw_mode else ""}.png'
+    plt.savefig(f'{output_dir}/{filename}', bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_accuracy_drop.png")
+    print(f"  ✅ Saved: {filename}")
 
 
-def plot_relative_change_vs_perturbation(df, dataset_name, output_dir):
+def plot_relative_change_vs_perturbation(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 3: Relative Embedding Change vs Perturbation
     Shows normalized L2 distance between original and perturbed embeddings.
@@ -217,21 +211,22 @@ def plot_relative_change_vs_perturbation(df, dataset_name, output_dir):
         ax.plot(func_df_sorted['ratio_pct'], func_df_sorted['mean_relative_change'],
                marker='s', linewidth=2, markersize=8, label=func, color=color)
     
+    mode_suffix = " (Raw Embeddings)" if raw_mode else ""
     ax.set_xlabel('Perturbation Ratio (%)', fontsize=12)
     ax.set_ylabel('Mean Relative Change (L2/||x||)', fontsize=12)
-    ax.set_title(f'{dataset_name}: Embedding Sensitivity\n(Lower = Less Sensitive)',
+    ax.set_title(f'{dataset_name}: Embedding Sensitivity{mode_suffix}\n(Lower = Less Sensitive)',
                 fontsize=13, fontweight='bold')
     ax.legend(loc='best', fontsize=9)
     ax.grid(True, alpha=0.3)
     
     plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_relative_change.png',
-                bbox_inches='tight', facecolor='white')
+    filename = f'{dataset_name.replace("-", "_").lower()}_relative_change{"_raw" if raw_mode else ""}.png'
+    plt.savefig(f'{output_dir}/{filename}', bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_relative_change.png")
+    print(f"  ✅ Saved: {filename}")
 
 
-def plot_stability_heatmap(df, dataset_name, output_dir):
+def plot_stability_heatmap(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 4: Heatmap of stability metrics by function and perturbation ratio.
     """
@@ -255,19 +250,20 @@ def plot_stability_heatmap(df, dataset_name, output_dir):
                 cbar_kws={'label': 'Cosine Similarity'}, vmin=0.7, vmax=1.0,
                 linewidths=0.5)
     
-    ax.set_title(f'{dataset_name}: Stability Heatmap\n(Cosine Similarity by Function & Perturbation)',
+    mode_suffix = " (Raw Embeddings)" if raw_mode else ""
+    ax.set_title(f'{dataset_name}: Stability Heatmap{mode_suffix}\n(Cosine Similarity by Function & Perturbation)',
                 fontsize=13, fontweight='bold')
     ax.set_xlabel('Perturbation Ratio', fontsize=11)
     ax.set_ylabel('Function Type', fontsize=11)
     
     plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_stability_heatmap.png',
-                bbox_inches='tight', facecolor='white')
+    filename = f'{dataset_name.replace("-", "_").lower()}_stability_heatmap{"_raw" if raw_mode else ""}.png'
+    plt.savefig(f'{output_dir}/{filename}', bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_stability_heatmap.png")
+    print(f"  ✅ Saved: {filename}")
 
 
-def plot_accuracy_original_vs_perturbed(df, dataset_name, output_dir):
+def plot_accuracy_original_vs_perturbed(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 5: Original vs Perturbed Accuracy scatter plot.
     Shows trade-off between original performance and robustness.
@@ -319,13 +315,13 @@ def plot_accuracy_original_vs_perturbed(df, dataset_name, output_dir):
     ax.set_aspect('equal')
     
     plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_acc_scatter.png',
-                bbox_inches='tight', facecolor='white')
+    filename = f'{dataset_name.replace("-", "_").lower()}_acc_scatter{"_raw" if raw_mode else ""}.png'
+    plt.savefig(f'{output_dir}/{filename}', bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_acc_scatter.png")
+    print(f"  ✅ Saved: {filename}")
 
 
-def plot_stability_by_mode(df, dataset_name, output_dir):
+def plot_stability_by_mode(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 6: Compare stability across perturbation modes (add/remove/default).
     """
@@ -377,7 +373,7 @@ def plot_stability_by_mode(df, dataset_name, output_dir):
     print(f"  ✅ Saved: {dataset_name}_mode_comparison.png")
 
 
-def plot_combined_stability_summary(df, dataset_name, output_dir):
+def plot_combined_stability_summary(df, dataset_name, output_dir, raw_mode=False):
     """
     Plot 7: Combined summary showing multiple stability metrics.
     """
@@ -454,14 +450,14 @@ def plot_combined_stability_summary(df, dataset_name, output_dir):
     fig.suptitle(f'{dataset_name}: Stability Analysis Summary', fontsize=15, fontweight='bold', y=1.02)
     
     plt.tight_layout()
-    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_stability_summary.png',
+    plt.savefig(f'{output_dir}/{dataset_name.replace("-", "_").lower()}_stability_summary{"_raw" if raw_mode else ""}.png',
                 bbox_inches='tight', facecolor='white')
     plt.close()
-    print(f"  ✅ Saved: {dataset_name}_stability_summary.png")
+    print(f"  ✅ Saved: {dataset_name}_stability_summary{"_raw" if raw_mode else ""}.png")
 
 
-def create_stability_summary_table(all_data, output_dir):
-    """Create a summary table of stability metrics across datasets."""
+def create_stability_summary_table(all_data, output_dir, raw_mode=False):
+    """Create a summary table of stability metrics."""
     summary_rows = []
     
     for dataset_name, df in all_data.items():
@@ -499,7 +495,8 @@ def create_stability_summary_table(all_data, output_dir):
     summary_df = pd.DataFrame(summary_rows)
     
     # Save as CSV
-    summary_df.to_csv(f'{output_dir}/stability_analysis_summary.csv', index=False)
+    mode_suffix = "_raw" if raw_mode else ""
+    summary_df.to_csv(f'{output_dir}/stability_analysis_summary{mode_suffix}.csv', index=False)
     
     # Print table
     print("\n" + "="*120)
@@ -516,44 +513,110 @@ def create_stability_summary_table(all_data, output_dir):
     return summary_df
 
 
+def plot_raw_vs_preprocessed_comparison(all_data_prep, all_data_raw, output_dir):
+    """
+    NEW: Plot comparing raw vs preprocessed stability side-by-side.
+    Shows which approach is more stable.
+    """
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    
+    for ax, dataset_name in zip(axes, all_data_prep.keys()):
+        df_prep = all_data_prep.get(dataset_name)
+        df_raw = all_data_raw.get(dataset_name)
+        
+        if df_prep is None or df_raw is None:
+            ax.text(0.5, 0.5, f'{dataset_name}\nNo comparison data', ha='center', va='center')
+            ax.set_title(dataset_name)
+            continue
+        
+        # Get unique functions
+        funcs = set(df_prep['func'].unique()) & set(df_raw['func'].unique())
+        
+        for func in funcs:
+            # Preprocessed
+            func_prep = df_prep[df_prep['func'] == func]
+            prep_agg = func_prep.groupby('ratio_pct')['mean_cosine_similarity'].mean().reset_index()
+            
+            # Raw
+            func_raw = df_raw[df_raw['func'] == func]
+            raw_agg = func_raw.groupby('ratio_pct')['mean_cosine_similarity'].mean().reset_index()
+            
+            color = get_func_color(func)
+            ax.plot(prep_agg['ratio_pct'], prep_agg['mean_cosine_similarity'],
+                   marker='o', linewidth=2, label=f'{func} (Prep)', color=color, linestyle='-')
+            ax.plot(raw_agg['ratio_pct'], raw_agg['mean_cosine_similarity'],
+                   marker='s', linewidth=2, label=f'{func} (Raw)', color=color, linestyle='--', alpha=0.7)
+        
+        ax.set_xlabel('Perturbation Ratio (%)', fontsize=11)
+        ax.set_ylabel('Mean Cosine Similarity', fontsize=11)
+        ax.set_title(f'{dataset_name}', fontsize=12, fontweight='bold')
+        ax.legend(loc='best', fontsize=8)
+        ax.grid(True, alpha=0.3)
+    
+    fig.suptitle('Stability Comparison: Preprocessed vs Raw Embeddings', fontsize=14, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    plt.savefig(f'{output_dir}/stability_raw_vs_preprocessed.png', bbox_inches='tight', facecolor='white')
+    plt.close()
+    print("  ✅ Saved: stability_raw_vs_preprocessed.png")
+
+
 def main():
     print("="*80)
     print("FGSD STABILITY ANALYSIS VISUALIZATION")
     print("="*80)
     
-    all_data = {}
+    all_data_preprocessed = {}
+    all_data_raw = {}
     
-    for dataset_name, path in FILES.items():
-        print(f"\n📊 Processing {dataset_name}...")
+    for dataset_name, paths in FILES.items():
+        # Process preprocessed
+        print(f"\n📊 Processing {dataset_name} (Preprocessed)...")
+        df_prep = load_data(paths['preprocessed'])
+        all_data_preprocessed[dataset_name] = df_prep
         
-        df = load_data(path)
-        all_data[dataset_name] = df
+        if df_prep is not None:
+            output_dir = get_output_dir(raw_mode=False)
+            print(f"  Loaded {len(df_prep)} rows (preprocessed)")
+            
+            # Generate all plots for preprocessed
+            plot_cosine_similarity_vs_perturbation(df_prep, dataset_name, output_dir, raw_mode=False)
+            plot_accuracy_drop_vs_perturbation(df_prep, dataset_name, output_dir, raw_mode=False)
+            plot_relative_change_vs_perturbation(df_prep, dataset_name, output_dir, raw_mode=False)
+            plot_stability_heatmap(df_prep, dataset_name, output_dir, raw_mode=False)
+            plot_accuracy_original_vs_perturbed(df_prep, dataset_name, output_dir, raw_mode=False)
+            plot_stability_by_mode(df_prep, dataset_name, output_dir, raw_mode=False)
+            plot_combined_stability_summary(df_prep, dataset_name, output_dir, raw_mode=False)
         
-        if df is None:
-            continue
+        # Process raw
+        print(f"\n📊 Processing {dataset_name} (Raw Embeddings)...")
+        df_raw = load_data(paths['raw'])
+        all_data_raw[dataset_name] = df_raw
         
-        print(f"  Loaded {len(df)} rows")
-        print(f"  Functions: {df['func'].unique().tolist()}")
-        print(f"  Perturbation ratios: {sorted(df['ratio'].unique())}")
-        if 'mode' in df.columns:
-            print(f"  Modes: {df['mode'].unique().tolist()}")
-        
-        # Generate all plots
-        plot_cosine_similarity_vs_perturbation(df, dataset_name, OUTPUT_DIR)
-        plot_accuracy_drop_vs_perturbation(df, dataset_name, OUTPUT_DIR)
-        plot_relative_change_vs_perturbation(df, dataset_name, OUTPUT_DIR)
-        plot_stability_heatmap(df, dataset_name, OUTPUT_DIR)
-        plot_accuracy_original_vs_perturbed(df, dataset_name, OUTPUT_DIR)
-        plot_stability_by_mode(df, dataset_name, OUTPUT_DIR)
-        plot_combined_stability_summary(df, dataset_name, OUTPUT_DIR)
+        if df_raw is not None:
+            output_dir_raw = get_output_dir(raw_mode=True)
+            print(f"  Loaded {len(df_raw)} rows (raw)")
+            
+            # Generate all plots for raw
+            plot_cosine_similarity_vs_perturbation(df_raw, dataset_name, output_dir_raw, raw_mode=True)
+            plot_accuracy_drop_vs_perturbation(df_raw, dataset_name, output_dir_raw, raw_mode=True)
+            plot_relative_change_vs_perturbation(df_raw, dataset_name, output_dir_raw, raw_mode=True)
+            plot_stability_heatmap(df_raw, dataset_name, output_dir_raw, raw_mode=True)
+            plot_accuracy_original_vs_perturbed(df_raw, dataset_name, output_dir_raw, raw_mode=True)
+            plot_stability_by_mode(df_raw, dataset_name, output_dir_raw, raw_mode=True)
+            plot_combined_stability_summary(df_raw, dataset_name, output_dir_raw, raw_mode=True)
     
-    # Create summary table
-    create_stability_summary_table(all_data, OUTPUT_DIR)
+    # Create summary tables for both modes
+    create_stability_summary_table(all_data_preprocessed, OUTPUT_DIR, raw_mode=False)
+    create_stability_summary_table(all_data_raw, OUTPUT_DIR_RAW, raw_mode=True)
     
-    print(f"\n✅ All plots saved to: {OUTPUT_DIR}/")
-    print("\nGenerated files:")
-    for f in sorted(os.listdir(OUTPUT_DIR)):
-        print(f"  📈 {f}")
+    # Create comparison plot
+    print("\n📊 Creating Raw vs Preprocessed comparison...")
+    plot_raw_vs_preprocessed_comparison(all_data_preprocessed, all_data_raw, OUTPUT_DIR)
+    
+    print(f"\n✅ All plots saved!")
+    print(f"  📁 Preprocessed: {OUTPUT_DIR}/")
+    print(f"  📁 Raw: {OUTPUT_DIR_RAW}/")
+    print(f"  📁 Comparison: {OUTPUT_DIR}/stability_raw_vs_preprocessed.png")
 
 
 if __name__ == "__main__":

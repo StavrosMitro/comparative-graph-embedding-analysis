@@ -1,0 +1,4 @@
+RAW EMBEDDINGS OPTIMAL PARAMETERS FOR ENZYMES
+==================================================
+harmonic: bins=250, range=30.3038
+polynomial: bins=150, range=3.8061

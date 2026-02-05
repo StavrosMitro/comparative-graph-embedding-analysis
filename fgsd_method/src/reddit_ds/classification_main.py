@@ -425,101 +425,59 @@ def run_final_classification_with_cache(
 
 def run_stability_only():
     """Run only stability analysis using best config from existing results."""
-    from sklearn.model_selection import train_test_split
-    from .stability import (print_stability_summary, DEFAULT_PERTURBATION_RATIOS,
-                           generate_embeddings_for_graphs, perturb_graphs_batch,
-                           compute_embedding_stability, compute_classification_stability)
+    from .stability import (
+        run_stability_analysis, print_stability_summary,
+        load_best_configs_from_csv
+    )
+    from .data_loader import load_metadata
     
     print("="*80)
-    print("STABILITY-ONLY MODE: Loading best config from results")
+    print("STABILITY-ONLY MODE (Batch-wise, RAM-efficient)")
+    print("Loading best harmonic & polynomial from results")
     print("="*80)
     
-    optimal_params, _ = load_best_config_from_results()
+    # Load best configs from CSV
+    final_results_path = os.path.join(RESULTS_DIR, 'fgsd_reddit_final_results.csv')
+    print(f"\nLoading best configs from: {final_results_path}")
+    configs = load_best_configs_from_csv(final_results_path)
     
+    if not configs:
+        raise ValueError("No valid configs found in results CSV")
+    
+    # Load only labels (not graphs - they're loaded batch-wise)
     print("\n" + "="*80)
-    print("Running Stability Analysis")
+    print("Loading metadata...")
     print("="*80)
     
     ensure_dataset_ready()
-    graphs, labels = load_all_graphs(DATASET_DIR)
+    records = load_metadata(DATASET_DIR)
+    labels = np.array([r.label for r in records])
+    print(f"  Total samples: {len(labels)}")
     
-    stability_results = []
-    all_stability_results = []
+    # Run stability analysis (graphs loaded batch-wise internally)
+    results, control_embeddings = run_stability_analysis(
+        graphs=None,  # Not needed - loaded batch-wise
+        labels=labels,
+        configs=configs,
+        seed=42,
+        test_size=0.15
+    )
     
-    configs_to_test = []
-    for func_type in ['harmonic', 'polynomial', 'biharmonic']:
-        if func_type in optimal_params:
-            p = optimal_params[func_type]
-            configs_to_test.append({
-                'name': func_type, 'func': func_type, 
-                'bins': p.bins, 'range': round(p.range_val, 2)
-            })
+    # Print summary
+    print_stability_summary(results)
     
-    if 'harmonic' in optimal_params and 'polynomial' in optimal_params:
-        h, p = optimal_params['harmonic'], optimal_params['polynomial']
-        configs_to_test.append({
-            'name': 'naive_hybrid', 'func': 'naive_hybrid',
-            'harm_bins': h.bins, 'harm_range': round(h.range_val, 2),
-            'pol_bins': p.bins, 'pol_range': round(p.range_val, 2)
-        })
-    
-    if 'biharmonic' in optimal_params and 'polynomial' in optimal_params:
-        bh, p = optimal_params['biharmonic'], optimal_params['polynomial']
-        configs_to_test.append({
-            'name': 'biharmonic_hybrid', 'func': 'biharmonic_hybrid',
-            'biharm_bins': bh.bins, 'biharm_range': round(bh.range_val, 2),
-            'pol_bins': p.bins, 'pol_range': round(p.range_val, 2)
-        })
-    
-    print(f"\nConfigs to test: {[c['name'] for c in configs_to_test]}")
-    
-    for config in configs_to_test:
-        print(f"\n  Stability for {config['name']}...")
-        X_original = generate_embeddings_for_graphs(graphs, config, seed=42)
-        
-        indices = np.arange(len(graphs))
-        train_idx, test_idx = train_test_split(indices, test_size=0.15, random_state=42, stratify=labels)
-        
-        config_results = {'config': config, 'perturbation_results': []}
-        
-        for ratio in DEFAULT_PERTURBATION_RATIOS:
-            perturbed_graphs = perturb_graphs_batch(graphs, ratio, seed=42)
-            X_perturbed = generate_embeddings_for_graphs(perturbed_graphs, config, seed=42)
-            
-            stability_cosine = compute_embedding_stability(X_original, X_perturbed, 'cosine')
-            stability_euclidean = compute_embedding_stability(X_original, X_perturbed, 'euclidean')
-            clf_stability = compute_classification_stability(
-                X_original[train_idx], X_original[test_idx],
-                X_perturbed[train_idx], X_perturbed[test_idx],
-                labels[train_idx], labels[test_idx], 42
-            )
-            
-            result_entry = {'ratio': ratio, 'func': config['func'], **stability_cosine, **stability_euclidean, **clf_stability}
-            if config['func'] == 'naive_hybrid':
-                result_entry.update({'harm_bins': config['harm_bins'], 'harm_range': config['harm_range'],
-                                    'pol_bins': config['pol_bins'], 'pol_range': config['pol_range']})
-            elif config['func'] == 'biharmonic_hybrid':
-                result_entry.update({'biharm_bins': config['biharm_bins'], 'biharm_range': config['biharm_range'],
-                                    'pol_bins': config['pol_bins'], 'pol_range': config['pol_range']})
-            else:
-                result_entry.update({'bins': config['bins'], 'range': config['range']})
-            
-            stability_results.append(result_entry)
-            config_results['perturbation_results'].append(result_entry)
-            del perturbed_graphs
-            gc.collect()
-        
-        all_stability_results.append(config_results)
-    
-    print_stability_summary(all_stability_results)
-    
+    # Save results
     os.makedirs(RESULTS_DIR, exist_ok=True)
-    df_stab = pd.DataFrame(stability_results)
+    df_stab = pd.DataFrame(results)
     stab_path = os.path.join(RESULTS_DIR, 'fgsd_reddit_stability_results.csv')
     df_stab.to_csv(stab_path, index=False)
-    print(f"\n✅ Stability saved to: {stab_path}")
+    print(f"\n✅ Stability results saved to: {stab_path}")
     
-    del graphs
+    # Report cache status
+    print(f"\n✅ Control embeddings cached in: {os.path.join(parent_dir, 'cache')}")
+    for key in control_embeddings:
+        print(f"    - {key}: shape={control_embeddings[key].shape}")
+    
     gc.collect()
 
 
@@ -656,79 +614,27 @@ def main(run_stability: bool = False, force: bool = False, stability_only: bool 
     # STEP 7: Stability Analysis (if requested)
     # =================================================================
     if run_stability:
+        from .stability import (
+            run_stability_analysis, print_stability_summary,
+            load_best_configs_from_csv
+        )
+        
         print("\n" + "="*80)
         print("STEP 7: Stability Analysis")
         print("="*80)
         
-        from .stability import (print_stability_summary, DEFAULT_PERTURBATION_RATIOS,
-                               generate_embeddings_for_graphs, perturb_graphs_batch,
-                               compute_embedding_stability, compute_classification_stability)
+        # Load best configs from the final results we just saved
+        final_results_path = os.path.join(RESULTS_DIR, 'fgsd_reddit_final_results.csv')
+        configs = load_best_configs_from_csv(final_results_path)
         
         graphs, labels = load_all_graphs(DATASET_DIR)
-        stability_results = []
-        all_stability_results = []
         
-        configs_to_test = []
-        for func_type in ['harmonic', 'polynomial', 'biharmonic']:
-            if func_type in optimal_params:
-                p = optimal_params[func_type]
-                configs_to_test.append({'name': func_type, 'func': func_type, 'bins': p.bins, 'range': round(p.range_val, 2)})
+        # Run stability analysis
+        stability_results, control_embeddings = run_stability_analysis(
+            graphs, labels, configs, seed=42, test_size=0.15
+        )
         
-        if 'harmonic' in optimal_params and 'polynomial' in optimal_params:
-            h, p = optimal_params['harmonic'], optimal_params['polynomial']
-            configs_to_test.append({
-                'name': 'naive_hybrid', 'func': 'naive_hybrid',
-                'harm_bins': h.bins, 'harm_range': round(h.range_val, 2),
-                'pol_bins': p.bins, 'pol_range': round(p.range_val, 2)
-            })
-        
-        if 'biharmonic' in optimal_params and 'polynomial' in optimal_params:
-            bh, p = optimal_params['biharmonic'], optimal_params['polynomial']
-            configs_to_test.append({
-                'name': 'biharmonic_hybrid', 'func': 'biharmonic_hybrid',
-                'biharm_bins': bh.bins, 'biharm_range': round(bh.range_val, 2),
-                'pol_bins': p.bins, 'pol_range': round(p.range_val, 2)
-            })
-        
-        for config in configs_to_test:
-            print(f"\n  Stability for {config['name']}...")
-            X_original = generate_embeddings_for_graphs(graphs, config, seed=42)
-            
-            indices = np.arange(len(graphs))
-            stab_train_idx, stab_test_idx = train_test_split(indices, test_size=0.15, random_state=42, stratify=labels)
-            
-            config_results = {'config': config, 'perturbation_results': []}
-            
-            for ratio in DEFAULT_PERTURBATION_RATIOS:
-                perturbed_graphs = perturb_graphs_batch(graphs, ratio, seed=42)
-                X_perturbed = generate_embeddings_for_graphs(perturbed_graphs, config, seed=42)
-                
-                stability_cosine = compute_embedding_stability(X_original, X_perturbed, 'cosine')
-                stability_euclidean = compute_embedding_stability(X_original, X_perturbed, 'euclidean')
-                clf_stability = compute_classification_stability(
-                    X_original[stab_train_idx], X_original[stab_test_idx],
-                    X_perturbed[stab_train_idx], X_perturbed[stab_test_idx],
-                    labels[stab_train_idx], labels[stab_test_idx], 42
-                )
-                
-                result_entry = {'ratio': ratio, 'func': config['func'], **stability_cosine, **stability_euclidean, **clf_stability}
-                if config['func'] == 'naive_hybrid':
-                    result_entry.update({'harm_bins': config['harm_bins'], 'harm_range': config['harm_range'],
-                                        'pol_bins': config['pol_bins'], 'pol_range': config['pol_range']})
-                elif config['func'] == 'biharmonic_hybrid':
-                    result_entry.update({'biharm_bins': config['biharm_bins'], 'biharm_range': config['biharm_range'],
-                                        'pol_bins': config['pol_bins'], 'pol_range': config['pol_range']})
-                else:
-                    result_entry.update({'bins': config['bins'], 'range': config['range']})
-                
-                stability_results.append(result_entry)
-                config_results['perturbation_results'].append(result_entry)
-                del perturbed_graphs
-                gc.collect()
-            
-            all_stability_results.append(config_results)
-        
-        print_stability_summary(all_stability_results)
+        print_stability_summary(stability_results)
         
         df_stab = pd.DataFrame(stability_results)
         stab_path = os.path.join(RESULTS_DIR, 'fgsd_reddit_stability_results.csv')

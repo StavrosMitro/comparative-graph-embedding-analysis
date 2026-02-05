@@ -1,0 +1,2 @@
+# This directory stores results from raw embeddings experiments
+# (Random Forest without StandardScaler preprocessing)

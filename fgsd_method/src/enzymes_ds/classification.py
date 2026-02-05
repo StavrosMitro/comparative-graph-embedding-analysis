@@ -30,6 +30,9 @@ from optimized_method import HybridFGSD
 from .config import DATASET_DIR, OptimalParams
 from .data_loader import ensure_dataset_ready, load_all_graphs, create_node_label_features
 
+# Results directory for raw embeddings
+RAW_RESULTS_DIR = os.path.join(parent_dir, 'results', 'raw_embeddings')
+
 
 def evaluate_classifier(X_train, X_test, y_train, y_test, classifier_name, clf):
     start_time = time.time()
@@ -57,6 +60,15 @@ def get_classifiers(random_state=42):
         'SVM (RBF)': make_pipeline(StandardScaler(), SVC(kernel='rbf', C=100, gamma='scale', probability=True, random_state=random_state)),
         'Random Forest': RandomForestClassifier(n_estimators=1000, max_depth=20, random_state=random_state, n_jobs=-1),
         'MLP': make_pipeline(StandardScaler(), MLPClassifier(hidden_layer_sizes=(1024, 512, 256, 128), max_iter=2000, early_stopping=True, random_state=random_state))
+    }
+
+
+def get_raw_classifiers(random_state=42):
+    """Get all classifiers without any preprocessing (raw embeddings)."""
+    return {
+        'SVM (RBF) Raw': SVC(kernel='rbf', C=100, gamma='scale', probability=True, random_state=random_state),
+        'Random Forest Raw': RandomForestClassifier(n_estimators=1000, max_depth=20, random_state=random_state, n_jobs=-1),
+        'MLP Raw': MLPClassifier(hidden_layer_sizes=(1024, 512, 256, 128), max_iter=2000, early_stopping=True, random_state=random_state)
     }
 
 
@@ -107,12 +119,16 @@ def generate_embeddings_with_tracking(graphs_train, graphs_test, func_type, bins
     return X_train, X_test, generation_time, peak_mem / 1024 / 1024
 
 
-def run_dimension_analysis(optimal_params, bin_sizes=[50, 100, 150, 200], test_size=0.15, random_state=42, use_node_labels=True):
+def run_dimension_analysis(optimal_params, bin_sizes=[50, 100, 150, 200], test_size=0.15, random_state=42, use_node_labels=True, raw_mode=False):
     """
     Test different bin sizes to find optimal embedding dimension.
     NOTE: This tests SPECTRAL ONLY embeddings. Node labels are tested separately in final classification.
+    
+    Args:
+        raw_mode: If True, use all classifiers without preprocessing
     """
-    print(f"\n{'='*80}\nDIMENSION ANALYSIS (Spectral Only)\n{'='*80}")
+    mode_str = "(Raw Embeddings - No Preprocessing)" if raw_mode else "(Spectral Only)"
+    print(f"\n{'='*80}\nDIMENSION ANALYSIS {mode_str}\n{'='*80}")
     
     ensure_dataset_ready()
     graphs, labels, node_labels_list = load_all_graphs(DATASET_DIR)
@@ -122,7 +138,7 @@ def run_dimension_analysis(optimal_params, bin_sizes=[50, 100, 150, 200], test_s
         graphs, labels, test_size=test_size, random_state=random_state, stratify=labels)
     
     results = []
-    classifiers = get_classifiers(random_state)
+    classifiers = get_raw_classifiers(random_state) if raw_mode else get_classifiers(random_state)
     best_config = {}  # {func_type: (best_bins, best_acc)}
     
     for func_type in ['harmonic', 'polynomial']:
@@ -170,21 +186,28 @@ def run_dimension_analysis(optimal_params, bin_sizes=[50, 100, 150, 200], test_s
     return results, best_config
 
 
-def run_final_classification(optimal_params, recommended_bins=None, test_size=0.15, random_state=42, use_node_labels=True):
+def run_final_classification(optimal_params, recommended_bins=None, test_size=0.15, random_state=42, use_node_labels=True, raw_mode=False):
     """
     Run final classification testing ALL bin sizes with and without labels.
     This ensures we find the true best configuration.
+    
+    Args:
+        raw_mode: If True, use all classifiers without preprocessing
     """
-    print(f"\n{'='*80}\nFINAL CLASSIFICATION\n{'='*80}")
+    mode_str = "(Raw Embeddings - No Preprocessing)" if raw_mode else ""
+    print(f"\n{'='*80}\nFINAL CLASSIFICATION {mode_str}\n{'='*80}")
     
     ensure_dataset_ready()
     graphs, labels, node_labels_list = load_all_graphs(DATASET_DIR)
     
-    # Prepare node labels
+    # Prepare node labels - available in both modes
     X_node_labels = None
     if use_node_labels and node_labels_list:
         X_node_labels = create_node_label_features(node_labels_list)
         print(f"Node labels available: shape={X_node_labels.shape}")
+    
+    if raw_mode:
+        print("Raw mode: Using all classifiers WITHOUT StandardScaler preprocessing")
     
     # Split data
     if X_node_labels is not None:
@@ -196,13 +219,12 @@ def run_final_classification(optimal_params, recommended_bins=None, test_size=0.
         X_labels_train = X_labels_test = None
     
     results = []
-    classifiers = get_classifiers(random_state)
+    classifiers = get_raw_classifiers(random_state) if raw_mode else get_classifiers(random_state)
     
     # Determine bin sizes to test
     if recommended_bins is None:
         recommended_bins = {'harmonic': [50, 100, 150], 'polynomial': [50, 100, 150]}
     
-    # Collect all unique bin sizes
     all_bin_sizes = set()
     for bins_list in recommended_bins.values():
         all_bin_sizes.update(bins_list)
@@ -210,10 +232,7 @@ def run_final_classification(optimal_params, recommended_bins=None, test_size=0.
     
     print(f"Testing bin sizes: {all_bin_sizes}")
     
-    # =================================================================
-    # Test each function type with each bin size
-    # =================================================================
-    best_embeddings = {}  # Store best for hybrid creation
+    best_embeddings = {}
     
     for func_type in ['harmonic', 'polynomial']:
         if func_type not in optimal_params:
@@ -246,7 +265,7 @@ def run_final_classification(optimal_params, recommended_bins=None, test_size=0.
                     func_best_acc = res['accuracy']
                     func_best_bins = bins
             
-            # Test with node labels
+            # Test with node labels (available in both modes)
             if X_labels_train is not None:
                 X_train_labels = np.hstack([X_train, X_labels_train])
                 X_test_labels = np.hstack([X_test, X_labels_test])
@@ -265,8 +284,9 @@ def run_final_classification(optimal_params, recommended_bins=None, test_size=0.
                         func_best_acc = res['accuracy']
                         func_best_bins = bins
             
-            print(f"  bins={bins}: spectral best={max(r['accuracy'] for r in results if r['func']==func_type and r.get('bins')==bins):.4f}, "
-                  f"with_labels best={max((r['accuracy'] for r in results if r['func']==f'{func_type}_with_labels' and r.get('bins')==bins), default=0):.4f}")
+            spectral_best = max(r['accuracy'] for r in results if r['func']==func_type and r.get('bins')==bins)
+            labels_best = max((r['accuracy'] for r in results if r['func']==f'{func_type}_with_labels' and r.get('bins')==bins), default=0)
+            print(f"  bins={bins}: spectral best={spectral_best:.4f}, with_labels best={labels_best:.4f}")
         
         # Store best embeddings for hybrid
         X_train_best, X_test_best, _, _ = generate_embeddings_with_tracking(
@@ -277,9 +297,7 @@ def run_final_classification(optimal_params, recommended_bins=None, test_size=0.
         }
         print(f"  ✓ Best bins for {func_type}: {func_best_bins} (acc={func_best_acc:.4f})")
     
-    # =================================================================
     # Create and test naive_hybrid
-    # =================================================================
     if 'harmonic' in best_embeddings and 'polynomial' in best_embeddings:
         print(f"\n--- NAIVE_HYBRID ---")
         h, p = best_embeddings['harmonic'], best_embeddings['polynomial']
@@ -298,7 +316,7 @@ def run_final_classification(optimal_params, recommended_bins=None, test_size=0.
             }
             results.append(result_entry)
         
-        # With labels
+        # With labels (available in both modes)
         if X_labels_train is not None:
             X_train_hybrid_labels = np.hstack([X_train_hybrid, X_labels_train])
             X_test_hybrid_labels = np.hstack([X_test_hybrid, X_labels_test])

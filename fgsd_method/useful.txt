@@ -17,6 +17,8 @@ python -m enzymes_ds.classification_main --stability-only    # Only stability (l
 python -m enzymes_ds.classification_main --force
 python -m enzymes_ds.classification_main --no-node-labels
 python -m enzymes_ds.classification_main --tune-classifiers  # Grid search for RF & SVM hyperparameters
+python -m enzymes_ds.classification_main --raw-embeddings    # All classifiers on raw embeddings (no preprocessing)
+python -m enzymes_ds.classification_main --raw-embeddings --stability  # Raw mode with stability analysis
 
 # IMDB (no node labels)
 python -m imbd_ds.classification_main
@@ -24,6 +26,8 @@ python -m imbd_ds.classification_main --stability
 python -m imbd_ds.classification_main --stability-only       # Only stability (loads best config from results)
 python -m imbd_ds.classification_main --force
 python -m imbd_ds.classification_main --tune-classifiers     # Grid search for RF & SVM hyperparameters
+python -m imbd_ds.classification_main --raw-embeddings       # All classifiers on raw embeddings (no preprocessing)
+python -m imbd_ds.classification_main --raw-embeddings --stability  # Raw mode with stability analysis
 
 # REDDIT (no node labels)
 python -m reddit_ds.classification_main
@@ -31,6 +35,26 @@ python -m reddit_ds.classification_main --stability
 python -m reddit_ds.classification_main --stability-only     # Only stability (loads best config from results)
 python -m reddit_ds.classification_main --force
 python -m reddit_ds.classification_main --tune-classifiers   # Grid search for RF & SVM hyperparameters
+
+# =============================================
+# RAW EMBEDDINGS MODE
+# =============================================
+# Runs the FULL pipeline with ALL classifiers (RF, SVM, MLP) on raw embeddings
+# NO StandardScaler preprocessing is applied
+# Includes: grid search, dimension analysis, final classification, stability analysis
+# Results are stored in: src/results/raw_embeddings/
+# Files generated:
+#   - fgsd_{dataset}_raw_grid_search.csv
+#   - fgsd_{dataset}_raw_dimension_analysis.csv
+#   - fgsd_{dataset}_raw_final_results.csv
+#   - fgsd_{dataset}_raw_stability_results.csv (if --stability flag used)
+#
+# Classifiers in raw mode:
+#   - SVM (RBF) Raw: No StandardScaler, direct SVC
+#   - Random Forest Raw: No StandardScaler, direct RF
+#   - MLP Raw: No StandardScaler, direct MLP
+#
+# Comparison output: Shows side-by-side comparison of raw vs preprocessed results
 
 # =============================================
 # CLUSTERING (with grid search)
