@@ -2,6 +2,8 @@
 
 A comprehensive evaluation and comparison of **three graph embedding methods** across **three benchmark datasets**, covering classification, clustering, and stability analysis.
 
+By Gratsia Maria, Mitropoulos Stavros, Tzanetos Dimitris (in greek alphabetical order)
+
 ## Methods
 
 | Method | Type | Description |
