@@ -32,20 +32,32 @@ from enzymes_ds.clustering import (
 )
 
 
-# Default configurations based on preanalysis results
+# =============================================================================
+# DEFAULT CONFIGURATIONS - Based on classification results
+# From fgsd_enzymes_final_results.csv - top 3 bins per function by accuracy
+# =============================================================================
+# ENZYMES Classification Results:
+#   harmonic:   range=30.3, best bins: 150 (0.456 acc), 50 (0.433), 100 (0.444)
+#   polynomial: range=3.81, best bins: 150 (0.544 acc), 100 (0.533), 50 (0.500)
+# =============================================================================
+
 DEFAULT_CONFIGS = [
-    # Harmonic configurations
-    {'name': 'harmonic_50_30', 'func': 'harmonic', 'bins': 50, 'range': 30.0},
-    {'name': 'harmonic_100_30', 'func': 'harmonic', 'bins': 100, 'range': 30.0},
-    # Polynomial configurations
-    {'name': 'polynomial_50_4', 'func': 'polynomial', 'bins': 50, 'range': 4.0},
-    {'name': 'polynomial_100_4', 'func': 'polynomial', 'bins': 100, 'range': 4.0},
-    # Naive hybrid (harmonic + polynomial)
+    # Harmonic - top 3 bins from classification (range=30.3)
+    {'name': 'harmonic_150_30.3', 'func': 'harmonic', 'bins': 150, 'range': 30.3},
+    {'name': 'harmonic_100_30.3', 'func': 'harmonic', 'bins': 100, 'range': 30.3},
+    {'name': 'harmonic_50_30.3', 'func': 'harmonic', 'bins': 50, 'range': 30.3},
+    
+    # Polynomial - top 3 bins from classification (range=3.81)
+    {'name': 'polynomial_150_3.81', 'func': 'polynomial', 'bins': 150, 'range': 3.81},
+    {'name': 'polynomial_100_3.81', 'func': 'polynomial', 'bins': 100, 'range': 3.81},
+    {'name': 'polynomial_50_3.81', 'func': 'polynomial', 'bins': 50, 'range': 3.81},
+    
+    # Naive hybrid - best harmonic (150) + best polynomial (100) from classification
     {
-        'name': 'naive_hybrid_100_30_100_4',
+        'name': 'naive_hybrid_150_30.3_100_3.81',
         'func': 'hybrid',
-        'harm_bins': 100, 'harm_range': 30.0,
-        'pol_bins': 100, 'pol_range': 4.0
+        'harm_bins': 150, 'harm_range': 30.3,
+        'pol_bins': 100, 'pol_range': 3.81
     },
 ]
 

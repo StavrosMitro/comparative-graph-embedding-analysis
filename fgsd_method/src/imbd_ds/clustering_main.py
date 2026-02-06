@@ -31,21 +31,32 @@ from imbd_ds.clustering import (
 )
 
 
-# Default configurations based on preanalysis results
-# IMDB: harmonic range ~3.5, polynomial range ~3.1
+# =============================================================================
+# DEFAULT CONFIGURATIONS - Based on classification results
+# From fgsd_imdb_final_results.csv - top 3 bins per function by accuracy
+# =============================================================================
+# IMDB Classification Results:
+#   harmonic:   range=3.52, best bins: 150 (0.489 acc), 200 (0.484), 100 (0.471)
+#   polynomial: range=3.13, best bins: 200 (0.498 acc), 150 (0.493), 100 (0.480)
+# =============================================================================
+
 DEFAULT_CONFIGS = [
-    # Harmonic configurations
-    {'name': 'harmonic_35_3.5', 'func': 'harmonic', 'bins': 35, 'range': 3.5},
-    {'name': 'harmonic_70_3.5', 'func': 'harmonic', 'bins': 70, 'range': 3.5},
-    # Polynomial configurations
-    {'name': 'polynomial_31_3.1', 'func': 'polynomial', 'bins': 31, 'range': 3.1},
-    {'name': 'polynomial_62_3.1', 'func': 'polynomial', 'bins': 62, 'range': 3.1},
-    # Naive hybrid (harmonic + polynomial)
+    # Harmonic - top 3 bins from classification (range=3.52)
+    {'name': 'harmonic_150_3.52', 'func': 'harmonic', 'bins': 150, 'range': 3.52},
+    {'name': 'harmonic_200_3.52', 'func': 'harmonic', 'bins': 200, 'range': 3.52},
+    {'name': 'harmonic_100_3.52', 'func': 'harmonic', 'bins': 100, 'range': 3.52},
+    
+    # Polynomial - top 3 bins from classification (range=3.13)
+    {'name': 'polynomial_200_3.13', 'func': 'polynomial', 'bins': 200, 'range': 3.13},
+    {'name': 'polynomial_150_3.13', 'func': 'polynomial', 'bins': 150, 'range': 3.13},
+    {'name': 'polynomial_100_3.13', 'func': 'polynomial', 'bins': 100, 'range': 3.13},
+    
+    # Naive hybrid - best harmonic (150) + best polynomial (200) from classification
     {
-        'name': 'naive_hybrid_70_3.5_62_3.1',
+        'name': 'naive_hybrid_150_3.52_200_3.13',
         'func': 'hybrid',
-        'harm_bins': 70, 'harm_range': 3.5,
-        'pol_bins': 62, 'pol_range': 3.1
+        'harm_bins': 150, 'harm_range': 3.52,
+        'pol_bins': 200, 'pol_range': 3.13
     },
 ]
 
@@ -56,9 +67,20 @@ def main(configs=None, neighbor_values=None, run_grid_search=True):
     if neighbor_values is None:
         neighbor_values = [5, 10, 15, 20]
     
+    # Check for UMAP
+    try:
+        import umap
+        has_umap = True
+        umap_version = umap.__version__
+    except ImportError:
+        has_umap = False
+        umap_version = None
+    
     print("="*80)
     print("FGSD CLUSTERING ON IMDB-MULTI")
     print(f"Grid search: {'ENABLED' if run_grid_search else 'DISABLED'}")
+    print(f"Normalizations tested: l2, standard, none (raw)")
+    print(f"UMAP: {'ENABLED (v' + umap_version + ')' if has_umap else 'DISABLED (install umap-learn)'}")
     print("="*80)
     
     ensure_dataset_ready()
@@ -71,7 +93,8 @@ def main(configs=None, neighbor_values=None, run_grid_search=True):
         configs=configs,
         neighbor_values=neighbor_values,
         visualize=True,
-        run_grid_search=run_grid_search
+        run_grid_search=run_grid_search,
+        save_umap_coords=True  # Save UMAP coordinates
     )
     
     print_clustering_summary(results)
@@ -82,6 +105,17 @@ def main(configs=None, neighbor_values=None, run_grid_search=True):
     output_path = os.path.join(RESULTS_DIR, f'fgsd_imdb_clustering_results{suffix}.csv')
     df.to_csv(output_path, index=False)
     print(f"\nResults saved to: {output_path}")
+    
+    # Print summary of 'none' normalization results (raw embeddings)
+    none_results = df[df['normalization'] == 'none'] if 'normalization' in df.columns else pd.DataFrame()
+    if len(none_results) > 0:
+        print("\n" + "="*80)
+        print("RAW EMBEDDINGS (no normalization) RESULTS:")
+        print("="*80)
+        best_none = none_results.loc[none_results['ari'].idxmax()]
+        print(f"  Best ARI: {best_none['ari']:.4f}")
+        print(f"  Method: {best_none['method']}")
+        print(f"  Config: {best_none['config_name']}")
     
     del graphs
     gc.collect()

@@ -70,7 +70,11 @@ python -m imbd_ds.clustering_main                            # Full grid search 
 python -m imbd_ds.clustering_main --no-grid-search           # Original behavior without grid search
 
 # REDDIT clustering
-python -m reddit_ds.clustering_main
+python -m reddit_ds.clustering_main                          # Full clustering (all configs)
+python -m reddit_ds.clustering_targeted                      # TARGETED: Only polynomial_100 & harmonic_100
+                                                             # Only norm=l2 and norm=none
+                                                             # Saves embeddings to disk
+                                                             # Creates UMAP & t-SNE plots
 
 # =============================================
 # GRID SEARCH PARAMETERS (Clustering)

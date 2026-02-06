@@ -188,10 +188,11 @@ def run_clustering_grid_search(
     y_true: np.ndarray,
     config_name: str,
     lightweight: bool = True,
-    compute_umap: bool = True
+    compute_umap: bool = True,
+    verbose: bool = True
 ) -> List[Dict[str, Any]]:
     """
-    Run grid search over clustering hyperparameters.
+    Run grid search over clustering hyperparameters with detailed output.
     
     Args:
         X: Feature matrix
@@ -199,13 +200,14 @@ def run_clustering_grid_search(
         config_name: Name of the embedding configuration
         lightweight: Use reduced grid for faster search
         compute_umap: Whether to compute and store UMAP embeddings
+        verbose: Whether to print detailed results
     
     Returns:
         List of results for each parameter combination
     """
     if lightweight:
         grid = {
-            'norm_method': ['l2', 'standard', 'none'],  # Added 'none' for raw
+            'norm_method': ['l2', 'standard', 'none'],
             'pca_variance': [0.95, 0.99],
             'kmeans_n_init': [10, 50],
             'spectral_n_neighbors': [10, 20],
@@ -213,7 +215,7 @@ def run_clustering_grid_search(
         }
     else:
         grid = {
-            'norm_method': ['l2', 'standard', 'minmax', 'none'],  # Added 'none'
+            'norm_method': ['l2', 'standard', 'minmax', 'none'],
             'pca_variance': [0.90, 0.95, 0.99],
             'kmeans_n_init': [10, 50],
             'spectral_n_neighbors': [5, 10, 15, 20],
@@ -221,29 +223,33 @@ def run_clustering_grid_search(
         }
     
     results = []
-    
-    # Generate all combinations
     keys = list(grid.keys())
     combinations = list(product(*[grid[k] for k in keys]))
     
     print(f"  Running grid search with {len(combinations)} combinations...")
-    print(f"  Normalization options: {grid['norm_method']} (includes 'none' for raw embeddings)")
+    print(f"  Normalization options: {grid['norm_method']}")
     
-    # Compute UMAP once per normalization (expensive)
+    # Compute UMAP once per normalization
     umap_embeddings = {}
+    umap_metrics = {}
     if compute_umap and HAS_UMAP:
-        print("  Pre-computing UMAP embeddings for each normalization...")
+        print("\n  Pre-computing UMAP embeddings for each normalization...")
         for norm in grid['norm_method']:
             X_norm = apply_normalization(X, norm)
             umap_emb = compute_umap_embedding(X_norm)
             if umap_emb is not None:
                 umap_embeddings[norm] = umap_emb
-                # Compute UMAP-based clustering metrics
                 km_umap = KMeans(n_clusters=len(np.unique(y_true)), random_state=42, n_init=10)
                 y_km_umap = km_umap.fit_predict(umap_emb)
                 umap_ari = adjusted_rand_score(y_true, y_km_umap)
                 umap_sil = silhouette_score(umap_emb, y_km_umap) if len(np.unique(y_km_umap)) > 1 else -1
+                umap_metrics[norm] = {'ari': umap_ari, 'sil': umap_sil}
                 print(f"    {norm}: UMAP K-Means ARI={umap_ari:.4f}, Sil={umap_sil:.4f}")
+    
+    # Print header for detailed results
+    if verbose:
+        print(f"\n  {'Norm':<10} {'PCA':<6} {'KM_init':<8} {'SP_n':<6} {'Method':<10} {'ARI':<8} {'Sil':<8} {'UMAP_ARI':<10} {'UMAP_Sil':<10}")
+        print("  " + "-"*90)
     
     for i, combo in enumerate(combinations):
         params = dict(zip(keys, combo))
@@ -253,24 +259,14 @@ def run_clustering_grid_search(
                 X, y_true, **params
             )
             
-            # Evaluate K-Means
             km_ari = adjusted_rand_score(y_true, y_kmeans)
             km_sil = silhouette_score(X_pca, y_kmeans) if len(np.unique(y_kmeans)) > 1 else -1
-            
-            # Evaluate Spectral
             sp_ari = adjusted_rand_score(y_true, y_spectral)
             sp_sil = silhouette_score(X_pca, y_spectral) if len(np.unique(y_spectral)) > 1 else -1
             
-            # Base result for K-Means
-            km_result = {
-                'config_name': config_name,
-                **params_used,
-                'method': 'K-Means',
-                'ari': km_ari,
-                'silhouette': km_sil
-            }
+            # K-Means result
+            km_result = {'config_name': config_name, **params_used, 'method': 'K-Means', 'ari': km_ari, 'silhouette': km_sil}
             
-            # Add UMAP metrics if available
             if params['norm_method'] in umap_embeddings:
                 umap_emb = umap_embeddings[params['norm_method']]
                 km_umap = KMeans(n_clusters=len(np.unique(y_true)), random_state=42, n_init=params['kmeans_n_init'])
@@ -280,25 +276,21 @@ def run_clustering_grid_search(
             
             results.append(km_result)
             
-            # Spectral result
-            sp_result = {
-                'config_name': config_name,
-                **params_used,
-                'method': 'Spectral',
-                'ari': sp_ari,
-                'silhouette': sp_sil
-            }
+            # Print K-Means result
+            if verbose:
+                umap_ari_str = f"{km_result.get('umap_ari', 0):.4f}" if 'umap_ari' in km_result else "N/A"
+                umap_sil_str = f"{km_result.get('umap_silhouette', 0):.4f}" if 'umap_silhouette' in km_result else "N/A"
+                print(f"  {params['norm_method']:<10} {params['pca_variance']:<6.2f} {params['kmeans_n_init']:<8} "
+                      f"{params['spectral_n_neighbors']:<6} {'K-Means':<10} {km_ari:<8.4f} {km_sil:<8.4f} {umap_ari_str:<10} {umap_sil_str:<10}")
             
-            # Add UMAP metrics for spectral (same UMAP embedding, different clustering)
+            # Spectral result
+            sp_result = {'config_name': config_name, **params_used, 'method': 'Spectral', 'ari': sp_ari, 'silhouette': sp_sil}
+            
             if params['norm_method'] in umap_embeddings:
                 umap_emb = umap_embeddings[params['norm_method']]
                 try:
-                    sp_umap = SpectralClustering(
-                        n_clusters=len(np.unique(y_true)),
-                        affinity='nearest_neighbors',
-                        n_neighbors=params['spectral_n_neighbors'],
-                        random_state=42
-                    )
+                    sp_umap = SpectralClustering(n_clusters=len(np.unique(y_true)), affinity='nearest_neighbors',
+                                                  n_neighbors=params['spectral_n_neighbors'], random_state=42)
                     y_sp_umap = sp_umap.fit_predict(umap_emb)
                     sp_result['umap_ari'] = adjusted_rand_score(y_true, y_sp_umap)
                     sp_result['umap_silhouette'] = silhouette_score(umap_emb, y_sp_umap) if len(np.unique(y_sp_umap)) > 1 else -1
@@ -307,9 +299,15 @@ def run_clustering_grid_search(
             
             results.append(sp_result)
             
+            # Print Spectral result
+            if verbose:
+                umap_ari_str = f"{sp_result.get('umap_ari', 0):.4f}" if 'umap_ari' in sp_result else "N/A"
+                umap_sil_str = f"{sp_result.get('umap_silhouette', 0):.4f}" if 'umap_silhouette' in sp_result else "N/A"
+                print(f"  {params['norm_method']:<10} {params['pca_variance']:<6.2f} {params['kmeans_n_init']:<8} "
+                      f"{params['spectral_n_neighbors']:<6} {'Spectral':<10} {sp_ari:<8.4f} {sp_sil:<8.4f} {umap_ari_str:<10} {umap_sil_str:<10}")
+            
         except Exception as e:
             print(f"  Warning: Failed for params {params}: {e}")
-            continue
     
     return results
 
@@ -341,7 +339,8 @@ def visualize_clusters(
     y_spectral: np.ndarray,
     config_name: str,
     params_info: str = "",
-    save_dir: str = None
+    save_dir: str = None,
+    func_type: str = None
 ) -> Dict[str, np.ndarray]:
     """
     Visualize clustering results using t-SNE and optionally UMAP.
@@ -355,9 +354,10 @@ def visualize_clusters(
     
     labels_list = [y_true, y_kmeans, y_spectral]
     embeddings = {}
+    metrics = {}
     
     if HAS_UMAP:
-        fig, axes = plt.subplots(2, 3, figsize=(18, 10))
+        fig, axes = plt.subplots(2, 3, figsize=(18, 12))
         umap_row = axes[0]
         tsne_row = axes[1]
         
@@ -366,11 +366,26 @@ def visualize_clusters(
         if embedding_umap is not None:
             embeddings['umap'] = embedding_umap
             
-            titles_umap = ['GT (UMAP)', 'KMeans (UMAP)', 'Spectral (UMAP)']
+            # Compute UMAP-based metrics
+            umap_km_ari = adjusted_rand_score(y_true, y_kmeans)
+            umap_sp_ari = adjusted_rand_score(y_true, y_spectral)
+            umap_km_sil = silhouette_score(embedding_umap, y_kmeans) if len(np.unique(y_kmeans)) > 1 else -1
+            umap_sp_sil = silhouette_score(embedding_umap, y_spectral) if len(np.unique(y_spectral)) > 1 else -1
+            
+            metrics['umap'] = {
+                'kmeans_ari': umap_km_ari, 'spectral_ari': umap_sp_ari,
+                'kmeans_sil': umap_km_sil, 'spectral_sil': umap_sp_sil
+            }
+            
+            titles_umap = [
+                f'GT (UMAP)',
+                f'KMeans (UMAP)\nARI={umap_km_ari:.4f}, Sil={umap_km_sil:.4f}',
+                f'Spectral (UMAP)\nARI={umap_sp_ari:.4f}, Sil={umap_sp_sil:.4f}'
+            ]
             for ax, labels, title in zip(umap_row, labels_list, titles_umap):
-                ax.scatter(embedding_umap[:, 0], embedding_umap[:, 1], 
+                scatter = ax.scatter(embedding_umap[:, 0], embedding_umap[:, 1], 
                           c=labels, cmap='tab10', s=15, alpha=0.7)
-                ax.set_title(title)
+                ax.set_title(title, fontsize=10)
                 ax.axis('off')
     else:
         fig, axes = plt.subplots(1, 3, figsize=(18, 6))
@@ -380,21 +395,55 @@ def visualize_clusters(
     embedding_tsne = compute_tsne_embedding(X_scaled)
     embeddings['tsne'] = embedding_tsne
     
-    titles_tsne = ['GT (t-SNE)', 'KMeans (t-SNE)', 'Spectral (t-SNE)']
+    # Compute t-SNE-based metrics
+    tsne_km_ari = adjusted_rand_score(y_true, y_kmeans)
+    tsne_sp_ari = adjusted_rand_score(y_true, y_spectral)
+    tsne_km_sil = silhouette_score(embedding_tsne, y_kmeans) if len(np.unique(y_kmeans)) > 1 else -1
+    tsne_sp_sil = silhouette_score(embedding_tsne, y_spectral) if len(np.unique(y_spectral)) > 1 else -1
+    
+    metrics['tsne'] = {
+        'kmeans_ari': tsne_km_ari, 'spectral_ari': tsne_sp_ari,
+        'kmeans_sil': tsne_km_sil, 'spectral_sil': tsne_sp_sil
+    }
+    
+    titles_tsne = [
+        f'GT (t-SNE)',
+        f'KMeans (t-SNE)\nARI={tsne_km_ari:.4f}, Sil={tsne_km_sil:.4f}',
+        f'Spectral (t-SNE)\nARI={tsne_sp_ari:.4f}, Sil={tsne_sp_sil:.4f}'
+    ]
     for ax, labels, title in zip(tsne_row, labels_list, titles_tsne):
         ax.scatter(embedding_tsne[:, 0], embedding_tsne[:, 1], 
                   c=labels, cmap='tab10', s=15, alpha=0.7)
-        ax.set_title(title)
+        ax.set_title(title, fontsize=10)
         ax.axis('off')
     
+    # Add overall title with config info
+    title_str = f"Config: {config_name}"
+    if func_type:
+        title_str = f"Function: {func_type.upper()} | {title_str}"
     if params_info:
-        fig.suptitle(f"Best Config: {config_name}\n{params_info}", fontsize=10)
+        title_str += f"\n{params_info}"
+    fig.suptitle(title_str, fontsize=12, fontweight='bold')
     
     plt.tight_layout()
-    save_path = os.path.join(save_dir, f'clustering_enzymes_{config_name}_best.png')
-    plt.savefig(save_path, dpi=150)
+    
+    # Save with function type in filename
+    if func_type:
+        save_path = os.path.join(save_dir, f'clustering_enzymes_{func_type}_{config_name}.png')
+    else:
+        save_path = os.path.join(save_dir, f'clustering_enzymes_{config_name}_best.png')
+    
+    plt.savefig(save_path, dpi=150, bbox_inches='tight')
     plt.close()
     print(f"  -> Plot saved to: {save_path}")
+    
+    # Print metrics summary
+    print(f"\n  === VISUALIZATION METRICS for {config_name} ===")
+    if 'umap' in metrics:
+        print(f"  UMAP:  KMeans ARI={metrics['umap']['kmeans_ari']:.4f}, Sil={metrics['umap']['kmeans_sil']:.4f}")
+        print(f"         Spectral ARI={metrics['umap']['spectral_ari']:.4f}, Sil={metrics['umap']['spectral_sil']:.4f}")
+    print(f"  t-SNE: KMeans ARI={metrics['tsne']['kmeans_ari']:.4f}, Sil={metrics['tsne']['kmeans_sil']:.4f}")
+    print(f"         Spectral ARI={metrics['tsne']['spectral_ari']:.4f}, Sil={metrics['tsne']['spectral_sil']:.4f}")
     
     return embeddings
 
@@ -409,36 +458,16 @@ def run_clustering_experiment(
     run_grid_search: bool = True,
     save_umap_coords: bool = True
 ) -> List[Dict[str, Any]]:
-    """
-    Run full clustering experiment on multiple configurations.
-    
-    Args:
-        graphs: List of NetworkX graphs
-        labels: Ground truth labels
-        configs: List of embedding configurations
-        node_labels_list: Optional node labels for ENZYMES
-        neighbor_values: List of n_neighbors (used if grid_search=False)
-        visualize: Whether to generate visualizations (only for best)
-        run_grid_search: Whether to run hyperparameter grid search
-        save_umap_coords: Whether to save UMAP coordinates to file
-    
-    Returns:
-        List of result dictionaries
-    """
+    """Run full clustering experiment with plots for each function type."""
     all_results = []
-    best_result = {'ari': -1}
-    best_X = None
-    best_y_kmeans = None
-    best_y_spectral = None
-    best_config_name = None
-    best_params = None
     
-    # Store UMAP coordinates for best configurations
-    umap_coordinates = {}
+    # Track best results per function type
+    best_per_func = {}  # func_type -> {'result': ..., 'X': ..., 'y_km': ..., 'y_sp': ..., 'config': ...}
     
     for config in configs:
         print(f"\n{'='*80}")
         print(f"Processing Configuration: {config['name']}")
+        print(f"Function: {config['func'].upper()}")
         print(f"{'='*80}")
         
         print("Generating embeddings...")
@@ -448,11 +477,11 @@ def run_clustering_experiment(
         print(f"  -> Embedding shape: {X.shape}, Time: {embed_time:.2f}s")
         
         if run_grid_search:
-            # Run grid search with UMAP computation
             grid_results = run_clustering_grid_search(
                 X, labels, config['name'], 
                 lightweight=True, 
-                compute_umap=HAS_UMAP
+                compute_umap=HAS_UMAP,
+                verbose=True
             )
             
             for res in grid_results:
@@ -469,46 +498,40 @@ def run_clustering_experiment(
                 
                 all_results.append(res)
                 
-                # Track best result
-                if res['ari'] > best_result['ari']:
-                    best_result = res
-                    best_config_name = config['name']
-                    best_params = {
-                        'normalization': res['normalization'],
-                        'pca_variance': res['pca_variance'],
-                        'kmeans_n_init': res['kmeans_n_init'],
-                        'spectral_n_neighbors': res['spectral_n_neighbors'],
-                        'spectral_affinity': res['spectral_affinity']
-                    }
+                # Track best per function type
+                func_type = config['func']
+                if func_type not in best_per_func or res['ari'] > best_per_func[func_type]['result']['ari']:
+                    # Recompute clustering for best result
                     X_pca, y_km, y_sp, _ = perform_clustering_with_params(
                         X, labels,
-                        norm_method=best_params['normalization'],
-                        pca_variance=best_params['pca_variance'],
-                        kmeans_n_init=best_params['kmeans_n_init'],
-                        spectral_n_neighbors=best_params['spectral_n_neighbors'],
-                        spectral_affinity=best_params['spectral_affinity']
+                        norm_method=res['normalization'],
+                        pca_variance=res['pca_variance'],
+                        kmeans_n_init=res['kmeans_n_init'],
+                        spectral_n_neighbors=res['spectral_n_neighbors'],
+                        spectral_affinity=res['spectral_affinity']
                     )
-                    best_X = X_pca
-                    best_y_kmeans = y_km
-                    best_y_spectral = y_sp
-            
-            # Compute and save UMAP coordinates for this config
-            if save_umap_coords and HAS_UMAP:
-                X_norm = apply_normalization(X, 'standard')  # Use standard for UMAP
-                umap_emb = compute_umap_embedding(X_norm)
-                if umap_emb is not None:
-                    umap_coordinates[config['name']] = {
-                        'coords': umap_emb,
+                    best_per_func[func_type] = {
+                        'result': res,
+                        'X': X_pca.copy(),
+                        'y_kmeans': y_km.copy(),
+                        'y_spectral': y_sp.copy(),
+                        'config': config,
                         'labels': labels
                     }
+            
+            # Print config summary
+            config_results = [r for r in all_results if r.get('config_name') == config['name']]
+            if config_results:
+                best_km = max([r for r in config_results if r['method'] == 'K-Means'], key=lambda x: x['ari'])
+                best_sp = max([r for r in config_results if r['method'] == 'Spectral'], key=lambda x: x['ari'])
+                print(f"\n  === CONFIG SUMMARY: {config['name']} ===")
+                print(f"  Best K-Means:  ARI={best_km['ari']:.4f}, Sil={best_km['silhouette']:.4f}, norm={best_km['normalization']}")
+                print(f"  Best Spectral: ARI={best_sp['ari']:.4f}, Sil={best_sp['silhouette']:.4f}, norm={best_sp['normalization']}")
         else:
             # Original behavior without grid search
             for n_neighbors in neighbor_values:
                 print(f"\n--- n_neighbors={n_neighbors} ---")
-                
-                X_pca, y_kmeans, y_spectral, params_used = perform_clustering_with_params(
-                    X, labels, spectral_n_neighbors=n_neighbors
-                )
+                X_pca, y_kmeans, y_spectral, params_used = perform_clustering_with_params(X, labels, spectral_n_neighbors=n_neighbors)
                 
                 km_results = evaluate_clustering(labels, y_kmeans, X_pca, 'K-Means')
                 sp_results = evaluate_clustering(labels, y_spectral, X_pca, 'Spectral')
@@ -517,61 +540,52 @@ def run_clustering_experiment(
                 print(f"Spectral -> ARI: {sp_results['ari']:.4f} | Silhouette: {sp_results['silhouette']:.4f}")
                 
                 for res in [km_results, sp_results]:
-                    result_entry = {
-                        'name': config['name'],
-                        'func': config['func'],
-                        'bins': config.get('bins'),
-                        'range': config.get('range'),
-                        'n_neighbors': n_neighbors,
-                        'embed_time': embed_time,
-                        **res
-                    }
+                    result_entry = {'name': config['name'], 'func': config['func'], 'n_neighbors': n_neighbors, 'embed_time': embed_time, **res}
                     if 'harm_bins' in config:
                         result_entry['harm_bins'] = config['harm_bins']
                         result_entry['harm_range'] = config['harm_range']
                         result_entry['pol_bins'] = config['pol_bins']
                         result_entry['pol_range'] = config['pol_range']
+                    else:
+                        result_entry['bins'] = config.get('bins')
+                        result_entry['range'] = config.get('range')
                     all_results.append(result_entry)
-                    
-                    if res['ari'] > best_result.get('ari', -1):
-                        best_result = result_entry
-                        best_X = X_pca
-                        best_y_kmeans = y_kmeans
-                        best_y_spectral = y_spectral
-                        best_config_name = config['name']
         
         del X
         gc.collect()
     
-    # Visualize only the best result
-    if visualize and best_X is not None:
+    # Generate visualizations for best of each function type
+    if visualize and best_per_func:
         print(f"\n{'='*80}")
-        print(f"Generating visualization for BEST result: {best_config_name}")
-        print(f"Best ARI: {best_result['ari']:.4f}")
+        print("GENERATING VISUALIZATIONS FOR BEST OF EACH FUNCTION TYPE")
         print(f"{'='*80}")
         
-        params_str = ""
-        if best_params:
-            params_str = f"norm={best_params['normalization']}, pca={best_params['pca_variance']}, n_neighbors={best_params['spectral_n_neighbors']}"
-        
-        embeddings = visualize_clusters(
-            best_X, labels, best_y_kmeans, best_y_spectral,
-            best_config_name, params_str
-        )
-        
-        # Save UMAP coordinates to CSV
-        if save_umap_coords and 'umap' in embeddings:
-            import pandas as pd
-            umap_df = pd.DataFrame({
-                'umap_x': embeddings['umap'][:, 0],
-                'umap_y': embeddings['umap'][:, 1],
-                'true_label': labels,
-                'kmeans_label': best_y_kmeans,
-                'spectral_label': best_y_spectral
-            })
-            umap_path = os.path.join(RESULTS_DIR, f'umap_coords_enzymes_{best_config_name}.csv')
-            umap_df.to_csv(umap_path, index=False)
-            print(f"  -> UMAP coordinates saved to: {umap_path}")
+        for func_type, data in best_per_func.items():
+            print(f"\n  Visualizing best {func_type.upper()}...")
+            config = data['config']
+            result = data['result']
+            
+            params_str = f"norm={result['normalization']}, pca={result['pca_variance']}, n_neighbors={result.get('spectral_n_neighbors', 'N/A')}"
+            params_str += f"\nBest ARI={result['ari']:.4f}, Sil={result['silhouette']:.4f}"
+            
+            embeddings = visualize_clusters(
+                data['X'], data['labels'], data['y_kmeans'], data['y_spectral'],
+                result['config_name'], params_str, func_type=func_type
+            )
+            
+            # Save UMAP coordinates
+            if save_umap_coords and 'umap' in embeddings:
+                import pandas as pd
+                umap_df = pd.DataFrame({
+                    'umap_x': embeddings['umap'][:, 0],
+                    'umap_y': embeddings['umap'][:, 1],
+                    'true_label': data['labels'],
+                    'kmeans_label': data['y_kmeans'],
+                    'spectral_label': data['y_spectral']
+                })
+                umap_path = os.path.join(RESULTS_DIR, f'umap_coords_enzymes_{func_type}_{result["config_name"]}.csv')
+                umap_df.to_csv(umap_path, index=False)
+                print(f"  -> UMAP coordinates saved to: {umap_path}")
     
     return all_results
 

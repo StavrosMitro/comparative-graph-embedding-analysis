@@ -1,0 +1,901 @@
+dataset,classifier,embedding,preprocessing,repetition,fold,train_accuracy,test_accuracy,f1_score,train_time,train_size,test_size
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),1,1,1.0,0.48333333333333334,0.47051719238420003,0.5995540618896484,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),1,2,1.0,0.4166666666666667,0.403491251573093,0.4745023250579834,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),1,3,1.0,0.43333333333333335,0.43055555555555547,0.4815800189971924,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),1,4,1.0,0.45,0.4462962962962963,0.5347201824188232,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),1,5,1.0,0.38333333333333336,0.37271094402673355,0.5717818737030029,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),1,6,1.0,0.48333333333333334,0.47632487338369695,0.47857666015625,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),1,7,1.0,0.35,0.3520334059549745,0.47774481773376465,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),1,8,1.0,0.45,0.45021108922037717,0.47330236434936523,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),1,9,1.0,0.5166666666666667,0.509719528837176,0.4812188148498535,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),1,10,1.0,0.5166666666666667,0.5209508620034936,0.47296643257141113,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),2,1,1.0,0.5,0.5004643250638675,0.4774479866027832,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),2,2,1.0,0.4,0.38903784219001614,0.4789307117462158,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),2,3,1.0,0.43333333333333335,0.4411552661653618,0.4800698757171631,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),2,4,1.0,0.4666666666666667,0.46192972485205624,0.47306013107299805,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),2,5,1.0,0.45,0.41850414078674947,0.47652387619018555,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),2,6,1.0,0.5,0.5003359298553806,0.4706599712371826,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),2,7,1.0,0.5166666666666667,0.5031370091896409,0.4807133674621582,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),2,8,1.0,0.48333333333333334,0.48333333333333334,0.4793374538421631,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),2,9,1.0,0.45,0.446714007240323,0.5886387825012207,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),2,10,1.0,0.5166666666666667,0.5194627433757868,0.48682165145874023,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),3,1,1.0,0.4,0.387711176088369,0.47950148582458496,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),3,2,1.0,0.5333333333333333,0.5401002506265665,0.4883151054382324,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),3,3,1.0,0.36666666666666664,0.34793802688539527,0.48268675804138184,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),3,4,1.0,0.4666666666666667,0.45805076416531515,0.47412633895874023,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),3,5,1.0,0.38333333333333336,0.3719805194805194,0.47576308250427246,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),3,6,1.0,0.5,0.47668260961604614,0.48135924339294434,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),3,7,1.0,0.4166666666666667,0.4092363374399987,0.47199392318725586,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),3,8,1.0,0.4666666666666667,0.463461062949554,0.4716677665710449,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),3,9,1.0,0.5333333333333333,0.5332902964481911,0.48101377487182617,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),3,10,1.0,0.5333333333333333,0.5146899668958492,0.48024439811706543,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),4,1,1.0,0.5166666666666667,0.5169486142699227,0.48993468284606934,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),4,2,1.0,0.43333333333333335,0.44504053152592665,0.4823143482208252,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),4,3,1.0,0.35,0.3567159004229943,0.5582590103149414,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),4,4,1.0,0.43333333333333335,0.4376237868884928,0.5645022392272949,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),4,5,1.0,0.43333333333333335,0.421246297562087,0.5980319976806641,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),4,6,1.0,0.45,0.4468810916179337,0.5606117248535156,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),4,7,1.0,0.48333333333333334,0.48610066833751037,0.5487639904022217,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),4,8,1.0,0.48333333333333334,0.4851559530267969,0.5051333904266357,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),4,9,1.0,0.5166666666666667,0.47457764782326184,0.6703245639801025,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),4,10,1.0,0.4666666666666667,0.4571182412358883,0.6200788021087646,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),5,1,1.0,0.5,0.5001358313244165,0.8277101516723633,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),5,2,1.0,0.43333333333333335,0.4303932178932179,0.8495266437530518,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),5,3,1.0,0.5666666666666667,0.5529902196568862,0.5220043659210205,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),5,4,1.0,0.4666666666666667,0.46239763173682047,0.4833402633666992,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),5,5,1.0,0.5166666666666667,0.5187966345958672,0.4833521842956543,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),5,6,1.0,0.35,0.3321535904656109,0.4874560832977295,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),5,7,1.0,0.43333333333333335,0.4262113617376775,0.48491907119750977,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),5,8,1.0,0.48333333333333334,0.48110554163185737,0.4990382194519043,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),5,9,1.0,0.5,0.4798701298701299,0.5125336647033691,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),5,10,1.0,0.5,0.4879373217978683,0.499126672744751,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),6,1,1.0,0.4666666666666667,0.4629629629629629,0.6034836769104004,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),6,2,1.0,0.55,0.5365657734078788,0.6079096794128418,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),6,3,1.0,0.4666666666666667,0.45638966697790223,0.5046579837799072,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),6,4,1.0,0.5,0.4926263149089236,0.5498452186584473,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),6,5,1.0,0.38333333333333336,0.37129134482075654,0.573815107345581,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),6,6,1.0,0.4666666666666667,0.4551299746951921,0.579716682434082,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),6,7,1.0,0.45,0.4523300229182582,0.5057957172393799,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),6,8,1.0,0.3333333333333333,0.3309384572542467,0.5108933448791504,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),6,9,1.0,0.6166666666666667,0.6128507543368223,0.48898792266845703,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),6,10,1.0,0.4666666666666667,0.46532999164578115,0.5016708374023438,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),7,1,1.0,0.5166666666666667,0.5155400578741539,0.5195662975311279,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),7,2,1.0,0.4666666666666667,0.4657507294807066,0.4989142417907715,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),7,3,1.0,0.4166666666666667,0.41070650482415194,0.4998962879180908,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),7,4,1.0,0.36666666666666664,0.3535714285714286,0.5047731399536133,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),7,5,1.0,0.35,0.3456937799043062,0.5009114742279053,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),7,6,1.0,0.6,0.6070548102281847,0.49033427238464355,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),7,7,1.0,0.4166666666666667,0.41881757533931446,0.4897444248199463,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),7,8,1.0,0.5,0.4855010572502832,0.4961562156677246,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),7,9,1.0,0.4666666666666667,0.46542542126066155,0.4866201877593994,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),7,10,1.0,0.45,0.42816022544283416,0.48562026023864746,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),8,1,1.0,0.36666666666666664,0.3610927076144467,0.49218058586120605,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),8,2,1.0,0.5,0.48450577200577194,0.4875986576080322,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),8,3,1.0,0.43333333333333335,0.4260778208146629,0.49598050117492676,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),8,4,1.0,0.35,0.34398960363872644,0.48082971572875977,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),8,5,1.0,0.5166666666666667,0.5126069520335237,0.4847283363342285,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),8,6,1.0,0.4666666666666667,0.4649570786870559,0.4864325523376465,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),8,7,1.0,0.48333333333333334,0.4689228974462518,0.48758745193481445,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),8,8,1.0,0.45,0.4499769956291696,0.48441362380981445,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),8,9,1.0,0.45,0.45186495650891934,0.47575831413269043,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),8,10,1.0,0.45,0.4486390548175445,0.48714375495910645,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),9,1,1.0,0.48333333333333334,0.4836675020885547,0.4869964122772217,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),9,2,1.0,0.38333333333333336,0.3638027158408995,0.48870229721069336,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),9,3,1.0,0.55,0.5369773587265847,0.4914581775665283,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),9,4,1.0,0.45,0.44455456095481677,0.479198694229126,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),9,5,1.0,0.4666666666666667,0.46760582010582014,0.4819300174713135,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),9,6,1.0,0.3333333333333333,0.3288315809415554,0.4895896911621094,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),9,7,1.0,0.5166666666666667,0.5218253968253967,0.6320345401763916,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),9,8,1.0,0.43333333333333335,0.4103771506059835,0.5548861026763916,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),9,9,1.0,0.43333333333333335,0.4111860361860362,0.670602560043335,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),9,10,1.0,0.4666666666666667,0.43977272727272726,0.5409567356109619,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),10,1,1.0,0.4166666666666667,0.4167464114832536,0.5381371974945068,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),10,2,1.0,0.48333333333333334,0.472538532321141,0.6773741245269775,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),10,3,1.0,0.5166666666666667,0.5015642972164711,0.5465679168701172,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),10,4,1.0,0.4166666666666667,0.3883930266350511,0.6018567085266113,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),10,5,1.0,0.48333333333333334,0.4788676236044658,0.6059134006500244,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),10,6,1.0,0.4666666666666667,0.4654935620730088,0.7302412986755371,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),10,7,1.0,0.5,0.49125465178096756,0.49852800369262695,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),10,8,1.0,0.45,0.4456542482858273,0.5880684852600098,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),10,9,1.0,0.5333333333333333,0.5301169590643275,0.5836071968078613,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),10,10,1.0,0.36666666666666664,0.3478943878593899,0.545421838760376,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),11,1,1.0,0.4666666666666667,0.4537846412846413,0.5148046016693115,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),11,2,1.0,0.43333333333333335,0.42560694665957827,0.5466513633728027,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),11,3,1.0,0.48333333333333334,0.47849644908468425,0.530383825302124,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),11,4,1.0,0.5,0.4914820400804383,0.5531959533691406,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),11,5,1.0,0.45,0.4381045751633987,0.5831966400146484,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),11,6,1.0,0.48333333333333334,0.49166666666666664,0.635859489440918,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),11,7,1.0,0.48333333333333334,0.47219155113891953,0.5740556716918945,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),11,8,1.0,0.43333333333333335,0.4306137762020114,0.5182955265045166,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),11,9,1.0,0.5,0.48558792466115125,0.6152994632720947,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),11,10,1.0,0.4,0.3930254807236904,0.6214063167572021,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),12,1,1.0,0.5,0.48745216136520486,0.6611382961273193,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),12,2,1.0,0.5166666666666667,0.5131895395053289,0.6539270877838135,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),12,3,1.0,0.43333333333333335,0.4161581489956776,0.5879795551300049,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),12,4,1.0,0.4,0.39563882969455727,0.6425797939300537,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),12,5,1.0,0.5,0.48665223665223667,0.6576786041259766,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),12,6,1.0,0.48333333333333334,0.47582903336773313,0.641441822052002,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),12,7,1.0,0.4166666666666667,0.3909241160762459,0.6004846096038818,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),12,8,1.0,0.5166666666666667,0.49876385336743384,0.606966495513916,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),12,9,1.0,0.45,0.4455227743271222,0.6474847793579102,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),12,10,1.0,0.45,0.43271815903394845,0.6732475757598877,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),13,1,1.0,0.43333333333333335,0.4290204678362573,0.7069761753082275,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),13,2,1.0,0.36666666666666664,0.3710964912280702,0.8363127708435059,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),13,3,1.0,0.45,0.4465329991645781,0.6287868022918701,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),13,4,1.0,0.5166666666666667,0.5133713494394609,0.6937553882598877,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),13,5,1.0,0.4166666666666667,0.4295826292730317,0.8263411521911621,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),13,6,1.0,0.5,0.4734441602728048,0.6546850204467773,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),13,7,1.0,0.6833333333333333,0.6805903648008911,0.6578335762023926,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),13,8,1.0,0.43333333333333335,0.43719163809907907,0.6483986377716064,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),13,9,1.0,0.5666666666666667,0.5653368159088983,0.7384884357452393,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),13,10,1.0,0.55,0.5445134575569358,0.7738280296325684,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),14,1,1.0,0.38333333333333336,0.3848127481119808,0.7202708721160889,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),14,2,1.0,0.55,0.5491985645933013,0.6505696773529053,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),14,3,1.0,0.4666666666666667,0.4699001216648275,0.6866436004638672,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),14,4,1.0,0.45,0.45099568847717997,0.6550164222717285,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),14,5,1.0,0.48333333333333334,0.48843045250367906,0.7381715774536133,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),14,6,1.0,0.4166666666666667,0.38335657624873315,0.630784273147583,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),14,7,1.0,0.38333333333333336,0.3690210374420901,0.6576905250549316,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),14,8,1.0,0.4166666666666667,0.4156894017575132,0.7609827518463135,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),14,9,1.0,0.4666666666666667,0.45482082068432855,0.6616015434265137,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),14,10,1.0,0.4666666666666667,0.4599232522910003,0.6451148986816406,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),15,1,1.0,0.4,0.39365595312391655,0.673821210861206,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),15,2,1.0,0.5666666666666667,0.5609049175225647,0.6820547580718994,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),15,3,1.0,0.45,0.43846466122680955,0.5527627468109131,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),15,4,1.0,0.4666666666666667,0.4667562399760542,0.6953957080841064,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),15,5,1.0,0.6,0.5860964912280703,0.5960001945495605,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),15,6,1.0,0.36666666666666664,0.3563980211967828,0.5974612236022949,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),15,7,1.0,0.5333333333333333,0.5219498910675381,0.5966682434082031,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),15,8,1.0,0.48333333333333334,0.475546282586261,0.5642333030700684,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),15,9,1.0,0.4666666666666667,0.45423021060275975,0.598170280456543,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),15,10,1.0,0.48333333333333334,0.48682944735576317,0.5896015167236328,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),16,1,1.0,0.36666666666666664,0.3343925623961577,0.6343555450439453,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),16,2,1.0,0.4,0.3788984445506184,0.6922359466552734,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),16,3,1.0,0.45,0.4514759120022278,0.5431160926818848,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),16,4,1.0,0.5,0.47837301587301584,0.5970079898834229,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),16,5,1.0,0.43333333333333335,0.4417140593611182,0.6239039897918701,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),16,6,1.0,0.5166666666666667,0.5082393483709272,0.6588225364685059,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),16,7,1.0,0.45,0.4466853408029879,0.7313723564147949,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),16,8,1.0,0.48333333333333334,0.46449911009407574,0.5328459739685059,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),16,9,1.0,0.3,0.2899484287642183,0.5129706859588623,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),16,10,1.0,0.55,0.5470719103812388,0.5160679817199707,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),17,1,1.0,0.38333333333333336,0.3758994708994709,0.5092349052429199,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),17,2,1.0,0.45,0.455201225789461,0.5144314765930176,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),17,3,1.0,0.45,0.4478560655031244,0.5166397094726562,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),17,4,1.0,0.45,0.43903679653679656,0.5145206451416016,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),17,5,1.0,0.5166666666666667,0.5143307542604219,0.5189862251281738,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),17,6,1.0,0.5333333333333333,0.5278628389154705,0.5106205940246582,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),17,7,1.0,0.48333333333333334,0.48266620657925,0.5142767429351807,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),17,8,1.0,0.4666666666666667,0.4708849329205366,0.5155422687530518,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),17,9,1.0,0.48333333333333334,0.47263825947363436,0.509885311126709,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),17,10,1.0,0.4666666666666667,0.44912698412698404,0.516977071762085,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),18,1,1.0,0.38333333333333336,0.3444973544973545,0.5163414478302002,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),18,2,1.0,0.4666666666666667,0.4648583470093767,0.5218300819396973,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),18,3,1.0,0.5,0.48496437537184567,0.5080604553222656,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),18,4,1.0,0.4666666666666667,0.449420492834815,0.5126838684082031,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),18,5,1.0,0.43333333333333335,0.40318457709762057,0.5044429302215576,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),18,6,1.0,0.43333333333333335,0.4222222222222222,0.5159101486206055,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),18,7,1.0,0.4166666666666667,0.4212791783380018,0.5069208145141602,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),18,8,1.0,0.5833333333333334,0.573664274322169,0.5106656551361084,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),18,9,1.0,0.5333333333333333,0.5320639426979447,0.5080530643463135,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),18,10,1.0,0.5666666666666667,0.5707802664324404,0.5090072154998779,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),19,1,1.0,0.4,0.3800528293814739,0.5186104774475098,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),19,2,1.0,0.5,0.4996187363834422,0.5194406509399414,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),19,3,1.0,0.45,0.44951751359074016,0.5088932514190674,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),19,4,1.0,0.5,0.5011416882126264,0.5133833885192871,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),19,5,1.0,0.55,0.5544678747465125,0.5061202049255371,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),19,6,1.0,0.43333333333333335,0.4296749002631355,0.5103318691253662,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),19,7,1.0,0.4166666666666667,0.40374541544730447,0.5153775215148926,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),19,8,1.0,0.45,0.44627192982456143,0.5122559070587158,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),19,9,1.0,0.4666666666666667,0.4630593864339994,0.5030229091644287,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),19,10,1.0,0.31666666666666665,0.3189245395127748,0.509667158126831,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),20,1,1.0,0.55,0.542512077294686,0.5375323295593262,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),20,2,1.0,0.5166666666666667,0.5133667502088555,0.5510039329528809,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),20,3,1.0,0.38333333333333336,0.39112838915470494,0.518099308013916,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),20,4,1.0,0.48333333333333334,0.4803427651253737,0.5136494636535645,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),20,5,1.0,0.48333333333333334,0.4747056486186921,0.5132250785827637,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),20,6,1.0,0.5,0.4937602465735458,0.5095691680908203,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),20,7,1.0,0.4,0.3998844278020479,0.5076029300689697,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),20,8,1.0,0.4166666666666667,0.4148031281023608,0.5158884525299072,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),20,9,1.0,0.5666666666666667,0.5639191302806863,0.5057117938995361,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),20,10,1.0,0.43333333333333335,0.43565557536145766,0.5164544582366943,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),21,1,1.0,0.45,0.4335990806579042,0.5129175186157227,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),21,2,1.0,0.4166666666666667,0.40618303003886524,0.5165457725524902,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),21,3,1.0,0.38333333333333336,0.3821969696969697,0.5103955268859863,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),21,4,1.0,0.4166666666666667,0.4006227690438216,0.5130615234375,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),21,5,1.0,0.4666666666666667,0.46667375509480774,0.5105979442596436,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),21,6,1.0,0.4666666666666667,0.45817357307295387,0.5049421787261963,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),21,7,1.0,0.5166666666666667,0.503288144603934,0.5204391479492188,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),21,8,1.0,0.4166666666666667,0.4116579327105644,0.5121927261352539,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),21,9,1.0,0.5333333333333333,0.5307903597377283,0.5077059268951416,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),21,10,1.0,0.4666666666666667,0.4650149813294247,0.5191705226898193,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),22,1,1.0,0.48333333333333334,0.475,0.561164379119873,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),22,2,1.0,0.5,0.5038961038961038,0.5272250175476074,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),22,3,1.0,0.4666666666666667,0.4690545808966862,0.5158801078796387,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),22,4,1.0,0.31666666666666665,0.2930445761967501,0.5171051025390625,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),22,5,1.0,0.55,0.5334206458503132,0.5124540328979492,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),22,6,1.0,0.4666666666666667,0.4630810520665593,0.5104634761810303,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),22,7,1.0,0.4,0.389018144737959,0.5261867046356201,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),22,8,1.0,0.5166666666666667,0.5229752187956521,0.5824506282806396,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),22,9,1.0,0.4666666666666667,0.4696127946127946,0.518376350402832,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),22,10,1.0,0.4666666666666667,0.44805346700083537,0.5107889175415039,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),23,1,1.0,0.38333333333333336,0.37990620490620486,0.515944242477417,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),23,2,1.0,0.4666666666666667,0.4684955141476881,0.5175256729125977,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),23,3,1.0,0.5666666666666667,0.5630312412046158,0.506986141204834,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),23,4,1.0,0.4,0.3846330802852542,0.5372376441955566,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),23,5,1.0,0.5833333333333334,0.5796103449354223,0.5324976444244385,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),23,6,1.0,0.5,0.49288515406162464,0.7294929027557373,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),23,7,1.0,0.45,0.45168097010202274,0.5857224464416504,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),23,8,1.0,0.4666666666666667,0.45732689210950084,0.654050350189209,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),23,9,1.0,0.43333333333333335,0.4376646745067798,0.5454330444335938,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),23,10,1.0,0.5333333333333333,0.5277048653175992,0.6355812549591064,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),24,1,1.0,0.4166666666666667,0.417056530214425,0.6602609157562256,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),24,2,1.0,0.43333333333333335,0.4373489278752436,0.6108124256134033,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),24,3,1.0,0.4666666666666667,0.46130535981121523,0.6478524208068848,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),24,4,1.0,0.45,0.44920381762487016,0.7507288455963135,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),24,5,1.0,0.55,0.5442803383979854,0.5333061218261719,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),24,6,1.0,0.5833333333333334,0.5770567286743756,0.5140936374664307,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),24,7,1.0,0.5,0.49757727652464484,0.5080208778381348,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),24,8,1.0,0.3333333333333333,0.3274547996162615,0.51133131980896,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),24,9,1.0,0.4666666666666667,0.4590622612681436,0.5207836627960205,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),24,10,1.0,0.4,0.39757236227824466,0.521064281463623,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),25,1,1.0,0.48333333333333334,0.4916588857765329,0.5323669910430908,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),25,2,1.0,0.45,0.44625601436746937,0.5120139122009277,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),25,3,1.0,0.4,0.39759151523857406,0.5166897773742676,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),25,4,1.0,0.43333333333333335,0.42550216120010176,0.5154170989990234,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),25,5,1.0,0.5333333333333333,0.5271028701335607,0.6178975105285645,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),25,6,1.0,0.48333333333333334,0.47762654012654016,0.558121919631958,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),25,7,1.0,0.5,0.4836511527687998,0.7424547672271729,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),25,8,1.0,0.48333333333333334,0.4839744417749533,0.5832939147949219,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),25,9,1.0,0.4,0.3950655624568668,0.6105029582977295,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),25,10,1.0,0.48333333333333334,0.480824770793138,0.5462610721588135,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),26,1,1.0,0.4166666666666667,0.406981906981907,0.5418968200683594,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),26,2,1.0,0.48333333333333334,0.48459830503174156,0.5902481079101562,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),26,3,1.0,0.4666666666666667,0.4398766524153521,0.5621986389160156,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),26,4,1.0,0.5,0.5027387308851841,0.5474574565887451,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),26,5,1.0,0.5,0.5047008547008547,0.5501885414123535,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),26,6,1.0,0.4,0.3935511474727161,0.6298506259918213,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),26,7,1.0,0.45,0.4316578483245149,0.5723690986633301,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),26,8,1.0,0.4666666666666667,0.4474622384839103,0.5575261116027832,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),26,9,1.0,0.43333333333333335,0.4373627920067548,0.6374661922454834,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),26,10,1.0,0.43333333333333335,0.4246240601503759,0.559276819229126,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),27,1,1.0,0.5333333333333333,0.5282990974167444,0.5640850067138672,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),27,2,1.0,0.43333333333333335,0.43278651173388005,0.5969870090484619,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),27,3,1.0,0.5166666666666667,0.5114047745626692,0.6164512634277344,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),27,4,1.0,0.36666666666666664,0.3560693400167085,0.5996720790863037,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),27,5,1.0,0.5,0.4893307599257256,0.5393469333648682,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),27,6,1.0,0.48333333333333334,0.46645743145743146,0.5241167545318604,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),27,7,1.0,0.43333333333333335,0.4106240981240982,0.5146610736846924,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),27,8,1.0,0.6166666666666667,0.6116959064327485,0.5224332809448242,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),27,9,1.0,0.43333333333333335,0.42494717185119657,0.51686692237854,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),27,10,1.0,0.45,0.45705269140455573,0.5180833339691162,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),28,1,1.0,0.4,0.39711399711399703,0.5277025699615479,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),28,2,1.0,0.4666666666666667,0.44752020587260855,0.5549640655517578,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),28,3,1.0,0.38333333333333336,0.3926127214170692,0.5639030933380127,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),28,4,1.0,0.4666666666666667,0.4603231563757879,0.5314338207244873,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),28,5,1.0,0.4666666666666667,0.4637670565302143,0.5521767139434814,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),28,6,1.0,0.48333333333333334,0.4791901250711319,0.5353298187255859,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),28,7,1.0,0.4666666666666667,0.46662014885699094,0.5177559852600098,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),28,8,1.0,0.5,0.4844444444444444,0.5270609855651855,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),28,9,1.0,0.43333333333333335,0.43746733143017974,0.6273705959320068,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),28,10,1.0,0.55,0.5455091533180778,0.5211279392242432,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),29,1,1.0,0.5166666666666667,0.5078943960522907,0.5229659080505371,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),29,2,1.0,0.45,0.4484650425826897,0.5263993740081787,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),29,3,1.0,0.4,0.4016654827800339,0.5155065059661865,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),29,4,1.0,0.36666666666666664,0.360149674886517,0.5213403701782227,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),29,5,1.0,0.48333333333333334,0.4777631578947369,0.5192692279815674,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),29,6,1.0,0.48333333333333334,0.46975076580339736,0.5105233192443848,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),29,7,1.0,0.48333333333333334,0.4807812013694367,0.5208725929260254,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),29,8,1.0,0.38333333333333336,0.37669657234874626,0.5167770385742188,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),29,9,1.0,0.4,0.3974215842636895,0.5196914672851562,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),29,10,1.0,0.4666666666666667,0.45948783997029613,0.523531436920166,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),30,1,1.0,0.4166666666666667,0.41750841750841755,0.5975441932678223,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),30,2,1.0,0.38333333333333336,0.37317219817219816,0.5966892242431641,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),30,3,1.0,0.55,0.5488759606406665,0.5207602977752686,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),30,4,1.0,0.4,0.404004576659039,0.521888256072998,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),30,5,1.0,0.5166666666666667,0.5129570211923153,0.5177290439605713,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),30,6,1.0,0.48333333333333334,0.4740601057009725,0.5246412754058838,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),30,7,1.0,0.45,0.4467528064782069,0.5163819789886475,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),30,8,1.0,0.55,0.5363144938996331,0.5635385513305664,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),30,9,1.0,0.48333333333333334,0.45900984344920276,0.5221517086029053,540,60
+ENZYMES,"Random Forest (n=500, max_depth=20)","polynomial (bins=150, range=4.0)",None (raw embeddings),30,10,1.0,0.5166666666666667,0.49812324929971985,0.5128567218780518,540,60
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),1,1,0.49037037037037035,0.4266666666666667,0.3994979634365824,0.4847273826599121,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),1,2,0.5851851851851851,0.4666666666666667,0.4399052365745892,0.6077661514282227,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),1,3,0.5933333333333334,0.5,0.4825132249789784,0.6338801383972168,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),1,4,0.5392592592592592,0.43333333333333335,0.42086917744812474,0.5284767150878906,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),1,5,0.5555555555555556,0.44,0.4196022913864544,0.4696636199951172,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),1,6,0.4792592592592593,0.46,0.45868703724099524,0.4047114849090576,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),1,7,0.5696296296296296,0.49333333333333335,0.49221716962932344,0.6209225654602051,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),1,8,0.5992592592592593,0.41333333333333333,0.406823330331068,1.03554368019104,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),1,9,0.5392592592592592,0.48,0.47353300294476763,0.7927899360656738,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),1,10,0.5644444444444444,0.5533333333333333,0.5438220678944882,0.5706198215484619,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),2,1,0.5874074074074074,0.5133333333333333,0.5049289377889784,0.6445670127868652,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),2,2,0.5696296296296296,0.46,0.4461750752827909,0.6080667972564697,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),2,3,0.5496296296296296,0.5066666666666667,0.5052089197724482,0.46013665199279785,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),2,4,0.4925925925925926,0.4533333333333333,0.45360148338325484,0.36490917205810547,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),2,5,0.5659259259259259,0.4266666666666667,0.4252986417934871,0.4657776355743408,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),2,6,0.562962962962963,0.54,0.5301360041226949,0.7086710929870605,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),2,7,0.48148148148148145,0.43333333333333335,0.42585646411602895,0.3534419536590576,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),2,8,0.5014814814814815,0.3933333333333333,0.37113919169383036,0.637749433517456,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),2,9,0.6051851851851852,0.43333333333333335,0.4312936813578663,0.7339186668395996,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),2,10,0.5555555555555556,0.47333333333333333,0.47182379241004585,0.45357322692871094,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),3,1,0.5185185185185185,0.5266666666666666,0.5211865650601728,0.4753587245941162,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),3,2,0.5503703703703704,0.5066666666666667,0.5012006757737307,0.4959278106689453,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),3,3,0.5955555555555555,0.4533333333333333,0.4450490701493107,0.7292602062225342,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),3,4,0.5918518518518519,0.4666666666666667,0.4462395075906654,0.7918229103088379,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),3,5,0.5888888888888889,0.48,0.4643790849673203,0.5450265407562256,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),3,6,0.5681481481481482,0.42,0.4029777612477788,0.4964919090270996,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),3,7,0.48148148148148145,0.37333333333333335,0.36947263882576714,0.36997365951538086,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),3,8,0.5251851851851852,0.5,0.4862798020692757,0.4046366214752197,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),3,9,0.5985185185185186,0.48,0.46927086514772054,0.9514670372009277,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),3,10,0.5533333333333333,0.44666666666666666,0.43473688468227967,0.5224480628967285,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),4,1,0.6081481481481481,0.52,0.5138707334785767,1.25370192527771,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),4,2,0.6051851851851852,0.4866666666666667,0.47398712398712406,0.6873071193695068,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),4,3,0.5688888888888889,0.44,0.4338243220929931,0.47278904914855957,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),4,4,0.534074074074074,0.48,0.464138059181493,0.4181478023529053,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),4,5,0.4918518518518519,0.4666666666666667,0.4493948048415613,0.3689568042755127,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),4,6,0.6007407407407407,0.42,0.41561365286855484,0.7911922931671143,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),4,7,0.5266666666666666,0.5066666666666667,0.4892696858425133,0.421872615814209,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),4,8,0.5518518518518518,0.4066666666666667,0.4069034065238999,0.45066165924072266,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),4,9,0.5370370370370371,0.5,0.4793681877360419,0.39274096488952637,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),4,10,0.597037037037037,0.46,0.45837636851890107,0.7546091079711914,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),5,1,0.4622222222222222,0.4533333333333333,0.40544898070721974,0.37476348876953125,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),5,2,0.5518518518518518,0.5,0.49604501550827534,0.5683965682983398,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),5,3,0.5925925925925926,0.49333333333333335,0.48149741824440623,0.5370726585388184,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),5,4,0.5496296296296296,0.44,0.4317941079112877,0.4503490924835205,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),5,5,0.597037037037037,0.4666666666666667,0.4445177553333672,0.509148359298706,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),5,6,0.5444444444444444,0.4866666666666667,0.4836534920103937,0.4698519706726074,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),5,7,0.6148148148148148,0.4666666666666667,0.466701671660026,0.7590363025665283,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),5,8,0.5925925925925926,0.4533333333333333,0.44670399842813635,0.9041588306427002,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),5,9,0.6074074074074074,0.5,0.4831059129304742,0.7046008110046387,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),5,10,0.5814814814814815,0.47333333333333333,0.4572412404377639,0.5570182800292969,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),6,1,0.5622222222222222,0.44,0.43071519795657726,1.0847814083099365,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),6,2,0.5748148148148148,0.44,0.42373273161374014,0.6950695514678955,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),6,3,0.4748148148148148,0.46,0.452322010885003,0.45719099044799805,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),6,4,0.6103703703703703,0.48,0.4584384549592336,1.2876908779144287,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),6,5,0.6133333333333333,0.4266666666666667,0.4233388146388214,0.7771236896514893,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),6,6,0.6066666666666667,0.5066666666666667,0.5045563259973872,0.7863209247589111,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),6,7,0.5251851851851852,0.46,0.44079275545834773,0.4779548645019531,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),6,8,0.6051851851851852,0.4866666666666667,0.47909035409035405,0.903911828994751,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),6,9,0.5674074074074074,0.4866666666666667,0.46744921744921747,0.6960756778717041,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),6,10,0.5874074074074074,0.48,0.47690058479532166,2.2988483905792236,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),7,1,0.5696296296296296,0.43333333333333335,0.42381727419448395,0.8817424774169922,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),7,2,0.5392592592592592,0.49333333333333335,0.4867566216891554,0.7132773399353027,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),7,3,0.6044444444444445,0.4,0.3733175660057577,0.9161093235015869,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),7,4,0.582962962962963,0.47333333333333333,0.45963639128196093,0.6714258193969727,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),7,5,0.6044444444444445,0.5066666666666667,0.48599336178283553,0.7916226387023926,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),7,6,0.58,0.5066666666666667,0.49423067472603077,0.8292627334594727,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),7,7,0.4703703703703704,0.44666666666666666,0.44513335921134994,0.6341631412506104,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),7,8,0.5088888888888888,0.46,0.43282958020572704,0.5599133968353271,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),7,9,0.5814814814814815,0.5333333333333333,0.5277057377743877,0.7903454303741455,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),7,10,0.5881481481481482,0.4666666666666667,0.4490218423551757,0.6712393760681152,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),8,1,0.47185185185185186,0.41333333333333333,0.3868348668791776,0.6874947547912598,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),8,2,0.6066666666666667,0.4666666666666667,0.4518928179058898,1.3008544445037842,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),8,3,0.5955555555555555,0.44666666666666666,0.44209097272133674,1.532087802886963,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),8,4,0.6096296296296296,0.49333333333333335,0.4821626455130948,0.9324779510498047,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),8,5,0.5918518518518519,0.43333333333333335,0.4148017707339741,0.7004261016845703,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),8,6,0.5592592592592592,0.5,0.4916369643924216,0.46721482276916504,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),8,7,0.46,0.4666666666666667,0.41787328934506346,0.5242772102355957,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),8,8,0.5866666666666667,0.43333333333333335,0.41674931812546495,0.6036694049835205,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),8,9,0.5888888888888889,0.4533333333333333,0.44144144144144143,0.5670623779296875,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),8,10,0.52,0.46,0.4369164501973906,0.4273405075073242,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),9,1,0.6118518518518519,0.5,0.48187772833851816,0.793370246887207,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),9,2,0.5977777777777777,0.4866666666666667,0.4809018084719019,0.6774022579193115,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),9,3,0.5977777777777777,0.43333333333333335,0.41061832289638556,0.6632823944091797,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),9,4,0.5955555555555555,0.5066666666666667,0.49098092548035005,0.7275111675262451,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),9,5,0.5014814814814815,0.48,0.4491113999876631,0.46125340461730957,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),9,6,0.5377777777777778,0.48,0.458412586617046,0.40814971923828125,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),9,7,0.6148148148148148,0.5066666666666667,0.5043374925727867,0.8660352230072021,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),9,8,0.5,0.42,0.4073068345795618,0.357433557510376,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),9,9,0.5325925925925926,0.4533333333333333,0.4279371785092609,0.6194279193878174,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),9,10,0.5007407407407407,0.5133333333333333,0.4936666855689481,0.480379581451416,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),10,1,0.5948148148148148,0.49333333333333335,0.4877270016804901,0.5964803695678711,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),10,2,0.5992592592592593,0.4266666666666667,0.4169605771765988,0.7075223922729492,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),10,3,0.6081481481481481,0.47333333333333333,0.46216714839185785,0.5729649066925049,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),10,4,0.5955555555555555,0.4666666666666667,0.44739522130826476,0.6936235427856445,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),10,5,0.4711111111111111,0.3933333333333333,0.3369638943451856,0.35052990913391113,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),10,6,0.6118518518518519,0.48,0.47428741670314706,1.3447809219360352,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),10,7,0.5807407407407408,0.48,0.47065637065637067,0.5209445953369141,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),10,8,0.5740740740740741,0.46,0.43189467133129106,0.694972038269043,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),10,9,0.5888888888888889,0.49333333333333335,0.4707805150283027,0.7423057556152344,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),10,10,0.582962962962963,0.46,0.4544526243370766,0.6250324249267578,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),11,1,0.6125925925925926,0.44666666666666666,0.43664238471151207,1.002098798751831,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),11,2,0.5851851851851851,0.46,0.4502218698843806,0.72918701171875,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),11,3,0.48592592592592593,0.5266666666666666,0.5227227227227228,0.3904280662536621,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),11,4,0.557037037037037,0.5333333333333333,0.5232689347650957,0.45915651321411133,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),11,5,0.5725925925925925,0.4266666666666667,0.4118511291531101,0.5302274227142334,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),11,6,0.6029629629629629,0.5066666666666667,0.50120099584426,0.7506060600280762,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),11,7,0.5096296296296297,0.42,0.3992103887922457,0.609168291091919,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),11,8,0.6088888888888889,0.52,0.5130093021659287,0.7906723022460938,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),11,9,0.6081481481481481,0.4866666666666667,0.47454889852406607,0.6087186336517334,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),11,10,0.5577777777777778,0.47333333333333333,0.4476927645988788,0.43705034255981445,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),12,1,0.5933333333333334,0.49333333333333335,0.45785450665547217,0.6074516773223877,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),12,2,0.5370370370370371,0.46,0.44625259235825515,0.5726079940795898,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),12,3,0.597037037037037,0.4666666666666667,0.4503873082623329,0.9608707427978516,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),12,4,0.6044444444444445,0.5266666666666666,0.5154774722403033,0.6043798923492432,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),12,5,0.5622222222222222,0.4866666666666667,0.48071902737376,0.48680663108825684,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),12,6,0.5822222222222222,0.54,0.5270277668287129,0.4947988986968994,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),12,7,0.605925925925926,0.46,0.44639629376471474,1.2058064937591553,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),12,8,0.5762962962962963,0.30666666666666664,0.295848708939169,0.7167935371398926,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),12,9,0.5303703703703704,0.5,0.4934089143180053,0.4352598190307617,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),12,10,0.6125925925925926,0.4,0.3886911749562352,0.7424886226654053,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),13,1,0.5251851851851852,0.4866666666666667,0.4624240880925373,0.4144887924194336,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),13,2,0.5237037037037037,0.44,0.43587533156498676,0.5519125461578369,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),13,3,0.6029629629629629,0.44,0.42346947738252083,0.6200706958770752,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),13,4,0.5348148148148149,0.4533333333333333,0.4508290451686678,0.40969371795654297,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),13,5,0.5362962962962963,0.49333333333333335,0.485086155674391,0.45132875442504883,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),13,6,0.6029629629629629,0.49333333333333335,0.4744458994131626,0.6228961944580078,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),13,7,0.5533333333333333,0.4533333333333333,0.44669601728425257,0.5019738674163818,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),13,8,0.6125925925925926,0.47333333333333333,0.46212522045855375,0.7768294811248779,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),13,9,0.4651851851851852,0.52,0.5084563260001858,0.3975815773010254,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),13,10,0.5703703703703704,0.52,0.5115461847389557,0.5571742057800293,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),14,1,0.4918518518518519,0.44,0.40831209445521727,0.5538392066955566,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),14,2,0.5170370370370371,0.43333333333333335,0.42816804407713493,0.45560717582702637,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),14,3,0.5903703703703703,0.44666666666666666,0.4398767942755213,0.5313498973846436,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),14,4,0.5925925925925926,0.44666666666666666,0.45190638908907377,0.8103303909301758,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),14,5,0.5651851851851852,0.5,0.48674331926863573,0.9690935611724854,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),14,6,0.5955555555555555,0.52,0.5108010955622585,1.1301205158233643,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),14,7,0.5288888888888889,0.4866666666666667,0.4821764911524941,0.6182520389556885,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),14,8,0.6118518518518519,0.43333333333333335,0.43150079653731704,0.676415205001831,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),14,9,0.5674074074074074,0.4266666666666667,0.4124116061518947,0.538630485534668,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),14,10,0.5874074074074074,0.48,0.4703988222975565,0.5274114608764648,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),15,1,0.5807407407407408,0.52,0.5006211180124224,0.5034451484680176,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),15,2,0.6044444444444445,0.52,0.4970231100665883,0.7453036308288574,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),15,3,0.5977777777777777,0.42,0.414354066985646,1.279456377029419,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),15,4,0.6007407407407407,0.49333333333333335,0.48436072656152057,1.3808541297912598,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),15,5,0.5711111111111111,0.5133333333333333,0.49345814275077127,0.9623589515686035,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),15,6,0.597037037037037,0.4666666666666667,0.447608947099263,0.8994159698486328,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),15,7,0.5762962962962963,0.52,0.5194235853938988,0.671788215637207,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),15,8,0.5955555555555555,0.4666666666666667,0.4560755132975059,0.6234066486358643,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),15,9,0.5814814814814815,0.5,0.4970174173075816,0.5591201782226562,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),15,10,0.6081481481481481,0.5,0.49205732539065866,0.8041729927062988,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),16,1,0.5992592592592593,0.52,0.5104209799861974,0.649261474609375,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),16,2,0.5148148148148148,0.5066666666666667,0.49934307149497026,0.4326469898223877,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),16,3,0.5607407407407408,0.5133333333333333,0.49536433434738514,0.43850064277648926,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),16,4,0.5925925925925926,0.4266666666666667,0.42017204778581835,1.0165066719055176,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),16,5,0.5481481481481482,0.47333333333333333,0.4714393510658366,0.5618991851806641,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),16,6,0.6274074074074074,0.4266666666666667,0.42565674068369486,1.925048589706421,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),16,7,0.6148148148148148,0.43333333333333335,0.4174088713219148,0.839714765548706,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),16,8,0.5896296296296296,0.5333333333333333,0.5317019750009441,0.7129755020141602,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),16,9,0.5681481481481482,0.48,0.47814212613921947,0.7170758247375488,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),16,10,0.5162962962962963,0.5266666666666666,0.5257260956447948,0.42579174041748047,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),17,1,0.5533333333333333,0.43333333333333335,0.4206010024702017,0.4796106815338135,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),17,2,0.48444444444444446,0.43333333333333335,0.4123123123123123,0.5173070430755615,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),17,3,0.5911111111111111,0.48,0.4711011215769854,0.7898495197296143,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),17,4,0.5733333333333334,0.4533333333333333,0.4332158245201723,1.069753885269165,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),17,5,0.6162962962962963,0.4533333333333333,0.4439012023757786,1.1847410202026367,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),17,6,0.5814814814814815,0.42,0.4144030858782081,0.47164320945739746,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),17,7,0.5948148148148148,0.54,0.5372451559064134,0.6524715423583984,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),17,8,0.6244444444444445,0.4866666666666667,0.45610252724877226,0.8506643772125244,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),17,9,0.6044444444444445,0.5466666666666666,0.5431885866946963,0.7363195419311523,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),17,10,0.5562962962962963,0.4533333333333333,0.44586171745931313,0.508378267288208,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),18,1,0.6140740740740741,0.43333333333333335,0.41860220631462464,0.6794805526733398,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),18,2,0.5637037037037037,0.4533333333333333,0.4248313556274721,0.5582852363586426,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),18,3,0.5244444444444445,0.44666666666666666,0.4405298405298405,0.4192662239074707,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),18,4,0.585925925925926,0.4533333333333333,0.45067155067155074,0.6864051818847656,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),18,5,0.5296296296296297,0.43333333333333335,0.4303526312960275,0.4427061080932617,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),18,6,0.6074074074074074,0.5066666666666667,0.5039869082565711,1.2065138816833496,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),18,7,0.5577777777777778,0.47333333333333333,0.46080743656606926,0.41570377349853516,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),18,8,0.5333333333333333,0.49333333333333335,0.45287081339712915,0.41097402572631836,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),18,9,0.5725925925925925,0.3933333333333333,0.3931471578530402,0.5618789196014404,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),18,10,0.5162962962962963,0.38666666666666666,0.36076543913534515,0.417938232421875,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),19,1,0.5911111111111111,0.47333333333333333,0.4564311632272797,0.543220043182373,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),19,2,0.5585185185185185,0.43333333333333335,0.4312908966737653,0.5443415641784668,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),19,3,0.6044444444444445,0.44,0.442109640057128,1.0434236526489258,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),19,4,0.5296296296296297,0.4866666666666667,0.44066091954022985,0.41744112968444824,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),19,5,0.5481481481481482,0.44666666666666666,0.4357995703996387,0.5535790920257568,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),19,6,0.49703703703703705,0.5133333333333333,0.5088151484511444,0.40969252586364746,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),19,7,0.5511111111111111,0.49333333333333335,0.4912033802575613,0.4939241409301758,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),19,8,0.47185185185185186,0.4666666666666667,0.4635677552928605,0.4101254940032959,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),19,9,0.5111111111111111,0.38666666666666666,0.3836789894621219,0.4126145839691162,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),19,10,0.577037037037037,0.49333333333333335,0.47629802568136836,0.5488672256469727,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),20,1,0.5814814814814815,0.4533333333333333,0.4326791946929247,0.612384557723999,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),20,2,0.5607407407407408,0.4666666666666667,0.46312195449810134,0.6254420280456543,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),20,3,0.6214814814814815,0.41333333333333333,0.4089030814159776,1.4695212841033936,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),20,4,0.5992592592592593,0.5133333333333333,0.5012160339377465,0.6408584117889404,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),20,5,0.6051851851851852,0.47333333333333333,0.4677019905778076,0.6595239639282227,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),20,6,0.5807407407407408,0.5133333333333333,0.492973022485079,0.5516023635864258,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),20,7,0.5659259259259259,0.5133333333333333,0.5024540472379844,0.46072816848754883,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),20,8,0.5837037037037037,0.54,0.5209605209605209,0.4893608093261719,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),20,9,0.5170370370370371,0.4866666666666667,0.467998385794996,0.6847100257873535,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),20,10,0.5896296296296296,0.4533333333333333,0.41920216362407026,0.5210127830505371,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),21,1,0.5637037037037037,0.47333333333333333,0.45691302161890396,0.48642516136169434,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),21,2,0.6133333333333333,0.4266666666666667,0.4214022958581023,0.7389731407165527,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),21,3,0.6,0.5,0.48420642865087304,0.8953859806060791,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),21,4,0.6014814814814815,0.41333333333333333,0.41200645206536224,1.225095510482788,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),21,5,0.5985185185185186,0.49333333333333335,0.49331196581196574,1.4423534870147705,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),21,6,0.4688888888888889,0.4533333333333333,0.3877593155917784,0.5001370906829834,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),21,7,0.5533333333333333,0.44666666666666666,0.4130468233085599,0.651400089263916,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),21,8,0.6177777777777778,0.5266666666666666,0.5122782821897865,1.6345350742340088,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),21,9,0.5925925925925926,0.4866666666666667,0.4765315110609911,1.0609245300292969,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),21,10,0.4918518518518519,0.44666666666666666,0.4462412068819392,1.0813519954681396,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),22,1,0.605925925925926,0.42,0.405038236617184,1.7235114574432373,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),22,2,0.5911111111111111,0.43333333333333335,0.4304043023144146,1.2854914665222168,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),22,3,0.5525925925925926,0.44666666666666666,0.44190276249099775,0.6138296127319336,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),22,4,0.4837037037037037,0.4266666666666667,0.39295874305340417,0.5252654552459717,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),22,5,0.5577777777777778,0.5266666666666666,0.5096808795923841,0.6515014171600342,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),22,6,0.6088888888888889,0.47333333333333333,0.4690642363532362,0.8581502437591553,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),22,7,0.5807407407407408,0.5266666666666666,0.5229919760641915,0.6432759761810303,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),22,8,0.5888888888888889,0.5,0.48918865791930805,0.7248883247375488,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),22,9,0.5903703703703703,0.47333333333333333,0.46421107628004166,0.9115633964538574,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),22,10,0.48814814814814816,0.4666666666666667,0.465,0.7608096599578857,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),23,1,0.5688888888888889,0.5333333333333333,0.5072422174125392,0.967803955078125,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),23,2,0.6044444444444445,0.46,0.4467506631299734,1.8087797164916992,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),23,3,0.5325925925925926,0.47333333333333333,0.4728901461574729,1.4602489471435547,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),23,4,0.5,0.35333333333333333,0.33794710710305,0.8171415328979492,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),23,5,0.5955555555555555,0.52,0.5170684445194367,1.6304550170898438,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),23,6,0.6037037037037037,0.46,0.4542587611744975,1.534592628479004,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),23,7,0.5985185185185186,0.52,0.520769492679605,1.2055892944335938,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),23,8,0.6007407407407407,0.44666666666666666,0.4403575383641829,1.14805006980896,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),23,9,0.6066666666666667,0.48,0.4688822537562034,2.142778158187866,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),23,10,0.5977777777777777,0.46,0.43469372892588465,1.7701473236083984,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),24,1,0.56,0.4533333333333333,0.44240529626603936,1.2617106437683105,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),24,2,0.577037037037037,0.5266666666666666,0.5100026816840977,1.2831215858459473,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),24,3,0.5814814814814815,0.46,0.43686631297250766,1.0133693218231201,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),24,4,0.6051851851851852,0.4866666666666667,0.4724095015727162,1.818115234375,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),24,5,0.6111111111111112,0.4266666666666667,0.42078234802693004,2.231543779373169,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),24,6,0.6111111111111112,0.4533333333333333,0.4493479605280847,1.421821117401123,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),24,7,0.6133333333333333,0.5,0.48765536211423655,1.5657813549041748,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),24,8,0.6096296296296296,0.41333333333333333,0.3962412599962671,2.2320022583007812,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),24,9,0.5407407407407407,0.47333333333333333,0.46657578737224753,0.7349405288696289,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),24,10,0.5511111111111111,0.4666666666666667,0.4337087814860977,0.8080465793609619,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),25,1,0.5903703703703703,0.49333333333333335,0.4828335506301608,0.6994524002075195,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),25,2,0.5903703703703703,0.52,0.5177767502981043,1.121074914932251,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),25,3,0.6051851851851852,0.5333333333333333,0.5214053579270971,1.2987980842590332,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),25,4,0.47185185185185186,0.4066666666666667,0.3899410774410775,0.5922894477844238,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),25,5,0.5651851851851852,0.48,0.4630596098088358,0.6642069816589355,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),25,6,0.5466666666666666,0.4533333333333333,0.4334454524554795,0.741750955581665,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),25,7,0.5985185185185186,0.4666666666666667,0.45554333883085946,1.2542407512664795,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),25,8,0.5622222222222222,0.47333333333333333,0.4536625586928335,0.7941405773162842,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),25,9,0.617037037037037,0.41333333333333333,0.4111430579515686,1.1774635314941406,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),25,10,0.5733333333333334,0.5,0.48581871071113575,1.14742112159729,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),26,1,0.5696296296296296,0.4866666666666667,0.48279268696725997,1.9886503219604492,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),26,2,0.4925925925925926,0.48,0.45854151012465555,1.0148530006408691,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),26,3,0.5288888888888889,0.44,0.4145822273117496,0.9246807098388672,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),26,4,0.597037037037037,0.4866666666666667,0.4787430733809998,1.2047502994537354,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),26,5,0.6111111111111112,0.42,0.4021289214791711,1.2233753204345703,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),26,6,0.534074074074074,0.4866666666666667,0.48166278166278165,1.2883477210998535,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),26,7,0.52,0.4266666666666667,0.38796429140762,0.8810181617736816,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),26,8,0.54,0.5466666666666666,0.5374149097423178,1.2995216846466064,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),26,9,0.4785185185185185,0.42,0.3974900374710046,1.20817232131958,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),26,10,0.5762962962962963,0.47333333333333333,0.45321497376291897,0.9839544296264648,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),27,1,0.5170370370370371,0.48,0.48024290524290514,0.9654955863952637,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),27,2,0.5844444444444444,0.5266666666666666,0.4960718294051627,1.1280570030212402,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),27,3,0.5614814814814815,0.5133333333333333,0.5118016685673451,1.1777043342590332,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),27,4,0.49407407407407405,0.42,0.4131604531847103,0.6968443393707275,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),27,5,0.6118518518518519,0.5266666666666666,0.5029028258731991,0.9812843799591064,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),27,6,0.4740740740740741,0.4533333333333333,0.4298063945126673,0.9195847511291504,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),27,7,0.5733333333333334,0.43333333333333335,0.41848853047760465,0.9707310199737549,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),27,8,0.4792592592592593,0.43333333333333335,0.3854349951124145,0.6891143321990967,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),27,9,0.5607407407407408,0.42,0.3978781736441361,0.7456302642822266,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),27,10,0.5466666666666666,0.5133333333333333,0.5028188865398168,1.0764586925506592,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),28,1,0.54,0.5,0.48863524053397467,1.1147863864898682,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),28,2,0.48962962962962964,0.4866666666666667,0.4558829065222927,1.5767130851745605,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),28,3,0.6014814814814815,0.41333333333333333,0.4000899640143943,1.7114615440368652,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),28,4,0.5785185185185185,0.44,0.4249724495137339,0.7053477764129639,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),28,5,0.4740740740740741,0.46,0.43744312479334735,0.48088765144348145,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),28,6,0.5644444444444444,0.47333333333333333,0.46950214648151756,1.020721435546875,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),28,7,0.5681481481481482,0.49333333333333335,0.488849108674573,1.674649715423584,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),28,8,0.5296296296296297,0.47333333333333333,0.44671940578373326,1.0411407947540283,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),28,9,0.5288888888888889,0.4866666666666667,0.4759709986982714,1.2024219036102295,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),28,10,0.56,0.4666666666666667,0.46844224674532825,1.165398120880127,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),29,1,0.5925925925925926,0.5066666666666667,0.4940195632817996,1.2570016384124756,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),29,2,0.5807407407407408,0.41333333333333333,0.4053543565738688,0.6056616306304932,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),29,3,0.6,0.6266666666666667,0.6103026103026102,1.5078275203704834,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),29,4,0.5592592592592592,0.4866666666666667,0.4588097781295703,1.091721534729004,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),29,5,0.4674074074074074,0.4866666666666667,0.43427579365079355,0.5554533004760742,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),29,6,0.48814814814814816,0.44666666666666666,0.40116686537678237,0.6009931564331055,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),29,7,0.5274074074074074,0.5,0.4746063113297858,0.5842525959014893,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),29,8,0.4711111111111111,0.4266666666666667,0.4069485686956469,0.7300012111663818,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),29,9,0.5474074074074075,0.37333333333333335,0.37294298201714876,1.00311279296875,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),29,10,0.5837037037037037,0.4066666666666667,0.39547853329365934,1.1977291107177734,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),30,1,0.5059259259259259,0.42,0.37673802102432463,0.7749824523925781,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),30,2,0.542962962962963,0.5133333333333333,0.49783462367695547,0.6835463047027588,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),30,3,0.482962962962963,0.5133333333333333,0.5093101343101343,0.5907697677612305,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),30,4,0.5303703703703704,0.41333333333333333,0.41497179980718385,0.5151822566986084,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),30,5,0.5244444444444445,0.47333333333333333,0.45838616148213673,0.8354899883270264,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),30,6,0.5170370370370371,0.48,0.45746684590800185,0.5671787261962891,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),30,7,0.5466666666666666,0.54,0.5271322961491779,0.6539278030395508,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),30,8,0.5562962962962963,0.49333333333333335,0.47978085944187643,0.6656293869018555,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),30,9,0.48592592592592593,0.46,0.456275558888841,0.49880123138427734,1350,150
+IMDB-MULTI,"MLP (256,128,64, max_iter=1000, early_stopping)","polynomial (bins=150, range=3.1)",None (raw embeddings),30,10,0.5851851851851851,0.5,0.480118225246589,0.5208208560943604,1350,150
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),1,1,0.9968330849478391,0.4652137468566639,0.4419047436574813,11.686781406402588,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),1,2,0.9969262295081968,0.43671416596814755,0.41860349095761146,12.748109579086304,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),1,3,0.9967399403874814,0.46018440905280805,0.4398954463333672,12.668462038040161,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),1,4,0.9969262295081968,0.4526404023470243,0.42590756943402336,12.593223094940186,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),1,5,0.9961810730253353,0.4551550712489522,0.43788286016521405,11.402528047561646,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),1,6,0.9970193740685543,0.45934618608549876,0.4381766430531022,11.690311193466187,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),1,7,0.9961810730253353,0.43671416596814755,0.41515461993573916,11.875713586807251,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),1,8,0.9968330849478391,0.44761106454316846,0.42827197702901726,11.789523839950562,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),1,9,0.9964605067064084,0.44761106454316846,0.4261358911476006,11.664583921432495,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),1,10,0.9961814287044798,0.4412751677852349,0.4192104379253618,12.5454261302948,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),2,1,0.9970193740685543,0.46269907795473597,0.4408459430243033,11.375654935836792,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),2,2,0.9967399403874814,0.44341994970662196,0.4236017745867771,11.372469186782837,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),2,3,0.9967399403874814,0.4459346186085499,0.4253334813498493,11.282400846481323,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),2,4,0.9961810730253353,0.44761106454316846,0.42758656036789383,11.757410764694214,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),2,5,0.996553651266766,0.4308466051969824,0.4128421056907785,12.193073749542236,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),2,6,0.997112518628912,0.44425817267393125,0.4238264917219723,12.494804620742798,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),2,7,0.9968330849478391,0.4660519698239732,0.4463835093518657,13.26320743560791,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),2,8,0.9967399403874814,0.4685666387259011,0.4420850027655997,12.51160740852356,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),2,9,0.996553651266766,0.4501257334450964,0.43114297541856794,13.103755235671997,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),2,10,0.9964608363602496,0.4521812080536913,0.42986266992143235,12.368910074234009,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),3,1,0.9968330849478391,0.451802179379715,0.42790630184392264,12.040782928466797,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),3,2,0.9970193740685543,0.44090528080469404,0.4238024689955786,12.230279922485352,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),3,3,0.997112518628912,0.42330259849119867,0.4102778805823643,11.556700706481934,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),3,4,0.9961810730253353,0.4425817267393127,0.42513811383452793,12.142543077468872,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),3,5,0.996553651266766,0.44761106454316846,0.4259416724061769,11.619100332260132,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),3,6,0.996553651266766,0.4333612740989103,0.41356389160246015,11.470427751541138,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),3,7,0.9970193740685543,0.4702430846605197,0.4448794937253317,11.435059547424316,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),3,8,0.9967399403874814,0.4660519698239732,0.44740570874510466,11.182882308959961,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),3,9,0.9963673621460507,0.4526404023470243,0.43131382200874296,13.018701791763306,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),3,10,0.9966471081307627,0.4773489932885906,0.4525005186836508,13.682324171066284,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),4,1,0.9967399403874814,0.4509639564124057,0.4341656502548556,14.514551401138306,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),4,2,0.9966467958271237,0.4266554903604359,0.4055405834498646,12.523260593414307,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),4,3,0.9970193740685543,0.4677284157585918,0.44457929333578355,12.036155462265015,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),4,4,0.9968330849478391,0.45347862531433364,0.43426449222513647,13.351499080657959,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),4,5,0.9961810730253353,0.45347862531433364,0.4365037817848378,16.539089918136597,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),4,6,0.9970193740685543,0.451802179379715,0.43073224032406926,12.903374433517456,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),4,7,0.9966467958271237,0.44677284157585917,0.42618588502813975,11.937905311584473,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),4,8,0.9968330849478391,0.4425817267393127,0.4234217151175512,11.620325803756714,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),4,9,0.9963673621460507,0.4685666387259011,0.44843237613608566,15.459117889404297,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),4,10,0.9972990593275589,0.4488255033557047,0.42671784173362104,14.280921220779419,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),5,1,0.9963673621460507,0.4492875104777871,0.4267938324978371,13.479063749313354,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),5,2,0.9967399403874814,0.45934618608549876,0.43548722851985666,13.465964555740356,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),5,3,0.9970193740685543,0.4509639564124057,0.43496444396128053,13.280862808227539,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),5,4,0.9966467958271237,0.4526404023470243,0.43061327986321246,14.78426480293274,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),5,5,0.9972056631892697,0.43419949706621963,0.415947900902446,17.608673095703125,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),5,6,0.9961810730253353,0.44006705783738476,0.42157318110570574,16.074589252471924,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),5,7,0.9968330849478391,0.44761106454316846,0.4227662758503741,11.437232255935669,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),5,8,0.9969262295081968,0.47778709136630343,0.4577593949471786,11.896706342697144,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),5,9,0.9970193740685543,0.44090528080469404,0.4198225374543415,12.574829578399658,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),5,10,0.9964608363602496,0.46476510067114096,0.4407125578362767,12.10526156425476,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),6,1,0.997112518628912,0.4316848281642917,0.41085745362372467,12.614285945892334,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),6,2,0.9966467958271237,0.4559932942162615,0.43361494878965595,12.978431463241577,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),6,3,0.9966467958271237,0.44425817267393125,0.42013232010373464,12.720518827438354,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),6,4,0.9963673621460507,0.44677284157585917,0.4261052956897359,11.631730794906616,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),6,5,0.9961810730253353,0.45683151718357085,0.4319080419822401,11.939884901046753,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),6,6,0.996274217585693,0.4702430846605197,0.4497802274630678,11.78468942642212,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),6,7,0.9972056631892697,0.4350377200335289,0.4163665325436312,11.762376308441162,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),6,8,0.9967399403874814,0.46018440905280805,0.4441297732219959,13.616008520126343,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),6,9,0.9967399403874814,0.4585079631181894,0.4350239699029203,12.30294132232666,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),6,10,0.9970196516717892,0.4521812080536913,0.43072480576656924,12.270808935165405,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),7,1,0.9967399403874814,0.4677284157585918,0.4427898976386124,12.435992002487183,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),7,2,0.996553651266766,0.4459346186085499,0.42454474804293196,12.837732076644897,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),7,3,0.9967399403874814,0.4316848281642917,0.4118295626632328,11.975622177124023,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),7,4,0.9963673621460507,0.4702430846605197,0.4501933719215522,12.434355974197388,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),7,5,0.9967399403874814,0.43671416596814755,0.4110388833352675,13.269813299179077,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),7,6,0.9968330849478391,0.432523051131601,0.41147432218592656,12.502806663513184,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),7,7,0.996553651266766,0.48365465213746855,0.4616612617465411,12.015163898468018,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),7,8,0.9964605067064084,0.4509639564124057,0.42682913276175694,12.351626873016357,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),7,9,0.997112518628912,0.4652137468566639,0.44759768970725244,13.090163707733154,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),7,10,0.9965539722455062,0.42701342281879195,0.4126579527706352,13.135660648345947,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),8,1,0.9968330849478391,0.46102263202011734,0.438345774716977,13.459071159362793,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),8,2,0.9967399403874814,0.44677284157585917,0.42959443798866254,11.31599760055542,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),8,3,0.9964605067064084,0.44174350377200333,0.4199031328537098,11.637403011322021,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),8,4,0.996553651266766,0.45347862531433364,0.43362948081140734,11.528015375137329,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),8,5,0.9967399403874814,0.44761106454316846,0.42543611355848376,11.493393182754517,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),8,6,0.9966467958271237,0.43419949706621963,0.4162394948848989,11.5979745388031,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),8,7,0.9969262295081968,0.4694048616932104,0.4523543917374196,12.139615774154663,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),8,8,0.9970193740685543,0.44006705783738476,0.4185917029840153,13.16245174407959,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),8,9,0.9967399403874814,0.46437552388935455,0.44095050472858344,13.630174398422241,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),8,10,0.9965539722455062,0.4437919463087248,0.4229781864617725,13.707343816757202,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),9,1,0.9967399403874814,0.4509639564124057,0.43062052343736473,11.74438190460205,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),9,2,0.996274217585693,0.4543168482816429,0.43513826661381866,11.602866172790527,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),9,3,0.9967399403874814,0.44174350377200333,0.41995961149166405,12.906217098236084,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),9,4,0.9968330849478391,0.42162615255658004,0.40355497938697493,11.690868139266968,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),9,5,0.9963673621460507,0.44090528080469404,0.41987396214267775,12.247105121612549,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),9,6,0.996553651266766,0.4450963956412406,0.4223896155961501,12.852948904037476,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),9,7,0.9970193740685543,0.47611064543168485,0.4595296193697102,12.804898977279663,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),9,8,0.9968330849478391,0.46102263202011734,0.4421417749582685,13.275343179702759,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),9,9,0.9964605067064084,0.4526404023470243,0.42735298882503575,13.699682712554932,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),9,10,0.9964608363602496,0.46057046979865773,0.433218962488097,13.164523363113403,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),10,1,0.9964605067064084,0.4157585917854149,0.3954283016198751,12.684652090072632,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),10,2,0.9968330849478391,0.4492875104777871,0.42869802540535834,13.588392496109009,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),10,3,0.9967399403874814,0.47359597652975693,0.4553095491567713,13.673688411712646,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),10,4,0.9966467958271237,0.4484492875104778,0.42996346432199645,13.860804080963135,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),10,5,0.996553651266766,0.48700754400670576,0.46416257298020946,12.658794403076172,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),10,6,0.9972988077496274,0.46102263202011734,0.43624949254912765,12.383869647979736,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),10,7,0.9963673621460507,0.451802179379715,0.4281844619562577,12.405830383300781,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),10,8,0.9972988077496274,0.45347862531433364,0.4320139866057713,11.579238653182983,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),10,9,0.996553651266766,0.4350377200335289,0.4122050249068648,11.350986957550049,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),10,10,0.9971127875570457,0.4395973154362416,0.421110455944629,12.053478240966797,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),11,1,0.9967399403874814,0.46437552388935455,0.44307568952106136,13.503965139389038,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),11,2,0.9964605067064084,0.4652137468566639,0.44520480607139873,13.399049520492554,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),11,3,0.996274217585693,0.4492875104777871,0.4327743640318491,13.726792812347412,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),11,4,0.9963673621460507,0.44090528080469404,0.421471403096421,14.96739411354065,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),11,5,0.9960879284649776,0.4392288348700754,0.41676276734799966,14.63717532157898,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),11,6,0.9970193740685543,0.44174350377200333,0.4161157701690399,13.549536228179932,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),11,7,0.9966467958271237,0.4459346186085499,0.4271356413603725,13.380667924880981,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),11,8,0.9964605067064084,0.4559932942162615,0.4323210295725057,13.483539819717407,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),11,9,0.9967399403874814,0.4224643755238894,0.40234342594466294,14.66675853729248,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),11,10,0.9966471081307627,0.47567114093959734,0.45379545517537706,13.89815878868103,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),12,1,0.9964605067064084,0.46018440905280805,0.4382013541214394,13.093470096588135,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),12,2,0.9970193740685543,0.4652137468566639,0.44672274828683317,13.245542526245117,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),12,3,0.9961810730253353,0.4308466051969824,0.40911785854764066,14.86850094795227,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),12,4,0.9964605067064084,0.4559932942162615,0.4379987590301562,13.279747486114502,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),12,5,0.9969262295081968,0.44341994970662196,0.42355053845926177,12.106152772903442,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),12,6,0.9961810730253353,0.4551550712489522,0.43660514148493657,11.546808958053589,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),12,7,0.9963673621460507,0.4383906119027661,0.41677794404962,11.75376582145691,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),12,8,0.9964605067064084,0.4333612740989103,0.4145470902362521,12.431600093841553,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),12,9,0.9966467958271237,0.4501257334450964,0.43254977825760815,11.614666938781738,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),12,10,0.9966471081307627,0.4588926174496644,0.4334367429485899,11.564805030822754,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),13,1,0.9966467958271237,0.48113998323554064,0.4617265153357131,11.483349800109863,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),13,2,0.9969262295081968,0.4685666387259011,0.4491497653407974,11.555960893630981,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),13,3,0.9972056631892697,0.45347862531433364,0.4311823641394489,11.661378145217896,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),13,4,0.996553651266766,0.4258172673931266,0.40530153324155244,13.14694619178772,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),13,5,0.9961810730253353,0.4484492875104778,0.4281321348047442,12.479100942611694,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),13,6,0.9967399403874814,0.44341994970662196,0.42448183510835974,11.988157510757446,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),13,7,0.9970193740685543,0.46353730092204526,0.4432123090011941,12.725403070449829,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),13,8,0.9967399403874814,0.44006705783738476,0.4209478287235253,11.705636262893677,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),13,9,0.9967399403874814,0.4383906119027661,0.4183075586334263,13.093225717544556,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),13,10,0.9966471081307627,0.4412751677852349,0.42128503598387634,12.452702045440674,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),14,1,0.9963673621460507,0.46186085498742663,0.44504326329281424,11.93393874168396,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),14,2,0.996274217585693,0.44761106454316846,0.4292712496970632,12.69401502609253,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),14,3,0.9968330849478391,0.4677284157585918,0.44765410579972514,12.006708860397339,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),14,4,0.996274217585693,0.4308466051969824,0.41418911142301634,11.352386474609375,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),14,5,0.9969262295081968,0.43755238893545684,0.41581489843146113,11.83115530014038,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),14,6,0.9968330849478391,0.4786253143336127,0.45585471792884374,11.388146877288818,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),14,7,0.9960879284649776,0.4677284157585918,0.4468255532386761,12.467852354049683,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),14,8,0.997112518628912,0.45766974015088013,0.4363826775494765,12.338064670562744,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),14,9,0.9964605067064084,0.44006705783738476,0.4157385345262751,12.642865896224976,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),14,10,0.9965539722455062,0.44798657718120805,0.4276322166875385,11.376240730285645,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),15,1,0.997112518628912,0.44425817267393125,0.4258468544966609,12.391149520874023,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),15,2,0.9966467958271237,0.4551550712489522,0.4332904428996221,12.247955799102783,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),15,3,0.9969262295081968,0.46269907795473597,0.4460768997676834,12.206892967224121,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),15,4,0.9972056631892697,0.45766974015088013,0.4399246666251196,11.706162214279175,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),15,5,0.9972056631892697,0.4484492875104778,0.4269447290626008,12.0469069480896,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),15,6,0.9967399403874814,0.4484492875104778,0.42481963652616295,11.996943235397339,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),15,7,0.996274217585693,0.4459346186085499,0.42422626602876473,11.701667308807373,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),15,8,0.9961810730253353,0.4652137468566639,0.4410701610417927,11.454676389694214,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),15,9,0.9967399403874814,0.4392288348700754,0.4219673141229008,11.468312501907349,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),15,10,0.9960882928192233,0.438758389261745,0.41760768441804735,11.470077753067017,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),16,1,0.9963673621460507,0.4752724224643755,0.4535376888429066,12.71225094795227,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),16,2,0.9964605067064084,0.43671416596814755,0.4233355496515758,12.302690505981445,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),16,3,0.9967399403874814,0.45347862531433364,0.4347729940026975,11.766775131225586,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),16,4,0.9972056631892697,0.4585079631181894,0.4365143184416177,12.82033395767212,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),16,5,0.997112518628912,0.4559932942162615,0.4347210654278528,11.70844292640686,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),16,6,0.9966467958271237,0.4308466051969824,0.4087223567342342,12.687928676605225,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),16,7,0.9960879284649776,0.4694048616932104,0.4489754135806903,12.730038404464722,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),16,8,0.9966467958271237,0.46437552388935455,0.44459770356902334,11.763540267944336,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),16,9,0.9972056631892697,0.4551550712489522,0.43122086218030814,11.093860626220703,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),16,10,0.9966471081307627,0.4261744966442953,0.4085211481461492,11.53324556350708,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),17,1,0.996553651266766,0.4425817267393127,0.4260914714335688,11.042555570602417,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),17,2,0.9964605067064084,0.4526404023470243,0.4315675529331707,11.013072490692139,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),17,3,0.9964605067064084,0.42162615255658004,0.4009582471945309,11.051711082458496,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),17,4,0.9968330849478391,0.44677284157585917,0.42659790381542534,11.19011640548706,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),17,5,0.9970193740685543,0.4652137468566639,0.4425320219481102,11.079773426055908,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),17,6,0.997112518628912,0.46102263202011734,0.4399942574061798,11.004215478897095,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),17,7,0.9972056631892697,0.4509639564124057,0.42642094206526937,10.970129251480103,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),17,8,0.9964605067064084,0.4844928751047779,0.46302563866169755,10.98330545425415,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),17,9,0.9968330849478391,0.45766974015088013,0.4375835374941905,11.18981647491455,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),17,10,0.996367700474993,0.44546979865771813,0.42167388459763855,11.002164363861084,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),18,1,0.9968330849478391,0.4392288348700754,0.4265212628558566,11.001423120498657,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),18,2,0.9968330849478391,0.4752724224643755,0.4563340011872554,10.949899673461914,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),18,3,0.996274217585693,0.44174350377200333,0.42291317216881735,10.969103574752808,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),18,4,0.9966467958271237,0.46018440905280805,0.43922129987972597,11.158146381378174,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),18,5,0.9964605067064084,0.4333612740989103,0.4083565536322189,10.954881429672241,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),18,6,0.9964605067064084,0.46186085498742663,0.44650179159803066,11.015685081481934,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),18,7,0.996553651266766,0.4660519698239732,0.4401396982184079,10.986085653305054,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),18,8,0.9970193740685543,0.44090528080469404,0.42194173919223205,11.024072170257568,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),18,9,0.9963673621460507,0.46353730092204526,0.4456784063012762,11.09896206855774,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),18,10,0.9967402440160193,0.4521812080536913,0.42935038543045395,11.160197496414185,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),19,1,0.996553651266766,0.4543168482816429,0.43117972556505113,10.973194599151611,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),19,2,0.9967399403874814,0.4585079631181894,0.43930133142071176,10.908021926879883,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),19,3,0.9969262295081968,0.451802179379715,0.4287923611428792,10.901527643203735,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),19,4,0.9964605067064084,0.46018440905280805,0.4399842523064019,11.30930233001709,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),19,5,0.996553651266766,0.43671416596814755,0.4170470167146593,11.035479545593262,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),19,6,0.9967399403874814,0.4492875104777871,0.4274910006175762,10.942401647567749,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),19,7,0.996553651266766,0.451802179379715,0.4332664518939016,10.952951669692993,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),19,8,0.9964605067064084,0.4425817267393127,0.4228316373468546,10.956949234008789,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),19,9,0.9970193740685543,0.46186085498742663,0.43597821591440794,11.085037231445312,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),19,10,0.9969265157865326,0.46560402684563756,0.44792248242724175,11.102233171463013,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),20,1,0.9967399403874814,0.46269907795473597,0.443978651859107,10.920454740524292,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),20,2,0.9964605067064084,0.46353730092204526,0.4397692971633782,10.93139386177063,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),20,3,0.996553651266766,0.42497904442581724,0.40582251155244325,10.910420894622803,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),20,4,0.9966467958271237,0.4425817267393127,0.4209024300010235,11.158007383346558,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),20,5,0.996553651266766,0.44761106454316846,0.4291029639905875,11.080751657485962,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),20,6,0.9968330849478391,0.44006705783738476,0.4200172835759502,10.93671178817749,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),20,7,0.9964605067064084,0.48030176026823135,0.45837515625313957,10.919886589050293,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),20,8,0.9963673621460507,0.4752724224643755,0.4556828026433886,10.970296382904053,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),20,9,0.9966467958271237,0.4492875104777871,0.43155716633374347,11.146849393844604,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),20,10,0.9965539722455062,0.4354026845637584,0.41022024667857165,11.036816835403442,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),21,1,0.9973919523099851,0.46102263202011734,0.4380140748208014,10.966691732406616,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),21,2,0.9968330849478391,0.44090528080469404,0.4223584916930127,10.953941583633423,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),21,3,0.9966467958271237,0.4585079631181894,0.4417079212541923,10.919561624526978,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),21,4,0.996553651266766,0.4677284157585918,0.4442641913709522,11.112200498580933,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),21,5,0.9964605067064084,0.43755238893545684,0.41641793366538143,11.058077096939087,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),21,6,0.996553651266766,0.4459346186085499,0.42653053484114417,10.981644630432129,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),21,7,0.9969262295081968,0.42330259849119867,0.39802092301832936,10.963734149932861,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),21,8,0.9966467958271237,0.47778709136630343,0.458938540120724,10.94438886642456,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),21,9,0.9967399403874814,0.4928751047778709,0.46849934684701733,11.113657236099243,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),21,10,0.9964608363602496,0.4278523489932886,0.41151545324240024,11.150725364685059,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),22,1,0.9970193740685543,0.4526404023470243,0.4290703311319037,10.929824113845825,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),22,2,0.9972988077496274,0.4551550712489522,0.43129213669329713,10.942494869232178,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),22,3,0.996553651266766,0.4333612740989103,0.4131257315814885,10.98367714881897,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),22,4,0.9968330849478391,0.471081307627829,0.450971490471051,11.083940267562866,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),22,5,0.9960879284649776,0.4551550712489522,0.4309698727406019,11.516708850860596,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),22,6,0.9961810730253353,0.4501257334450964,0.43146389702196053,11.55586314201355,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),22,7,0.9964605067064084,0.44341994970662196,0.4260749942180611,11.517295360565186,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),22,8,0.9966467958271237,0.4224643755238894,0.40369829303893895,11.062037467956543,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),22,9,0.997112518628912,0.45347862531433364,0.4377548897303799,11.43683910369873,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),22,10,0.9964608363602496,0.4412751677852349,0.41570869236445557,11.254964590072632,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),23,1,0.9959947839046199,0.44425817267393125,0.4217490436405657,11.10324764251709,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),23,2,0.9967399403874814,0.46018440905280805,0.44102412855708883,11.024252653121948,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),23,3,0.996553651266766,0.4526404023470243,0.4263010146182379,11.200067281723022,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),23,4,0.9969262295081968,0.4744341994970662,0.4568421778608448,11.052963018417358,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),23,5,0.9967399403874814,0.44174350377200333,0.4184466614034649,11.069427490234375,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),23,6,0.997112518628912,0.44341994970662196,0.4249218116404051,10.888859272003174,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),23,7,0.996274217585693,0.451802179379715,0.43629963125891086,10.878712177276611,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),23,8,0.9968330849478391,0.44006705783738476,0.4230491458494842,10.918844223022461,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),23,9,0.996553651266766,0.44090528080469404,0.4204072261311702,11.10407567024231,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),23,10,0.996833379901276,0.45302013422818793,0.42709388927608055,11.048266172409058,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),24,1,0.9961810730253353,0.4501257334450964,0.4282001739367075,10.888543367385864,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),24,2,0.9970193740685543,0.43755238893545684,0.4238054581100055,10.897294044494629,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),24,3,0.996553651266766,0.4501257334450964,0.4221467731725285,10.913549184799194,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),24,4,0.9966467958271237,0.4585079631181894,0.44110194180038625,11.086319208145142,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),24,5,0.9967399403874814,0.4727577535624476,0.44576465971012436,11.06063961982727,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),24,6,0.9969262295081968,0.4459346186085499,0.4264805517350646,10.866830110549927,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),24,7,0.9969262295081968,0.46018440905280805,0.4364591914650475,10.889196872711182,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),24,8,0.9967399403874814,0.4652137468566639,0.44528772190789523,10.878427267074585,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),24,9,0.9968330849478391,0.4425817267393127,0.42482984852282346,11.062559843063354,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),24,10,0.9967402440160193,0.4521812080536913,0.4331547270176298,11.07607364654541,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),25,1,0.9966467958271237,0.46353730092204526,0.44418207550052463,10.88185715675354,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),25,2,0.9966467958271237,0.44761106454316846,0.43020423475741154,10.917866706848145,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),25,3,0.996274217585693,0.46269907795473597,0.43664163644478854,10.963677406311035,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),25,4,0.9968330849478391,0.44677284157585917,0.41957974922496366,11.049725532531738,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),25,5,0.9967399403874814,0.4526404023470243,0.4351592296008711,10.907058954238892,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),25,6,0.9966467958271237,0.4258172673931266,0.40549805003405703,11.032013177871704,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),25,7,0.997112518628912,0.4652137468566639,0.44340254262814865,10.886720418930054,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),25,8,0.9963673621460507,0.4484492875104778,0.42575502257899767,10.901409149169922,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),25,9,0.996553651266766,0.451802179379715,0.4329657670668531,11.078222036361694,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),25,10,0.9969265157865326,0.4278523489932886,0.40713645274186755,11.041717290878296,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),26,1,0.9966467958271237,0.42497904442581724,0.4044728344331457,10.897245645523071,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),26,2,0.9968330849478391,0.46102263202011734,0.44022026701942374,10.908522605895996,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),26,3,0.9967399403874814,0.45766974015088013,0.4380340357433837,10.900875806808472,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),26,4,0.9970193740685543,0.45347862531433364,0.4338624423207855,11.111976385116577,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),26,5,0.9963673621460507,0.4509639564124057,0.4317602598531697,11.025880575180054,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),26,6,0.9969262295081968,0.41743503772003354,0.39832518446295073,10.888855695724487,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),26,7,0.9966467958271237,0.4702430846605197,0.4457706199726019,10.82850980758667,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),26,8,0.996274217585693,0.4694048616932104,0.45053096695143674,10.840218305587769,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),26,9,0.9964605067064084,0.43671416596814755,0.41317462378900777,10.867619037628174,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),26,10,0.9964608363602496,0.43456375838926176,0.41359459471904586,10.906296014785767,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),27,1,0.9963673621460507,0.46102263202011734,0.44171714167186704,11.039834976196289,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),27,2,0.9963673621460507,0.4694048616932104,0.44879443575853983,10.835195779800415,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),27,3,0.9968330849478391,0.44761106454316846,0.42299964963877607,10.867793083190918,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),27,4,0.9969262295081968,0.45683151718357085,0.43612213255298793,10.86139965057373,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),27,5,0.9966467958271237,0.4559932942162615,0.43608474618241105,11.02060580253601,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),27,6,0.9964605067064084,0.46018440905280805,0.4387928317355626,10.972359895706177,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),27,7,0.9968330849478391,0.44425817267393125,0.41987709360203146,10.877782821655273,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),27,8,0.9967399403874814,0.43755238893545684,0.41657345607255414,10.843658924102783,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),27,9,0.996274217585693,0.4551550712489522,0.4340996926702565,10.863792419433594,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),27,10,0.9970196516717892,0.43288590604026844,0.4112236449255578,11.163246393203735,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),28,1,0.9964605067064084,0.4425817267393127,0.4282135216911037,10.787164688110352,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),28,2,0.9966467958271237,0.45766974015088013,0.4343875388421914,11.407342672348022,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),28,3,0.9968330849478391,0.4551550712489522,0.43392760926544793,10.990620136260986,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),28,4,0.9967399403874814,0.4425817267393127,0.42077007889977347,11.109617233276367,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),28,5,0.9964605067064084,0.44341994970662196,0.42550443686500444,11.335817337036133,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),28,6,0.9967399403874814,0.44174350377200333,0.41977453626753325,10.85396146774292,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),28,7,0.9966467958271237,0.4450963956412406,0.42345623551442496,10.818199157714844,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),28,8,0.9964605067064084,0.46186085498742663,0.44137719064107006,10.922694683074951,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),28,9,0.997112518628912,0.44341994970662196,0.4229586130821161,10.907799482345581,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),28,10,0.9969265157865326,0.46057046979865773,0.43692061017701406,11.057986974716187,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),29,1,0.9964605067064084,0.4585079631181894,0.4379933001199743,10.935184478759766,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),29,2,0.9963673621460507,0.451802179379715,0.43306954136870984,10.89814567565918,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),29,3,0.996553651266766,0.4383906119027661,0.4185955907627071,10.897837162017822,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),29,4,0.996553651266766,0.4719195305951383,0.44857795323600985,10.849121570587158,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),29,5,0.9967399403874814,0.44174350377200333,0.41953457573978553,11.07169771194458,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),29,6,0.9966467958271237,0.44174350377200333,0.42542141519531973,11.077321767807007,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),29,7,0.9972056631892697,0.4509639564124057,0.4322168300590057,10.870920896530151,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),29,8,0.9967399403874814,0.4786253143336127,0.4480315720175286,10.86974835395813,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),29,9,0.9970193740685543,0.4484492875104778,0.42586289545789313,10.951879024505615,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),29,10,0.9962745645897364,0.4446308724832215,0.4248230400897634,10.998666286468506,10737,1192
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),30,1,0.9968330849478391,0.47694886839899414,0.45093926941563667,11.239451169967651,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),30,2,0.9969262295081968,0.46186085498742663,0.4404304178682429,11.048843145370483,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),30,3,0.9963673621460507,0.45934618608549876,0.43731445557748166,11.307296991348267,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),30,4,0.9964605067064084,0.4551550712489522,0.4348607456447916,10.90587067604065,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),30,5,0.9968330849478391,0.4526404023470243,0.42681642613324733,11.05206561088562,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),30,6,0.9967399403874814,0.4543168482816429,0.43149681425587505,11.039393663406372,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),30,7,0.9964605067064084,0.4559932942162615,0.4409647203465351,10.903412342071533,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),30,8,0.996553651266766,0.45683151718357085,0.43595310277069393,10.8626708984375,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),30,9,0.997112518628912,0.4333612740989103,0.40915500140883804,10.858526945114136,10736,1193
+REDDIT-MULTI-12K,"Random Forest (n=500, max_depth=20)","harmonic (bins=500, range=14.61) [cached]",None (raw embeddings),30,10,0.9967402440160193,0.4312080536912752,0.41293575082645534,11.070033550262451,10737,1192

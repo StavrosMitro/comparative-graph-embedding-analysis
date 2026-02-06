@@ -29,31 +29,46 @@ from reddit_ds.clustering import (
 )
 
 
-# Default configurations based on preanalysis results
-# REDDIT: harmonic range ~14.6, polynomial range ~3.5, biharmonic range ~500 (1/λ² gives much larger values)
+# =============================================================================
+# DEFAULT CONFIGURATIONS - Based on classification results
+# From fgsd_reddit_final_results.csv - top 3 bins per function by accuracy
+# =============================================================================
+# REDDIT Classification Results:
+#   harmonic:   range=14.61, best bins: 500 (0.457 acc), 100 (0.447), 200 (0.444)
+#   polynomial: range=3.48, best bins: 500 (0.443 acc), 200 (0.441), 100 (0.432)
+#   biharmonic: range=500.0, best bins: 200 (0.406 acc), 500 (0.407), 100 (0.377)
+# =============================================================================
+
 DEFAULT_CONFIGS = [
-    # Harmonic configurations (range ~15)
-    {'name': 'harmonic_100_15', 'func': 'harmonic', 'bins': 100, 'range': 15.0},
-    {'name': 'harmonic_200_15', 'func': 'harmonic', 'bins': 200, 'range': 15.0},
-    # Polynomial configurations (range ~3.5)
-    {'name': 'polynomial_50_3.5', 'func': 'polynomial', 'bins': 50, 'range': 3.5},
-    {'name': 'polynomial_100_3.5', 'func': 'polynomial', 'bins': 100, 'range': 3.5},
-    # Biharmonic configurations (range ~500, because 1/λ² >> 1/λ)
-    {'name': 'biharmonic_100_500', 'func': 'biharmonic', 'bins': 100, 'range': 500.0},
+    # Harmonic - top 3 bins from classification (range=14.61)
+    {'name': 'harmonic_500_14.61', 'func': 'harmonic', 'bins': 500, 'range': 14.61},
+    {'name': 'harmonic_100_14.61', 'func': 'harmonic', 'bins': 100, 'range': 14.61},
+    {'name': 'harmonic_200_14.61', 'func': 'harmonic', 'bins': 200, 'range': 14.61},
+    
+    # Polynomial - top 3 bins from classification (range=3.48)
+    {'name': 'polynomial_500_3.48', 'func': 'polynomial', 'bins': 500, 'range': 3.48},
+    {'name': 'polynomial_200_3.48', 'func': 'polynomial', 'bins': 200, 'range': 3.48},
+    {'name': 'polynomial_100_3.48', 'func': 'polynomial', 'bins': 100, 'range': 3.48},
+    
+    # Biharmonic - top 3 bins from classification (range=500.0)
+    {'name': 'biharmonic_500_500', 'func': 'biharmonic', 'bins': 500, 'range': 500.0},
     {'name': 'biharmonic_200_500', 'func': 'biharmonic', 'bins': 200, 'range': 500.0},
-    # Naive hybrid (harmonic + polynomial) - use 'naive_hybrid' consistently
+    {'name': 'biharmonic_100_500', 'func': 'biharmonic', 'bins': 100, 'range': 500.0},
+    
+    # Naive hybrid - best harmonic (500) + best polynomial (500) from classification
     {
-        'name': 'naive_hybrid_200_15_100_3.5',
-        'func': 'naive_hybrid',  # Changed from 'hybrid' for consistency
-        'harm_bins': 200, 'harm_range': 15.0,
-        'pol_bins': 100, 'pol_range': 3.5
+        'name': 'naive_hybrid_500_14.61_500_3.48',
+        'func': 'naive_hybrid',
+        'harm_bins': 500, 'harm_range': 14.61,
+        'pol_bins': 500, 'pol_range': 3.48
     },
-    # Biharmonic hybrid (biharmonic + polynomial)
+    
+    # Biharmonic hybrid - best biharmonic (500) + best polynomial (500)
     {
-        'name': 'biharmonic_hybrid_200_500_100_3.5',
+        'name': 'biharmonic_hybrid_500_500_500_3.48',
         'func': 'biharmonic_hybrid',
-        'biharm_bins': 200, 'biharm_range': 500.0,
-        'pol_bins': 100, 'pol_range': 3.5
+        'biharm_bins': 500, 'biharm_range': 500.0,
+        'pol_bins': 500, 'pol_range': 3.48
     },
 ]
 
