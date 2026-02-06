@@ -82,19 +82,7 @@ pip install matplotlib umap-learn tqdm
 
 ### 1.3 GIN Environment (Python 3.x, GPU Required)
 
-Used for the Jupyter notebooks under `GIN_model/`.
-
-```bash
-# Create from the conda environment file
-conda env create -f environment.yml
-conda activate graphs
-
-# OR create manually
-conda create -n gin python=3.9 -y
-conda activate gin
-conda install pytorch torchvision -c pytorch -y     # or with CUDA
-pip install torch-geometric scikit-learn networkx matplotlib umap-learn pandas numpy
-```
+Used for the Jupyter notebooks under `GIN_model/`. Run just the notebook, it sets up its own enviroment.
 
 **Note:** The GIN notebooks require a **GPU with CUDA support** for practical training times. They can run on CPU but will be significantly slower.
 
