@@ -25,3 +25,5 @@ venv/
 # IDE settings
 .idea/
 .vscode/
+
+*pkl
