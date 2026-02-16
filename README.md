@@ -1,22 +1,126 @@
 # Graph Embedding Evaluation Benchmark
 
-A comprehensive evaluation and comparison of **three graph embedding methods** across **three benchmark datasets**, covering classification, clustering, and stability analysis.
+> **Comparative study of graph-level embedding methods for classification, clustering, and stability analysis on standard benchmark datasets.**
 
-## Methods
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red.svg)](https://pytorch.org/)
+[![License](https://img.shields.io/badge/License-see%20LICENSE-lightgrey.svg)](LICENSE)
 
-| Method | Type | Description |
-|--------|------|-------------|
-| **FGSD** (Flexible Graph Spectral Descriptor) | Unsupervised | Spectral graph embedding using eigendecomposition of the Normalized Laplacian with configurable kernel functions (`harmonic`, `polynomial`, `biharmonic`) |
-| **Graph2Vec** (g2v) | Unsupervised | Learns graph-level embeddings via Weisfeiler-Lehman subtree patterns + PV-DBOW (Doc2Vec-style) training |
-| **GIN** (Graph Isomorphism Network) | Supervised | Graph neural network that learns node/graph representations through message passing with learnable aggregation |
+---
+
+## Overview
+
+This project implements and benchmarks **three fundamentally different graph embedding approaches** — spanning unsupervised spectral methods, unsupervised neural document models, and supervised graph neural networks — and evaluates them head-to-head across three standard TU Dortmund graph classification datasets of increasing scale (600 → 1,500 → 11,929 graphs).
+
+The evaluation covers **classification accuracy** (SVM, Random Forest, MLP), **clustering quality** (K-Means, Spectral Clustering with t-SNE/UMAP visualization), and **embedding stability** under controlled graph perturbations (edge addition/removal, node attribute shuffling). Additional analyses include embedding dimension sweeps, computational cost profiling (exact eigendecomposition vs. Chebyshev polynomial approximation), grid search over spectral histogram parameters, and memory benchmarking on the large-scale Reddit dataset.
+
+A detailed written report accompanies this codebase (not included in this repository).
+
+### Key Results at a Glance
+
+| Dataset | Best FGSD | Best Graph2Vec | Best GIN | Metric |
+|---------|-----------|----------------|----------|--------|
+| **ENZYMES** (600 graphs, 6 classes) | ~54% (RF) | ~52% | ~58% | Accuracy (10-fold CV) |
+| **IMDB-MULTI** (1,500 graphs, 3 classes) | ~50% (RF) | ~49% | ~52% | Accuracy (10-fold CV) |
+| **REDDIT-12K** (11,929 graphs, 11 classes) | ~46% (RF) | ~44% | ~50% | Accuracy (10-fold CV) |
+
+- **GIN** (supervised) achieves the highest accuracy across all datasets, as expected from a method with access to labels during training.
+- **FGSD polynomial kernel** consistently outperforms harmonic on ENZYMES and IMDB; harmonic edges out on Reddit's larger graphs.
+- **Stability**: polynomial embeddings are significantly more robust to perturbations than harmonic (cosine similarity 0.87 vs 0.68 at 20% edge perturbation on ENZYMES).
+- **Computational cost**: FGSD scales as $O(n^3)$ per graph due to eigendecomposition — manageable for ENZYMES (~5 ms/graph) but costly for Reddit (~350–400 ms/graph, ~80 min total). Chebyshev approximation provides a practical speedup.
+
+---
+
+## Methods Implemented
+
+### 1. FGSD — Flexible Graph Spectral Descriptor (Unsupervised)
+
+A spectral embedding method that characterizes graph structure through the distribution of pairwise spectral distances derived from the Normalized Laplacian.
+
+**Pipeline**: Compute Normalized Laplacian $L$ → Eigendecompose $L = V \Lambda V^T$ → Apply spectral filter $f(\lambda)$ → Reconstruct $f(L)$ → Extract pairwise distances → Build fixed-size histogram embedding.
+
+**Spectral kernels**: `harmonic` ($1/\lambda$, captures global structure), `polynomial` ($\lambda^2$, captures local structure), `biharmonic` ($1/\lambda^2$, stronger global weighting).
+
+**Extensions built**:
+- **Hybrid mode** — concatenation of harmonic + polynomial histograms for richer representation
+- **Chebyshev approximation** — avoids $O(n^3)$ eigendecomposition by approximating $f(L)$ with Chebyshev polynomials of configurable order, operating directly on sparse matrices
+- **Preanalysis module** — automatic detection of optimal histogram ranges per kernel/dataset
+
+### 2. Graph2Vec (Unsupervised)
+
+Learns graph-level embeddings by treating each graph as a "document" and its Weisfeiler-Lehman subtree patterns as "words", then training a PV-DBOW (Paragraph Vector — Distributed Bag of Words) model.
+
+**Pipeline**: Extract WL subtree vocabulary → Train PV-DBOW with negative sampling → Output fixed-size graph embedding.
+
+**Implementation details**: Custom PyTorch PV-DBOW training loop, three initial node labeling strategies (`constant`, `degree`, Feature-based Transfer Labeling via k-means quantization), configurable WL depth, token counting strategies, and learning rate schedule with linear decay.
+
+### 3. GIN — Graph Isomorphism Network (Supervised)
+
+A message-passing graph neural network proven to be as powerful as the WL test for distinguishing graph structures. Trained end-to-end with graph labels.
+
+**Architecture**: 5-layer GIN with JumpingKnowledge concatenation, hidden dimension 64, dropout 0.5, learnable $\varepsilon$, `global_add_pool` readout, trained for 350 epochs with Adam + Cosine Annealing LR.
+
+**Downstream evaluation**: GIN-generated embeddings are also fed to external classifiers (SVM, Random Forest, MLP) for a fair comparison with the unsupervised methods.
+
+---
 
 ## Datasets
 
-| Dataset | Graphs | Classes | Node Attributes | Source |
-|---------|--------|---------|-----------------|--------|
-| **ENZYMES** | 600 | 6 | Yes (18 features) | TU Dortmund |
-| **IMDB-MULTI** | 1,500 | 3 | No | TU Dortmund |
-| **REDDIT-MULTI-12K** | 11,929 | 11 | No | TU Dortmund |
+| Dataset | Graphs | Classes | Avg Nodes | Node Attributes | Scale |
+|---------|--------|---------|-----------|-----------------|-------|
+| **ENZYMES** | 600 | 6 | ~33 | Yes (18 features) | Small |
+| **IMDB-MULTI** | 1,500 | 3 | ~13 | No | Medium |
+| **REDDIT-MULTI-12K** | 11,929 | 11 | ~391 | No | Large |
+
+All datasets are sourced from the [TU Dortmund benchmark collection](https://chrsmrrs.github.io/datasets/) and are automatically downloaded on first run.
+
+---
+
+## Evaluation Framework
+
+| Task | Description | Metrics |
+|------|-------------|---------|
+| **Classification** | Train SVM, Random Forest, MLP on embeddings (10-fold stratified CV × 30 repeats) | Accuracy, Weighted F1, AUC (OVR) |
+| **Clustering** | K-Means and Spectral Clustering on embeddings with grid-searched hyperparameters | Adjusted Rand Index (ARI), Silhouette Score |
+| **Stability** | Re-embed after controlled perturbations (1–20% edge add/remove, node attribute shuffle) | Cosine similarity, L2 distance, accuracy drop (%) |
+| **Dimension Analysis** | Sweep embedding dimensionality and measure accuracy vs. compute trade-off | Accuracy vs. dimension curves |
+| **Computational Analysis** | Profile generation time and memory across methods, datasets, and approximation strategies | Wall-clock time, peak RAM (via `tracemalloc`) |
+
+---
+
+## Project Structure
+
+```
+emb3/
+├── fgsd_method/           # FGSD: spectral graph embeddings
+│   ├── src/
+│   │   ├── fgsd.py                        # Core FlexibleFGSD (harmonic / polynomial / biharmonic)
+│   │   ├── chebyshev_fgsd.py              # Chebyshev polynomial approximation
+│   │   ├── optimized_method.py            # Hybrid FGSD (concatenated embeddings)
+│   │   ├── cross_validation_benchmark.py  # 10-fold × 30-repeat CV benchmark
+│   │   ├── enzymes_ds/                    # ENZYMES dataset pipeline
+│   │   ├── imbd_ds/                       # IMDB-MULTI dataset pipeline
+│   │   ├── reddit_ds/                     # REDDIT-MULTI-12K dataset pipeline
+│   │   ├── cache/                         # Cached parameters & embeddings
+│   │   └── results/                       # Output CSVs & analysis files
+│   └── plots/                             # Publication-quality figures
+│
+├── g2v/                   # Graph2Vec: WL subtree + PV-DBOW embeddings
+│   ├── enzymes_first.py / enzymes_second.py   # Generate → Evaluate
+│   ├── imdb_first.py / imdb_second.py
+│   └── reddit_first.py / reddit_second.py
+│
+├── GIN_model/             # GIN: supervised graph neural network
+│   ├── GIN_enzymes_full_pipeline.ipynb
+│   ├── GIN_IMDB_full_pipeline.ipynb
+│   └── GIN_REDDIT_full_pipeline.ipynb
+│
+├── environment.yml        # Conda environment (GIN / general)
+├── env_fgsd.yml           # Conda environment (FGSD)
+└── requirements.txt       # Pip requirements (FGSD)
+```
+
+Each dataset subdirectory (`enzymes_ds/`, `imbd_ds/`, `reddit_ds/`) contains a full pipeline with dedicated modules for `classification`, `clustering`, `stability`, `hyperparameter_search`, `preanalysis`, and `data_loader`.
 
 ---
 
