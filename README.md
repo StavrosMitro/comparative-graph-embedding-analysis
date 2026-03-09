@@ -14,15 +14,19 @@ This project implements and benchmarks **three fundamentally different graph emb
 
 The evaluation covers **classification accuracy** (SVM, Random Forest, MLP), **clustering quality** (K-Means, Spectral Clustering with t-SNE/UMAP visualization), and **embedding stability** under controlled graph perturbations (edge addition/removal, node attribute shuffling). Additional analyses include embedding dimension sweeps, computational cost profiling (exact eigendecomposition vs. Chebyshev polynomial approximation), grid search over spectral histogram parameters, and memory benchmarking on the large-scale Reddit dataset.
 
-A detailed written report accompanies this codebase (not included in this repository).
+Maria Gratsia --------> GIN.
+Tzanetos Dimitris ----> G2V.
+Mitropoulos Stavros --> FGSD.
+
+A detailed written report accompanies this codebase (only in greek).
 
 ### Key Results at a Glance
 
-| Dataset | Best FGSD | Best Graph2Vec | Best GIN | Metric |
+| Dataset | Best FGSD (no kfold approach) | Best Graph2Vec | Best GIN | Metric |
 |---------|-----------|----------------|----------|--------|
-| **ENZYMES** (600 graphs, 6 classes) | ~54% (RF) | ~52% | ~58% | Accuracy (10-fold CV) |
-| **IMDB-MULTI** (1,500 graphs, 3 classes) | ~50% (RF) | ~49% | ~52% | Accuracy (10-fold CV) |
-| **REDDIT-12K** (11,929 graphs, 11 classes) | ~46% (RF) | ~44% | ~50% | Accuracy (10-fold CV) |
+| **ENZYMES** (600 graphs, 6 classes) | ~54% (RF) | ~52% | ~58% | Accuracy (k-fold CV) |
+| **IMDB-MULTI** (1,500 graphs, 3 classes) | ~50% (RF) | ~49% | ~52% | Accuracy (k-fold CV) |
+| **REDDIT-12K** (11,929 graphs, 11 classes) | ~46% (RF) | ~44% | ~50% | Accuracy (k-fold CV) |
 
 - **GIN** (supervised) achieves the highest accuracy across all datasets, as expected from a method with access to labels during training.
 - **FGSD polynomial kernel** consistently outperforms harmonic on ENZYMES and IMDB; harmonic edges out on Reddit's larger graphs.
